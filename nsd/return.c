@@ -996,8 +996,7 @@ Ns_ConnReturnInternalError(Ns_Conn *conn)
     }
     return Ns_ReturnNotice(conn, 500, "Server Error",
 			   "The requested URL cannot be accessed "
-			   "due to a system error.")
-
+			   "due to a system error.");
 }
 
 
