@@ -261,8 +261,8 @@ NsTclGetUrlObjCmd(ClientData arg, Tcl_Interp *interp, int objc, Tcl_Obj *CONST o
         headers = Ns_SetCreate(NULL);
     }
     Ns_DStringInit(&ds);
-	url = Tcl_GetString(objv[1]);
-    if (url[1] == '/') {
+    url = Tcl_GetString(objv[1]);
+    if (url[0] == '/') {
 	status = Ns_FetchPage(&ds, Tcl_GetString(objv[1]), itPtr->servPtr->server);
     } else {
         status = Ns_FetchURL(&ds, Tcl_GetString(objv[1]), headers);
