@@ -42,9 +42,12 @@ if {![info exists ::tcl_platform(threaded)] || !$::tcl_platform(threaded)} {
 
 package require tcltest 2.2
 
-
-set env(LD_LIBRARY_PATH) [join [list \
-        $env(LD_LIBRARY_PATH) ../../nsd ../../nsthread] :]
+set LD_LIBRARY_PATH [list]
+if {[info exists env(LD_LIBRARY_PATH)]} {
+    lappend LD_LIBRARY_PATH $env(LD_LIBRARY_PATH)
+}
+lappend LD_LIBRARY_PATH ../../nsd ../../nsthread
+set env(LD_LIBRARY_PATH) [join $LD_LIBRARY_PATH :]
 
 tcltest::configure -testdir [file dirname [info script]]
 eval tcltest::configure $argv
