@@ -84,6 +84,7 @@ NsInitPools(void)
     Tcl_InitHashTable(&pools, TCL_STRING_KEYS);
     InitPool(&defpool);
     defpool.name = ns_strdup("default");
+    timeoutPoolPtr = &defpool;
     hPtr = Tcl_CreateHashEntry(&pools, "default", &new);
     if (new) {
         Tcl_SetHashValue(hPtr, &defpool);
