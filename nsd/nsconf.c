@@ -151,7 +151,6 @@ NsConfUpdate(void)
     
     NsUpdateEncodings();
     NsUpdateMimeTypes();
-    NsUpdateUrlEncode();
 
     Ns_DStringInit(&ds);
 
