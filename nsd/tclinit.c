@@ -1109,6 +1109,7 @@ InitInterp(Tcl_Interp *interp, NsServer *servPtr, NsInterp **itPtrPtr)
 	    NsTclInitQueueType();
 	    NsTclInitAddrType();
 	    NsTclInitTimeType();
+        NsTclInitKeylistType();
 	    initialized = 1;
 	}
 	Ns_MasterUnlock();

@@ -783,14 +783,11 @@ NS_EXTERN int Ns_TclDetachedThread(Tcl_Interp *interp, char *script);
  * tclxkeylist.c:
  */
 
-NS_EXTERN char *Tcl_DeleteKeyedListField (Tcl_Interp  *interp, CONST char *fieldName,
-        CONST char *keyedList);
-NS_EXTERN int Tcl_GetKeyedListField (Tcl_Interp  *interp, CONST char *fieldName,
-        CONST char *keyedList, char **fieldValuePtr);
-NS_EXTERN int Tcl_GetKeyedListKeys (Tcl_Interp  *interp, char CONST *subFieldName,
-        CONST char *keyedList, int *keysArgcPtr, char ***keysArgvPtr);
-NS_EXTERN char *Tcl_SetKeyedListField (Tcl_Interp  *interp, CONST char *fieldName,
-        CONST char *fieldvalue, CONST char *keyedList);
+NS_EXTERN int TclX_KeyedListDelete (Tcl_Interp *interp, Tcl_Obj *keylPtr, char *key);
+NS_EXTERN int TclX_KeyedListGet (Tcl_Interp *interp, Tcl_Obj *keylPtr, char *key, Tcl_Obj **valuePtrPtr);
+NS_EXTERN int TclX_KeyedListGetKeys (Tcl_Interp *interp, Tcl_Obj *keylPtr, char *key, Tcl_Obj **listObjPtrPtr);
+NS_EXTERN int TclX_KeyedListSet (Tcl_Interp *interp, Tcl_Obj *keylPtr, char *key, Tcl_Obj *valuePtr);
+
 
 /*
  * listen.c:

@@ -160,7 +160,11 @@ extern Tcl_ObjCmdProc
     NsTclVarObjCmd,
     NsTclWriteContentObjCmd,
     NsTclWriteFpObjCmd,
-    NsTclWriteObjCmd;
+    NsTclWriteObjCmd,
+    TclX_KeyldelObjCmd,
+    TclX_KeylgetObjCmd,
+    TclX_KeylkeysObjCmd,
+    TclX_KeylsetObjCmd;
 
 extern Tcl_CmdProc
     NsTclAdpDebugCmd,
@@ -202,11 +206,7 @@ extern Tcl_CmdProc
     NsTclShareCmd,
     NsTclStripHtmlCmd,
     NsTclThreadCmd,
-    NsTclUnscheduleCmd,
-    Tcl_KeyldelCmd,
-    Tcl_KeylgetCmd,
-    Tcl_KeylkeysCmd,
-    Tcl_KeylsetCmd;
+    NsTclUnscheduleCmd;
 
 /*
  * The following structure defines a command to be created
@@ -355,10 +355,10 @@ static Cmd cmds[] = {
      * tclxkeylist.c
      */
 
-    {"keyldel", Tcl_KeyldelCmd, NULL},
-    {"keylget", Tcl_KeylgetCmd, NULL},
-    {"keylkeys", Tcl_KeylkeysCmd, NULL},
-    {"keylset", Tcl_KeylsetCmd, NULL},
+    {"keyldel", NULL, TclX_KeyldelObjCmd},
+    {"keylget", NULL, TclX_KeylgetObjCmd},
+    {"keylkeys", NULL, TclX_KeylkeysObjCmd},
+    {"keylset", NULL, TclX_KeylsetObjCmd},
 
     /*
      * cache.c
