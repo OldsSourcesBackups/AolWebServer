@@ -204,7 +204,7 @@ Ns_Main(int argc, char **argv, Ns_ServerInitProc *initProc)
 	    if (server != NULL) {
 		UsageError("multiple -s <server> options");
 	    }
-	    server = optarg;
+	    nsconf.server = server = optarg;
             break;
 	case 't':
 	    if (nsconf.config != NULL) {
