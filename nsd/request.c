@@ -44,8 +44,10 @@ static const char *RCSID = "@(#) $Header$, compiled: " __DATE__ " " __TIME__;
 /*
  * Local functions defined in this file.
  */
+
 static void SetUrl(Ns_Request * request, char *url);
 static void FreeUrl(Ns_Request * request);
+static Ns_Mutex reqlock;
 
 
 /*
@@ -283,10 +285,12 @@ Ns_SetRequestUrl(Ns_Request * request, char *url)
 {
     Ns_DString      ds;
 
+    Ns_MutexLock(&reqlock);
     FreeUrl(request);
     Ns_DStringInit(&ds);
     Ns_DStringAppend(&ds, url);
     SetUrl(request, ds.string);
+    Ns_MutexUnlock(&reqlock);
     Ns_DStringFree(&ds);
 }
 
@@ -490,4 +494,18 @@ Ns_ParseHeader(Ns_Set *set, char *line, Ns_HeaderCaseDisposition disp)
         *sep = ':';
     }
     return NS_OK;
+}
+
+
+void
+NsAppendRequest(Tcl_DString *dsPtr, Ns_Request *request)
+{
+    if (request == NULL) {
+	Tcl_DStringAppend(dsPtr, " ? ?", -1);
+    } else {
+    	Ns_MutexLock(&reqlock);
+	Tcl_DStringAppendElement(dsPtr, request->method);
+	Tcl_DStringAppendElement(dsPtr, request->url);
+    	Ns_MutexUnlock(&reqlock);
+    }
 }
