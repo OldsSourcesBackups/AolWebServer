@@ -2070,16 +2070,16 @@ FreeConn(Driver *drvPtr, Conn *connPtr)
      * Cleanup content buffers.
      */
 
-#ifndef _WIN32
     if (connPtr->mlen > 0) {
+#ifndef _WIN32
         if (munmap(connPtr->content, connPtr->mlen) != 0) {
             Ns_Fatal("FreeConn: munmap() failed: %s", strerror(errno));
         }
+#else
+        ns_free(connPtr->content);
+#endif
         connPtr->mlen = 0;
     }
-#else
-    ns_free(connPtr->content);
-#endif
     if (connPtr->tfd >= 0) {
         Ns_ReleaseTemp(connPtr->tfd);
         connPtr->tfd = -1;
