@@ -71,6 +71,8 @@ NsdInit(void)
     	NsInitEncodings();
     	NsInitListen();
     	NsInitLog();
+	NsInitInfo();
+	NsInitInfo();
     	NsInitMimeTypes();
     	NsInitModLoad();
     	NsInitProcInfo();
