@@ -160,7 +160,7 @@ Ns_ConnFlush(Ns_Conn *conn, char *buf, int len, int stream)
      */
 
     if (!stream
-	    && (conn->flags |= NS_CONN_GZIP)
+	    && (conn->flags & NS_CONN_GZIP)
 	    && (servPtr->opts.flags & SERV_GZIP)
 	    && (len > servPtr->opts.gzipmin)
 	    && (ahdr = Ns_SetIGet(conn->headers, "Accept-Encoding")) != NULL

@@ -381,6 +381,12 @@ NsInitServer(char *server, Ns_ServerInitProc *initProc)
     if (Ns_ConfigGetBool(path, "enabledebug", &i) && i) {
     	servPtr->adp.flags |= ADP_DEBUG;
     }
+    if (Ns_ConfigGetBool(path, "gzip", &i) && i) {
+    	servPtr->adp.flags |= ADP_GZIP;
+    }
+    if (Ns_ConfigGetBool(path, "trace", &i) && i) {
+    	servPtr->adp.flags |= ADP_TRACE;
+    }
     servPtr->adp.debuginit = Ns_ConfigGetValue(path, "debuginit");
     if (servPtr->adp.debuginit == NULL) {
     	servPtr->adp.debuginit = "ns_adp_debuginit";
