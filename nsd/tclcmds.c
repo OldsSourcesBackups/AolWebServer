@@ -88,6 +88,8 @@ extern Tcl_ObjCmdProc
     NsTclJobObjCmd,
     NsTclJpegSizeObjCmd,
     NsTclKillObjCmd,
+    NsTclLimitsObjCmd,
+    NsTclPoolsObjCmd,
     NsTclLinkObjCmd,
     NsTclLocalTimeObjCmd,
     NsTclLogObjCmd,
@@ -239,6 +241,8 @@ static Cmd cmds[] = {
 
     {"ns_info", NULL, NsTclInfoObjCmd},
     {"ns_modulepath", NULL, NsTclModulePathObjCmd},
+    {"ns_limits", NULL, NsTclLimitsObjCmd},
+    {"ns_pools", NULL, NsTclPoolsObjCmd},
 
     /*
      * log.c

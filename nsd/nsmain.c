@@ -583,7 +583,7 @@ Ns_Main(int argc, char **argv, Ns_ServerInitProc *initProc)
      */
 
     NsRunPreStartupProcs();
-    NsStartServers();
+    NsStartPools();
 
     /*
      * Signal startup is complete.
@@ -606,8 +606,9 @@ Ns_Main(int argc, char **argv, Ns_ServerInitProc *initProc)
      * and then close any remaining pre-bound sockets.
      */
 
-    NsStartDrivers();
-    NsWaitDriversStartup();
+    if (NsStartDrivers() != NS_OK) {
+        Ns_Fatal("could not start drivers");
+    }
 #ifndef _WIN32
     NsClosePreBound();
 #endif
@@ -642,7 +643,7 @@ Ns_Main(int argc, char **argv, Ns_ServerInitProc *initProc)
      */
 
     NsStopDrivers();
-    NsStopServers(&timeout);
+    NsStopPools(&timeout);
 
     /*
      * Next, start simultaneous shutdown in other systems and wait

@@ -78,6 +78,8 @@ NsdInit(void)
     	NsInitDrivers();
     	NsInitUrlSpace();
     	NsInitQueue();
+        NsInitLimits();
+        NsInitPools();
     	NsInitSched();
     	NsInitTcl();
     	NsInitRequests();

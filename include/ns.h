@@ -78,6 +78,8 @@
 #define NS_CONN_SENTHDRS	 16
 #define NS_CONN_KEEPALIVE	 32
 #define NS_CONN_WRITE_ENCODED    64
+#define NS_CONN_FILECONTENT     128
+#define NS_CONN_RUNNING         256
 
 #define NS_CONN_MAXCLS		 16
 
@@ -638,7 +640,7 @@ NS_EXTERN int Ns_GetAddrByHost(Ns_DString *dsPtr, char *host);
  */
 
 NS_EXTERN int Ns_DriverInit(char *server, char *module, Ns_DriverInitData *init);
-NS_EXTERN void Ns_RegisterPreQueue(char *server, Ns_PreQueueProc *proc,
+NS_EXTERN int Ns_RegisterPreQueue(char *server, Ns_PreQueueProc *proc,
     	    	    	    	   void *arg);
 NS_EXTERN void Ns_QueueWait(Ns_Conn *conn, SOCKET sock, Ns_QueueWaitProc *proc,
     	     void *arg, int when, Ns_Time *timePtr);
