@@ -1,8 +1,0 @@
-$Header$
-
-To build nsingres:
-
-$ II_SYSTEM=/home/ingres/II; export II_SYSTEM
-$ make
-$ make install
-
