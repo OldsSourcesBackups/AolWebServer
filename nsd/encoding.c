@@ -462,8 +462,8 @@ NsGetTypeEncoding(NsServer *servPtr, char **typePtr, Ns_DString *dsPtr)
 	 */
 
 	charset = servPtr->encoding.outputCharset;
+	len = -1;
 	if (charset != NULL && servPtr->encoding.hackContentTypeP) {
-	    len = -1;
 	    Ns_DStringVarAppend(dsPtr, type, "; charset=", charset, NULL);
     	    *typePtr = dsPtr->string;
 	}
