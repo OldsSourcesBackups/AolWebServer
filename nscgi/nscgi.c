@@ -813,10 +813,10 @@ CgiExec(Cgi *cgiPtr, Ns_Conn *conn)
             s = NULL;
         } else {
             if (strncmp(s, "https://", 8) == 0) {
-                SetUpdate(cgiPtr->env, "HTTPS", "1");
+                SetUpdate(cgiPtr->env, "HTTPS", "on");
                 https = 1;
             } else {
-                SetUpdate(cgiPtr->env, "HTTPS", "0");
+                SetUpdate(cgiPtr->env, "HTTPS", "off");
             }
             s = strchr(s, ':');         /* Get past the http */
             if (s != NULL) {
