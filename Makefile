@@ -64,7 +64,7 @@ install-tests:
 install-tests-new:
 	$(INSTALL_DATA) tests/new/http-test-config.tcl $(AOLSERVER)/
 	$(MKDIR) $(INSTSRVPAG)/tests
-	for i in tests/new/*.tcl tests/new/*.adp; do \
+	for i in tests/new/harness.tcl tests/new/*.adp; do \
 		$(INSTALL_DATA) $$i $(INSTSRVPAG)/tests/; \
 	done
 
