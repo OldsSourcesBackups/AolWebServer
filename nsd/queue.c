@@ -488,6 +488,8 @@ ConnRun(Conn *connPtr)
     /*
      * Initialize the conn.
      */
+
+    Ns_ConnInit(conn);
      
     if (servPtr->opts.hdrcase != Preserve) {
 	for (i = 0; i < Ns_SetSize(connPtr->headers); ++i) {
@@ -552,14 +554,12 @@ ConnRun(Conn *connPtr)
     }
 
     /*
-     * Perform various garbage collection tasks.  Note
-     * the order is significant:  The driver freeProc could
-     * possibly use Tcl and Tcl deallocate callbacks
-     * could possibly access header and/or request data.
+     * Cleanup the connections, calling any registered cleanup traces
+     * followed by free the connection interp if it was used.
      */
 
     NsRunCleanups(conn);
-    Ns_FreeConnInterp(conn);
+    NsFreeConnInterp(connPtr);
 }
 
 
