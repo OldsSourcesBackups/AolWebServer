@@ -160,7 +160,7 @@ Ns_ConnSend(Ns_Conn *conn, struct iovec *bufs, int nbufs)
     }
     nbufs = n;
     bufs = sbufs;
-    nwrote = 0;
+    n = nwrote = 0;
     while (towrite > 0) {
 	n = NsSockSend(connPtr->sockPtr, bufs, nbufs);
 	if (n < 0) {
@@ -196,6 +196,12 @@ Ns_ConnSend(Ns_Conn *conn, struct iovec *bufs, int nbufs)
 		nwrote = 0;
 	    }
 	}
+    } else {
+        /*
+         * Return error on first send, if any, from NsSockSend above.
+         */
+
+        nwrote = n;
     }
     return nwrote;
 }
