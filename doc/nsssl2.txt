@@ -56,6 +56,12 @@ An example:
    make DOMESTIC=1 BSAFE4=1 BSAFEDIR=/rsa/cryptoc43/linux/i386-libc6/library
 
 
+If you have the BSAFE 3.x library, don't use a BSAFE4 or BSAFE5 argument
+at all, just do a:
+
+	make BSAFEDIR=/path/to/bsafe3
+
+
 Installing is a bit iffy. Easiest to just manually copy the
 nsssle.so or nsssl.so module to the /bin directory of the server. 
 
