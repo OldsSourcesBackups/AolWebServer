@@ -154,26 +154,27 @@ Ns_RegisterReturn(int status, char *url)
     }
 }
 
-static int isSetupForChunkedEncoding(Ns_Conn *conn) 
+static int
+IsSetupForChunkedEncoding(Ns_Conn *conn) 
 {
-  int headerCount = 0;
-  int i;
-  Ns_Set* outHeaders;
+    int headerCount = 0;
+    int i;
+    Ns_Set* outHeaders;
 
-  if (conn == NULL)
-    return 0;
+    if (conn == NULL)
+        return 0;
 
-  outHeaders = Ns_ConnOutputHeaders(conn);
-  headerCount = Ns_SetSize (outHeaders);
+    outHeaders = Ns_ConnOutputHeaders(conn);
+    headerCount = Ns_SetSize (outHeaders);
 
-  if (outHeaders && headerCount) {
-    for (i = 0 ; i < headerCount ; i++) {
-      if ( !strcasecmp(Ns_SetKey (outHeaders, i), HTTP11_HDR_TE) &&
-	   !strcasecmp(Ns_SetValue (outHeaders, i), HTTP11_TE_CHUNKED) )
-	return 1;
+    if (outHeaders && headerCount) {
+        for (i = 0 ; i < headerCount ; i++) {
+           if ( !strcasecmp(Ns_SetKey (outHeaders, i), HTTP11_HDR_TE) &&
+	        !strcasecmp(Ns_SetValue (outHeaders, i), HTTP11_TE_CHUNKED) )
+	       return 1;
+           }
     }
-  }
-  return 0;
+    return 0;
 }
 
 
@@ -219,12 +220,12 @@ Ns_ConnConstructHeaders(Ns_Conn *conn, Ns_DString *dsPtr)
 	}
     }
 
-    doChunkEncoding = isSetupForChunkedEncoding(conn);
+    doChunkEncoding = IsSetupForChunkedEncoding(conn);
 
     if (!doChunkEncoding)
-      Ns_DStringVarAppend(dsPtr, "HTTP/1.0 ", buf, " ", reason, "\r\n", NULL);
+        Ns_DStringVarAppend(dsPtr, "HTTP/1.0 ", buf, " ", reason, "\r\n", NULL);
     else
-      Ns_DStringVarAppend(dsPtr, "HTTP/1.1 ", buf, " ", reason, "\r\n", NULL);
+        Ns_DStringVarAppend(dsPtr, "HTTP/1.1 ", buf, " ", reason, "\r\n", NULL);
 
     /*
      * Output any headers.
