@@ -760,7 +760,7 @@ Ns_CacheTryLock(Ns_Cache *cache)
 {
     Cache *cachePtr = (Cache *) cache;
 
-    Ns_MutexTryLock(&cachePtr->lock);
+    return Ns_MutexTryLock(&cachePtr->lock);
 }
 
 
