@@ -5,6 +5,7 @@
 package require Tcl 8.4
 package provide make 1.0
 
+set DEBUG 0
 set INSTALLDIR "./installed"
 set TCLDIR "../tcl_core-8-4-6/win/installed"
 
@@ -175,7 +176,7 @@ namespace eval ::make {
 #
 
 make::flag INCLUDE {-I./include}
-make::flag CFLAGS [concat [make::flag INCLUDE] {-MT -W3 -GX -Zi -O2 -D "WIN32" -D "NDEBUG" -D "_WINDOWS" -D "_MBCS" -D "_USRDLL" -D "TCL_THREADS=1" -D "FD_SETSIZE=128" -D "NO_CONST=1" -YX -FD}]
+make::flag CFLAGS [concat [make::flag INCLUDE] {-MD -W3 -GX -Zi -O2 -D "WIN32" -D "NDEBUG" -D "_WINDOWS" -D "_MBCS" -D "_USRDLL" -D "TCL_THREADS=1" -D "FD_SETSIZE=128" -D "NO_CONST=1" -YX -FD}]
 
 make::flag LIB "-libpath:\"$::TCLDIR/lib\" -libpath:./nsd -libpath:./nsthread"
 make::flag LDFLAGS [concat [make::flag LIB] {tcl84t.lib kernel32.lib -OPT:REF}]
@@ -359,6 +360,7 @@ make::depends nsd/nsd.dll {
     nsd/index.obj
     nsd/info.obj
     nsd/init.obj
+    nsd/limits.obj
     nsd/lisp.obj
     nsd/listen.obj
     nsd/log.obj
@@ -371,6 +373,7 @@ make::depends nsd/nsd.dll {
     nsd/op.obj
     nsd/pathname.obj
     nsd/pidfile.obj
+    nsd/pools.obj
     nsd/proc.obj
     nsd/queue.obj
     nsd/quotehtml.obj
