@@ -184,14 +184,14 @@ Ns_ConnFlush(Ns_Conn *conn, char *buf, int len, int stream)
 	    }
 	    hlen = -1;	/* NB: Surpress Content-length header. */
 	}
-	Ns_ConnSetRequiredHeaders(conn, NULL, hlen);
+	Ns_ConnSetRequiredHeaders(conn, Ns_ConnGetType(conn), hlen);
 	if (conn->flags & NS_CONN_CHUNK) {
 	    Ns_ConnCondSetHeaders(conn, "Transfer-Encoding", "chunked");
 	}
 	if (gzh) {
 	    Ns_ConnCondSetHeaders(conn, "Content-Encoding", "gzip");
 	}
-	Ns_ConnQueueHeaders(conn, 200);
+	Ns_ConnQueueHeaders(conn, Ns_ConnGetStatus(conn));
     }
 
     /*
