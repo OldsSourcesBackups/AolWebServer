@@ -70,7 +70,7 @@ static char *datakey = "nsdb:data";
 
 /*
  *----------------------------------------------------------------------
- * Ns_TclGetHandle --
+ * Ns_TclDbGetHandle --
  *
  *      Get database handle from its handle id.
  *
@@ -84,7 +84,7 @@ static char *datakey = "nsdb:data";
  */
 
 int
-Ns_TclGetHandle(Tcl_Interp *interp, char *id, Ns_DbHandle **handle)
+Ns_TclDbGetHandle(Tcl_Interp *interp, char *id, Ns_DbHandle **handle)
 {
     InterpData *idataPtr;
 
