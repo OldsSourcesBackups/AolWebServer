@@ -266,6 +266,9 @@ LimitsResult(Tcl_Interp *interp, Limits *limitsPtr)
             !AppendLimit(interp, "nwaiting", limitsPtr->nwaiting) ||
             !AppendLimit(interp, "maxwait", limitsPtr->maxwait) ||
             !AppendLimit(interp, "maxupload", limitsPtr->maxupload) ||
+            !AppendLimit(interp, "dropped", limitsPtr->ndropped) ||
+            !AppendLimit(interp, "timeout", limitsPtr->ntimeout) ||
+            !AppendLimit(interp, "overflow", limitsPtr->noverflow) ||
             !AppendLimit(interp, "maxrun", limitsPtr->maxrun)) {
         return TCL_ERROR;
     }
