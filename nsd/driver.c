@@ -415,6 +415,7 @@ Ns_DriverInit(char *server, char *module, Ns_DriverInitData *init)
                     " but %s has no defaultserver defined",
                     module, path);
         }
+        defMapPtr = NULL;
 	path = Ns_ConfigGetPath(NULL, module, "servers", NULL);
 	set = Ns_ConfigGetSection(path);
 	for (i = 0; set != NULL && i < Ns_SetSize(set); ++i) {
