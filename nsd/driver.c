@@ -1552,6 +1552,7 @@ SockRead(Driver *drvPtr, Sock *sockPtr)
 	 * Update next read pointer to end of this line.
 	 */
 
+        connPtr->roff += (e - s + 1);
 	if (e > s && e[-1] == '\r') {
 	    --e;
 	}
