@@ -184,7 +184,9 @@ Ns_ModuleInit(char *server, char *module)
 	logPtr->flags |= LOG_COMBINED;
     }
 
-    Ns_ConfigGetBool(path, "suppressquery", &logPtr->suppressquery);
+    if (!Ns_ConfigGetBool(path, "suppressquery", &logPtr->suppressquery)) {
+	logPtr->suppressquery = 0;
+    }
 
     /*
      * Schedule various log roll and shutdown options.
