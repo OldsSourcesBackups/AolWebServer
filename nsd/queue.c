@@ -156,15 +156,8 @@ Ns_GetConn(void)
 void
 NsQueueConn(Conn *connPtr)
 {
-    Pool *poolPtr;
+    Pool *poolPtr = NsGetPool(connPtr);
     int create = 0;
-
-    /*
-     * Determine the pool.
-     */
-
-    poolPtr = NsGetPool(connPtr->server, connPtr->request->method,
-            connPtr->request->url);
 
     /*
      * Queue connection.
