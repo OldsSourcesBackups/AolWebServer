@@ -63,7 +63,7 @@ install-tests:
 
 install-tests-new:
 	$(MKDIR) $(INSTSRVPAG)/tests
-	for i in tests/new/*; do \
+	for i in tests/new/*.tcl tests/new/*.adp; do \
 		$(INSTALL_DATA) $$i $(INSTSRVPAG)/tests/; \
 	done
 
