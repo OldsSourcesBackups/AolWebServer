@@ -378,7 +378,7 @@ NsTclJobObjCmd(ClientData arg, Tcl_Interp *interp, int objc, Tcl_Obj **objv)
 	Tcl_WrongNumArgs(interp, 1, objv, "option ?arg?");
 	return TCL_ERROR;
     }
-    if (Tcl_GetIndexFromObj(interp, objv[1], opts, "option", TCL_EXACT,
+    if (Tcl_GetIndexFromObj(interp, objv[1], opts, "option", 0,
                             (int *) &opt) != TCL_OK) {
         return TCL_ERROR;
     }

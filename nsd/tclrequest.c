@@ -269,7 +269,7 @@ NsTclRegisterFilterObjCmd(ClientData arg, Tcl_Interp *interp, int objc, Tcl_Obj 
     }
     when = 0;
     for (i = 0; i < lobjc; ++i) {
-    	if (Tcl_GetIndexFromObj(interp, lobjv[i], wopt, "when", 1,
+    	if (Tcl_GetIndexFromObj(interp, lobjv[i], wopt, "when", 0,
                 (int *) &widx) != TCL_OK) {
             return TCL_ERROR;
     	}
