@@ -189,6 +189,7 @@ extern Tcl_CmdProc
     NsTclConfigCmd,
     NsTclConfigSectionCmd,
     NsTclConfigSectionsCmd,
+    NsTclDriverObjCmd,
     NsTclEncodingForCharsetCmd,
     NsTclEnvCmd,
     NsTclEnvCmd,
@@ -243,6 +244,7 @@ static Cmd cmds[] = {
     {"ns_modulepath", NULL, NsTclModulePathObjCmd},
     {"ns_limits", NULL, NsTclLimitsObjCmd},
     {"ns_pools", NULL, NsTclPoolsObjCmd},
+    {"ns_driver", NULL, NsTclDriverObjCmd},
 
     /*
      * log.c
