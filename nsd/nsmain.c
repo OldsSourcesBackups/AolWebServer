@@ -579,6 +579,7 @@ Ns_Main(int argc, char **argv, Ns_ServerInitProc *initProc)
      */
 
     NsStartDrivers();
+    NsWaitDriversStartup();
 #ifndef _WIN32
     NsClosePreBound();
 #endif
