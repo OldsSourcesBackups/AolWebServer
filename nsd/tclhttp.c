@@ -380,10 +380,12 @@ HttpResult(char *response, Ns_Set *hdrs)
     eoh = strstr(response, "\r\n\r\n");
     if (eoh != NULL) {
         body = eoh + 4;
+	eoh += 2;
     } else {
         eoh = strstr(response, "\n\n");
         if (eoh != NULL) {
             body = eoh + 2;
+	    eoh += 2;
         }
     }
     if (eoh != NULL) {
