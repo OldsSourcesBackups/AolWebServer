@@ -231,6 +231,9 @@ NsInitServer(char *server, Ns_ServerInitProc *initProc)
 	Ns_ModulePath(&ds, server, "tcl", NULL);
 	servPtr->tcl.library = Ns_DStringExport(&ds);
     }
+    if (!Ns_ConfigGetBool(path, "oldhttp", &servPtr->tcl.oldhttp)) {
+	servPtr->tcl.oldhttp = 1;
+    }
     servPtr->tcl.initfile = Ns_ConfigGetValue(path, "initfile");
     if (servPtr->tcl.initfile == NULL) {
 	Ns_HomePath(&ds, "bin", "init.tcl", NULL);
