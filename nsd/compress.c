@@ -81,7 +81,7 @@ Ns_Compress(char *buf, int len, Tcl_DString *outPtr, int level)
      */
 
     glen = len + (len / 100) + 13 + sizeof(header) + sizeof(footer);
-    Tcl_DStringSetLength(outPtr, glen);
+    Tcl_DStringSetLength(outPtr, (int) glen);
 
     /*
      * Compress output starting 2-bytes from the end of the header. 
@@ -94,14 +94,14 @@ Ns_Compress(char *buf, int len, Tcl_DString *outPtr, int level)
         return NS_ERROR;
     }
     memcpy(gbuf, header, sizeof(header));
-    Tcl_DStringSetLength(outPtr, glen + skip);
+    Tcl_DStringSetLength(outPtr, (int) glen + skip);
 
     /*
      * Append footer of CRC and uncompressed length.
      */
 
     crc = crc32(0, Z_NULL, 0);
-    crc = crc32(crc, buf, len);
+    crc = crc32(crc, buf, (uInt) len);
     footer[0] = htonl(crc);
     footer[1] = htonl(len);
     Tcl_DStringAppend(outPtr, (char *) footer, sizeof(footer));

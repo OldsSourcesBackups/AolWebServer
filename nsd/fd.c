@@ -276,8 +276,9 @@ void
 Ns_ReleaseTemp(int fd)
 {
     Tmp *tmpPtr;
+    off_t zero = 0;
 
-    if (lseek(fd, 0, SEEK_SET) != 0 || ftruncate(fd, 0) != 0) {
+    if (lseek(fd, zero, SEEK_SET) != 0 || ftruncate(fd, zero) != 0) {
 	close(fd);
     } else {
 	tmpPtr = ns_malloc(sizeof(Tmp));

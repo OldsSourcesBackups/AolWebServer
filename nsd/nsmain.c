@@ -363,7 +363,7 @@ Ns_Main(int argc, char **argv, Ns_ServerInitProc *initProc)
 	 */
 
 	if (uarg != NULL) {
-	    if (initgroups(uarg, gid) != 0) {
+	    if (initgroups(uarg, (int) gid) != 0) {
 		Ns_Fatal("nsmain: initgroups(%s, %d) failed: '%s'",
 			uarg, gid, strerror(errno));
 	    }
