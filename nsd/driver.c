@@ -1939,6 +1939,7 @@ AllocConn(Driver *drvPtr, Sock *sockPtr)
     strcpy(connPtr->peer, ns_inet_ntoa(sockPtr->sa.sin_addr));
     connPtr->times.accept = sockPtr->acceptTime;
     connPtr->responseStatus = 0;
+    connPtr->nContentSent = 0;
     connPtr->sockPtr = sockPtr;
     return connPtr;
 }
@@ -2009,6 +2010,7 @@ FreeConn(Driver *drvPtr, Conn *connPtr)
     Tcl_DeleteHashTable(&connPtr->files);
     Tcl_InitHashTable(&connPtr->files, TCL_STRING_KEYS);
     connPtr->responseStatus = 0;
+    connPtr->nContentSent = 0;
 
     /*
      * Cleanup content buffers.
