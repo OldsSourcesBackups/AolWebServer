@@ -33,11 +33,11 @@
 NSBUILD=1
 include include/Makefile.global
 
-dirs   = nsthread nsd nssock nsssl nscgi nscp nslog nsperm nsdb nsext nspd
+dirs   = nsthread nsd nssock nsssl nscgi nscp nslog nsperm nsdb nsext nspd nscache nssha1 nspostgres
 
 all: 
 	@for i in $(dirs); do \
-		( cd $$i && $(MAKE) all ) || exit 1; \
+		( cd $$i && $(MAKE) all NSBUILD=1) || exit 1; \
 	done
 
 install: install-binaries install-doc
