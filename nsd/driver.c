@@ -1873,7 +1873,7 @@ SetupConn(Conn *connPtr)
      * Get limits and check content length.
      */
      
-    connPtr->limitsPtr = NsGetLimits(connPtr->server,
+    connPtr->limitsPtr = NsGetRequestLimits(connPtr->server,
             connPtr->request->method, connPtr->request->url);
 
     hdr = Ns_SetIGet(connPtr->headers, "content-length");
