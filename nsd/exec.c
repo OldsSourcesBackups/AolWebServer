@@ -551,6 +551,7 @@ ExecProc(char *exec, char *dir, int fdin, int fdout, char **argv,
 		}
 	    }
             (void) waitpid(pid, NULL, 0);
+	    errno = errnum;
         }
     }
     return result;
