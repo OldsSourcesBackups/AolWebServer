@@ -135,8 +135,9 @@ namespace eval ::make {
         set cmd "exec cl.exe -nologo -c \
             [flag CFLAGS] [flag CFLAGS-$dir] [flag CFLAGS-$dir-$file] \
             -Fo$base.obj $base.c"
-        # puts "DEBUG: $cmd"
-        eval $cmd
+        if {$::DEBUG >= 2} { puts "DEBUG: $cmd" }
+        set output [eval $cmd]
+        if {$::DEBUG} { puts $output }
     }
 
     proc link_dll {target args} {
@@ -149,8 +150,9 @@ namespace eval ::make {
         set cmd "exec link.exe -nologo -dll -machine:I386 \
             [flag LDFLAGS] [flag LDFLAGS-$dir] [flag LDFLAGS-$dir-$file] \
             -out:$target $args"
-        # puts "DEBUG: $cmd"
-        eval $cmd
+        if {$::DEBUG >= 2} { puts "DEBUG: $cmd" }
+        set output [eval $cmd]
+        if {$::DEBUG} { puts $output }
     }
 
     proc link_nsd_exe {target args} {
@@ -162,8 +164,9 @@ namespace eval ::make {
         puts "In $dir, linking $target."
         set cmd "exec link.exe -nologo -subsystem:console -machine:I386 \
             nsd.lib [flag LIB] -out:$target nsd/main.obj"
-        puts "DEBUG: $cmd"
-        eval $cmd
+        if {$::DEBUG >= 2} { puts "DEBUG: $cmd" }
+        set output [eval $cmd]
+        if {$::DEBUG} { puts $output }
     }
 }
 
