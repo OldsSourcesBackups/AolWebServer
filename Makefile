@@ -61,6 +61,12 @@ install-binaries: all
 install-tests:
 	$(CP) -r tests $(INSTSRVPAG)
 
+install-tests-new:
+	$(MKDIR) $(INSTSRVPAG)/tests
+	for i in tests/new/*; do \
+		$(INSTALL_DATA) $$i $(INSTSRVPAG)/tests/; \
+	done
+
 install-doc:
 	cd doc && /bin/sh ./install-doc $(AOLSERVER)
 
