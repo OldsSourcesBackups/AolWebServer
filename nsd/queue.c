@@ -148,7 +148,7 @@ Ns_GetConn(void)
  *	None.
  *
  * Side effects:
- *	Conneciton will run shortly.
+ *	Connection will run shortly.
  *
  *----------------------------------------------------------------------
  */

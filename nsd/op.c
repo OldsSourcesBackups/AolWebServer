@@ -214,19 +214,24 @@ int
 Ns_ConnRunRequest(Ns_Conn *conn)
 {
     Req *reqPtr;
+    Conn *connPtr = (Conn *) conn;
     int  status;
     char *server = Ns_ConnServer(conn);
+
+    if (connPtr->responseStatus != 0) {
+        switch (connPtr->responseStatus) {
+        case 400: return Ns_ConnReturnBadRequest(conn, NULL);
+        case 503: return Ns_ConnReturnServiceUnavailable(conn);
+        default:  return Ns_ConnReturnStatus(conn, connPtr->responseStatus);
+        }
+    }
 
     Ns_MutexLock(&ulock);
     reqPtr = Ns_UrlSpecificGet(server, conn->request->method,
     	    	    	       conn->request->url, uid);
     if (reqPtr == NULL) {
     	Ns_MutexUnlock(&ulock);
-	if (STREQ(conn->request->method, "BAD")) {
-	    return Ns_ConnReturnBadRequest(conn, NULL);
-	} else {
-	    return Ns_ConnReturnNotFound(conn);
-	}
+        return Ns_ConnReturnNotFound(conn);
     }
     ++reqPtr->refcnt;
     Ns_MutexUnlock(&ulock);

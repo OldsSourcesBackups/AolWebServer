@@ -1166,6 +1166,37 @@ Ns_ConnReturnInternalError(Ns_Conn *conn)
 /*
  *----------------------------------------------------------------------
  *
+ * Ns_ConnReturnServiceUnavailable --
+ *
+ *	Return a 503 Service Unavailable response. 
+ *
+ * Results:
+ *	NS_OK/NS_ERROR 
+ *
+ * Side effects:
+ *	Will close the connection. 
+ *
+ *----------------------------------------------------------------------
+ */
+
+int
+Ns_ConnReturnServiceUnavailable(Ns_Conn *conn)
+{
+    int result;
+
+    if (ReturnRedirect(conn, 503, &result)) {
+	return result;
+    }
+    return Ns_ConnReturnNotice(conn, 503, "Service Unavailable",
+	"The requested URL cannot be accessed "
+	"because the server is temporarily unable "
+        "to fulfill your request.  Please try again later.");
+}
+
+
+/*
+ *----------------------------------------------------------------------
+ *
  * Ns_ConnReturnStatus --
  *
  *	Return an arbitrary status code.
