@@ -442,7 +442,9 @@ Ns_ConnSetRequiredHeaders(Ns_Conn *conn, char *type, int length)
     if (type != NULL) {
     	Ns_ConnSetTypeHeader(conn, type);
     }
-    Ns_ConnSetLengthHeader(conn, length);
+    if (length >= 0) {
+       Ns_ConnSetLengthHeader(conn, length);
+    }
     Ns_DStringFree(&ds);
 }
 
