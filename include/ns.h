@@ -80,6 +80,8 @@
 #define NS_CONN_WRITE_ENCODED    64
 #define NS_CONN_FILECONTENT     128
 #define NS_CONN_RUNNING         256
+#define NS_CONN_OVERFLOW	512
+#define NS_CONN_TIMEOUT	       1024
 
 #define NS_CONN_MAXCLS		 16
 
