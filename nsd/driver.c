@@ -1692,7 +1692,8 @@ SetServer(Conn *connPtr)
     connPtr->encoding = connPtr->servPtr->encoding.outputEncoding;
     connPtr->urlEncoding = connPtr->servPtr->encoding.urlEncoding;
     if (!status) {
-	connPtr->request->method = "BAD";
+	ns_free(connPtr->request->method);
+	connPtr->request->method = ns_strdup("BAD");
     }
     return status;
 }
