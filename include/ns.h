@@ -489,6 +489,7 @@ NS_EXTERN int Ns_AdpRegisterParser(char *extension, Ns_AdpParserProc *proc);
  */
 
 NS_EXTERN int Ns_AdpRequest(Ns_Conn *conn, char *file);
+NS_EXTERN int Ns_AdpRequestEx(Ns_Conn *conn, char *file, Ns_Time *ttlPtr);
 
 /*
  * auth.c:
