@@ -142,10 +142,10 @@ NsTclLimitsObjCmd(ClientData data, Tcl_Interp *interp, int objc, Tcl_Obj **objv)
         LGetIdx, LSetIdx, LListIdx, LRegisterIdx
     } opt;
     static CONST char *cfgs[] = {
-        "-maxrun", "-maxwait", "-maxupload", NULL
+        "-maxrun", "-maxwait", "-maxupload", "-timeout", NULL
     };
     enum {
-        LCRunIdx, LCWaitIdx, LCUploadIdx
+        LCRunIdx, LCWaitIdx, LCUploadIdx, LCTimeoutIdx
     } cfg;
 
     if (objc < 2) {
@@ -214,6 +214,10 @@ NsTclLimitsObjCmd(ClientData data, Tcl_Interp *interp, int objc, Tcl_Obj **objv)
 
                 case LCUploadIdx:
                     limitsPtr->maxupload = val;
+                    break;
+
+                case LCTimeoutIdx:
+                    limitsPtr->timeout = val;
                     break;
 
             }
