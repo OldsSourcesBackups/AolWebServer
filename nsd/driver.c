@@ -1835,6 +1835,7 @@ SetupConn(Conn *connPtr)
      * Determine the virtual server and driver location.
      */
     
+    connPtr->responseStatus = 200;
     connPtr->servPtr = connPtr->drvPtr->servPtr;
     connPtr->location = connPtr->drvPtr->location;
     hdr = Ns_SetIGet(connPtr->headers, "host");
@@ -1865,8 +1866,7 @@ SetupConn(Conn *connPtr)
      * Setup character encodings.
      */
 
-    connPtr->encoding = connPtr->servPtr->encoding.outputEncoding;
-    connPtr->urlEncoding = connPtr->servPtr->encoding.urlEncoding;
+    Ns_ConnSetType((Ns_Conn *) connPtr, "*/*");
     connPtr->queryEncoding = NULL;
 
     /*
@@ -2080,8 +2080,6 @@ FreeConn(Conn *connPtr)
      * Cleanup private elements.
      */
 
-    connPtr->responseStatus = 0;
-    connPtr->nContentSent = 0;
     if (connPtr->query != NULL) {
 	Ns_SetFree(connPtr->query);
 	connPtr->query = NULL;
