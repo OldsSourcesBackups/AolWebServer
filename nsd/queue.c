@@ -323,7 +323,7 @@ NsConnArgProc(Tcl_DString *dsPtr, void *arg)
      */
 
     if (arg != NULL) {
-        NsAppendConn(dsPtr, dataPtr->connPtr, NULL, "running");
+        NsAppendConn(dsPtr, NULL, dataPtr->connPtr, "running");
     } else {
     	Tcl_DStringAppendElement(dsPtr, "");
     }

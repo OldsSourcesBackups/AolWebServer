@@ -212,7 +212,7 @@ NsAdpSource(NsInterp *itPtr, int objc, Tcl_Obj *objv[], char *resvar)
         itPtr->adp.responsePtr = &output;
     }
     code = AdpRun(itPtr, Tcl_GetString(objv[0]), objc, objv, &output);
-    if (itPtr->adp.responsePtr = &output) {
+    if (itPtr->adp.responsePtr == &output) {
         itPtr->adp.responsePtr = NULL;
     }
 

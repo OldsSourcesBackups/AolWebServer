@@ -250,7 +250,7 @@ NsTclPoolsObjCmd(ClientData data, Tcl_Interp *interp, int objc, Tcl_Obj **objv)
     }
     if (Tcl_GetIndexFromObj(interp, objv[1], opts, "option", 1,
                 (int *) &opt) != TCL_OK) {
-        return 0;
+        return TCL_ERROR;
     }
     switch (opt) {
     case PListIdx:
