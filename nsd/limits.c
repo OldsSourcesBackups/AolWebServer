@@ -272,12 +272,12 @@ FindLimits(char *limits, int create)
         if (new) {
             limitsPtr = ns_malloc(sizeof(Limits));
             limitsPtr->name = Tcl_GetHashKey(&limtable, hPtr);
-	    Ns_MutexInit(&limitsPtr->lock);
-	    limitsPtr->name = NULL;
-	    limitsPtr->nrunning = limitsPtr->nwaiting = 0;
-	    limitsPtr->maxrun = limitsPtr->maxwait = 100;
-	    limitsPtr->maxupload = 10 * 1024 * 1000; /* NB: 10meg limit. */
-	    limitsPtr->timeout = 60;
+	        Ns_MutexInit(&limitsPtr->lock);
+	        limitsPtr->nrunning = limitsPtr->nwaiting = 0;
+	        limitsPtr->ntimeout = limitsPtr->ndropped = limitsPtr->noverflow = 0;
+	        limitsPtr->maxrun = limitsPtr->maxwait = 100;
+	        limitsPtr->maxupload = 10 * 1024 * 1000; /* NB: 10meg limit. */
+	        limitsPtr->timeout = 60;
             Tcl_SetHashValue(hPtr, limitsPtr);
         }
     }
@@ -341,11 +341,12 @@ LimitsResult(Tcl_Interp *interp, Limits *limitsPtr)
 {
     if (!AppendLimit(interp, "nrunning", limitsPtr->nrunning) ||
             !AppendLimit(interp, "nwaiting", limitsPtr->nwaiting) ||
+            !AppendLimit(interp, "ntimeout", limitsPtr->ntimeout) ||
+            !AppendLimit(interp, "ndropped", limitsPtr->ndropped) ||
+            !AppendLimit(interp, "noverflow", limitsPtr->noverflow) ||
             !AppendLimit(interp, "maxwait", limitsPtr->maxwait) ||
             !AppendLimit(interp, "maxupload", limitsPtr->maxupload) ||
-            !AppendLimit(interp, "dropped", limitsPtr->ndropped) ||
-            !AppendLimit(interp, "timeout", limitsPtr->ntimeout) ||
-            !AppendLimit(interp, "overflow", limitsPtr->noverflow) ||
+            !AppendLimit(interp, "timeout", limitsPtr->timeout) ||
             !AppendLimit(interp, "maxrun", limitsPtr->maxrun)) {
         return TCL_ERROR;
     }
