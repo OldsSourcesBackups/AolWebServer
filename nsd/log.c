@@ -218,6 +218,9 @@ Ns_Fatal(char *fmt, ...)
     va_start(ap, fmt);
     Log(Fatal, fmt, ap);
     va_end(ap);
+    if (nsconf.debug) {
+	abort();
+    }
     _exit(1);
 }
 
