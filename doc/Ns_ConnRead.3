@@ -37,12 +37,14 @@
 .BS
 '\" Note:  do not modify the .SH NAME line immediately below!
 .SH NAME
-Ns_ConnGets, Ns_ConnRead, Ns_ConnReadHeaders, Ns_ConnReadLine \- library procedures
+Ns_ConnGets, Ns_ConnRead, Ns_ConnFlushHeaders, Ns_ConnReadHeaders, Ns_ConnReadLine \- library procedures
 .SH SYNOPSIS
 .nf
 \fB#include "ns.h"\fR
 .sp
 \fBNs_ConnGets\fR(\fIarg, arg\fR)
+.sp
+\fBNs_ConnFlushContent\fR(\fIarg, arg\fR)
 .sp
 \fBNs_ConnRead\fR(\fIarg, arg\fR)
 .sp
