@@ -1925,7 +1925,9 @@ RunPreQueues(Conn *connPtr)
  * SetupConn --
  *
  *      Determine the virtual server, various request limits, and
- *      setup the content (if any) for continued read.
+ *      setup the content (if any) for continued read.  Assumes
+ *      that the request has already been parsed and that
+ *      connPtr->request is NOT NULL.
  *
  * Results:
  *      1 if setup correctly, 0 if request is invalid.
@@ -2298,6 +2300,7 @@ ReaderThread(void *arg)
             sockPtr->nextPtr = drvPtr->runSockPtr;
             drvPtr->runSockPtr = sockPtr;
 	} else {
+            sockPtr->state = SOCK_CLOSEWAIT;
             sockPtr->nextPtr = drvPtr->closeSockPtr;
             drvPtr->closeSockPtr = sockPtr;
 	}
