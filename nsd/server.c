@@ -353,6 +353,13 @@ NsInitServer(char *server, Ns_ServerInitProc *initProc)
     path = Ns_ConfigGetPath(server, NULL, "adp", NULL);
     servPtr->adp.errorpage = Ns_ConfigGetValue(path, "errorpage");
     servPtr->adp.startpage = Ns_ConfigGetValue(path, "startpage");
+    servPtr->adp.flags = 0;
+    if (Ns_ConfigGetBool(path, "safeeval", &i) && i) {
+    	servPtr->adp.flags |= ADP_SAFE;
+    }
+    if (Ns_ConfigGetBool(path, "singlescript", &i) && i) {
+    	servPtr->adp.flags |= ADP_SINGLE;
+    }
     if (!Ns_ConfigGetBool(path, "enableexpire", &servPtr->adp.enableexpire)) {
     	servPtr->adp.enableexpire = 0;
     }
