@@ -178,7 +178,6 @@ Ns_ConnConstructHeaders(Ns_Conn *conn, Ns_DString *dsPtr)
 {
     int   i, length, minor, status;
     char *reason;
-    char  buf[100];
     char *value, *keep;
     char *key, *lengthHdr;
     Conn *connPtr;
@@ -232,7 +231,7 @@ Ns_ConnConstructHeaders(Ns_Conn *conn, Ns_DString *dsPtr)
 	    connPtr->request != NULL &&
 	    ((connPtr->responseStatus == 200 &&
 	    (lengthHdr != NULL &&
-	    connPtr->responseLength == length) || (minor > 0)) ||
+	    (connPtr->responseLength == length)) || (minor > 0)) ||
 	    connPtr->responseStatus == 304) &&
 	    STREQ(connPtr->request->method, "GET") &&
 	    HdrEq(conn->headers, "connection", "keep-alive")) {
