@@ -320,13 +320,13 @@ NsConnArgProc(Tcl_DString *dsPtr, void *arg)
 {
     ConnThreadData *dataPtr = arg;
     
+    Ns_MutexLock(&connlock);
     if (dataPtr->connPtr != NULL) {
-    	Ns_MutexLock(&connlock);
         NsAppendConn(dsPtr, dataPtr->connPtr, "running");
-    	Ns_MutexUnlock(&connlock);
     } else {
     	Tcl_DStringAppendElement(dsPtr, "");
     }
+    Ns_MutexUnlock(&connlock);
 }
 
 
