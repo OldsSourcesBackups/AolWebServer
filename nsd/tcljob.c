@@ -602,11 +602,8 @@ NsTclJobObjCmd(ClientData arg, Tcl_Interp *interp, int objc, Tcl_Obj **objv)
             if ((jobPtr->type == JOB_DETACHED) ||
                 (jobPtr->req == JOB_CANCEL) ||
                 (jobPtr->req == JOB_WAIT)) {
-                Tcl_AppendResult(interp,
-                                 "Cannot wait on job. Job ID : Job Req: %s",
-                                 Tcl_DStringValue(&jobPtr->id),
-                                 GetJobReqStr(jobPtr->req),
-                                 NULL);
+                Tcl_AppendResult(interp, "cannot wait on job: ",
+                    Tcl_DStringValue(&jobPtr->id), NULL);
                 ReleaseQueue(queuePtr, 0);
                 return TCL_ERROR;
             }
