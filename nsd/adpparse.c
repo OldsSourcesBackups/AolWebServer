@@ -396,7 +396,7 @@ ParseAtts(char *s, char *e, int *servPtr, Tcl_DString *attsPtr, int atts)
 	    } while (s < e && isspace(UCHAR(*s)));
 	    vs = s;
 
-            if (*s != '"') {
+            if (*s != '"' && *s != '\'') {
                 while (s < e && !isspace(UCHAR(*s))) {
                     ++s;
                 }
@@ -410,7 +410,7 @@ ParseAtts(char *s, char *e, int *servPtr, Tcl_DString *attsPtr, int atts)
             
 	    ve = s;
 	    end = *vs;
-	    if (end != '=' && end != '"') {
+	    if (end != '=' && end != '"' && end != '\'') {
 		end = 0;
 	    }
 	    if (end && ve > vs && ve[-1] == end) {
