@@ -83,12 +83,12 @@ ns_param   debug           false
 #ns_param HackContentType false       ;# automatic adjustment of response
                                        # content-type header to include charset
                                        # This defaults to True.
-ns_param  OutputCharset  iso8859-1    ;# Default output charset.  When none specified,
+ns_param  OutputCharset  iso-8859-1    ;# Default output charset.  When none specified,
                                        # no character encoding of output is performed.
-ns_param  URLCharset     iso8859-1    ;# Default Charset for Url Encode/Decode.
+ns_param  URLCharset     iso-8859-1    ;# Default Charset for Url Encode/Decode.
                                        # When none specified, no character set encoding
                                        # is performed.
-#ns_param  PreferredCharsets { utf-8 iso8859-1 } ;# This parameter supports output
+#ns_param  PreferredCharsets { utf-8 iso-8859-1 } ;# This parameter supports output
                                        # encoding arbitration.
 
 #
