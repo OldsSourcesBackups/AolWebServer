@@ -62,6 +62,7 @@ install-tests:
 	$(CP) -r tests $(INSTSRVPAG)
 
 install-tests-new:
+	$(INSTALL_DATA) tests/new/http-test-config.tcl $(AOLSERVER)/
 	$(MKDIR) $(INSTSRVPAG)/tests
 	for i in tests/new/*.tcl tests/new/*.adp; do \
 		$(INSTALL_DATA) $$i $(INSTSRVPAG)/tests/; \
