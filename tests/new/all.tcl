@@ -36,7 +36,7 @@ exec tclsh "$0" "$@"
 
 package require Tcl 8.4
 
-if {!$tcl_platform(threaded)} {
+if {![info exists ::tcl_platform(threaded)] || !$::tcl_platform(threaded)} {
     error "tests must run from a threaded tclsh"
 }
 
