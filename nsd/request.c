@@ -496,6 +496,22 @@ Ns_ParseHeader(Ns_Set *set, char *line, Ns_HeaderCaseDisposition disp)
     return NS_OK;
 }
 
+
+/*
+ *----------------------------------------------------------------------
+ *
+ * NsAppendRequest --
+ *
+ *	Utility function to append string of given request.
+
+ * Results:
+ *	None.
+ *
+ * Side effects:
+ *	None
+ *
+ *----------------------------------------------------------------------
+ */
 
 void
 NsAppendRequest(Tcl_DString *dsPtr, Ns_Request *request)
