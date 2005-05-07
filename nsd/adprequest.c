@@ -126,6 +126,7 @@ Ns_AdpRequestEx(Ns_Conn *conn, char *file, Ns_Time *ttlPtr)
 	type = NSD_TEXTHTML;
     }
     Ns_ConnSetType(conn, type);
+    Ns_ConnSetStatus(conn, 200);
 
     /*
      * Setup the response buffer and default size.
