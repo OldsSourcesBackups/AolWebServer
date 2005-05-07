@@ -579,7 +579,7 @@ Ns_ConnFlushContent(Ns_Conn *conn)
     Conn *connPtr = (Conn *) conn;
 
     if (connPtr->sockPtr == NULL) {
-	return -1;
+	return NS_ERROR;
     }
     connPtr->next  += connPtr->avail;
     connPtr->avail  = 0;
