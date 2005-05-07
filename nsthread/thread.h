@@ -40,6 +40,7 @@
 
 #include "nsthread.h"
 
+extern int    NsGetStack(void **addrPtr, size_t *sizePtr);
 extern void   NsthreadsInit(void);
 extern void   NsInitThreads(void);
 extern void   NsInitMaster(void);
