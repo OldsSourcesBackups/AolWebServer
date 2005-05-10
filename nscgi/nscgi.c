@@ -772,6 +772,7 @@ CgiExec(Cgi *cgiPtr, Ns_Conn *conn)
      */
 
     SetUpdate(cgiPtr->env, "SCRIPT_NAME", cgiPtr->name);
+    SetUpdate(cgiPtr->env, "SCRIPT_FILENAME", cgiPtr->path);
     if (cgiPtr->pathinfo != NULL && *cgiPtr->pathinfo != '\0') {
     	Ns_DString tmp;
 	
@@ -797,6 +798,8 @@ CgiExec(Cgi *cgiPtr, Ns_Conn *conn)
     Ns_DStringVarAppend(dsPtr, Ns_InfoServer(), "/", Ns_InfoVersion(), NULL);
     SetUpdate(cgiPtr->env, "SERVER_SOFTWARE", dsPtr->string);
     Ns_DStringTrunc(dsPtr, 0);
+    SetUpdate(cgiPtr->env, "SERVER_ROOT", Ns_InfoHomePath());
+    SetUpdate(cgiPtr->env, "DOCUMENT_ROOT", Ns_PageRoot(modPtr->server));
     Ns_DStringPrintf(dsPtr, "HTTP/%2.1f", conn->request->version);
     SetUpdate(cgiPtr->env, "SERVER_PROTOCOL", dsPtr->string);
     Ns_DStringTrunc(dsPtr, 0);
