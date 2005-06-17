@@ -698,7 +698,7 @@ Ns_ConnReadLine(Ns_Conn *conn, Ns_DString *dsPtr, int *nreadPtr)
     Ns_DStringNAppend(dsPtr, connPtr->next, ncopy);
     connPtr->next  += nread;
     connPtr->avail -= nread;
-    return NS_ERROR;
+    return NS_OK;
 }
 
 
