@@ -484,13 +484,20 @@ ConnRun(Conn *connPtr)
     Ns_Conn 	  *conn = (Ns_Conn *) connPtr;
     NsServer	  *servPtr = connPtr->servPtr;
     int            i, status;
+    Tcl_Encoding    encoding = NULL;
 	
     /*
-     * Initialize the conn.
+     * Initialize the connection encodings and headers. 
      */
-
-    Ns_ConnInit(conn);
-     
+    
+    encoding = NsGetInputEncoding(connPtr);
+    if (encoding == NULL) {
+    	encoding = NsGetOutputEncoding(connPtr);
+	if (encoding == NULL) {
+	    encoding = connPtr->servPtr->urlEncoding;
+	}
+    }
+    Ns_ConnSetUrlEncoding(conn, encoding);
     if (servPtr->opts.hdrcase != Preserve) {
 	for (i = 0; i < Ns_SetSize(connPtr->headers); ++i) {
     	    if (servPtr->opts.hdrcase == ToLower) {
