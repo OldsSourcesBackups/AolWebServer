@@ -201,7 +201,7 @@ NsInitServer(char *server, Ns_ServerInitProc *initProc)
     /*
      * Set the default charset for text/ types which do not
      * include the charset= specification, e.g., legacy code with
-     * just "text/html".  The Ns_ConnInit routine will update
+     * just "text/html".  The connection init code will update
      * output types with the default charset if needed.
      */
 
@@ -238,9 +238,6 @@ NsInitServer(char *server, Ns_ServerInitProc *initProc)
     if (servPtr->tcl.library == NULL) {
 	Ns_ModulePath(&ds, server, "tcl", NULL);
 	servPtr->tcl.library = Ns_DStringExport(&ds);
-    }
-    if (!Ns_ConfigGetBool(path, "oldhttp", &servPtr->tcl.oldhttp)) {
-	servPtr->tcl.oldhttp = 1;
     }
     servPtr->tcl.initfile = Ns_ConfigGetValue(path, "initfile");
     if (servPtr->tcl.initfile == NULL) {
