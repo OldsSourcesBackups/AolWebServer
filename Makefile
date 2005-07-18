@@ -69,7 +69,7 @@ install-tests-new:
 	done
 
 install-doc:
-	cd doc && /bin/sh ./install-doc $(AOLSERVER)
+	cd doc && $(MAKE) install
 
 test: all
 	cd tests/new && ./all.tcl
