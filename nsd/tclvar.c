@@ -388,7 +388,7 @@ NsTclNsvArrayObjCmd(ClientData arg, Tcl_Interp *interp, int objc, Tcl_Obj **objv
     static CONST char *opts[] = {
 	"set", "reset", "get", "names", "size", "exists", NULL
     };
-    enum ISubCmdIdx {
+    enum {
 	CSetIdx, CResetIdx, CGetIdx, CNamesIdx, CSizeIdx, CExistsIdx
     } opt;
 

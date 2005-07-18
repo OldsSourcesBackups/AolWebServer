@@ -65,11 +65,12 @@ static char header[] = {
  *----------------------------------------------------------------------
  */
 
-#ifdef HAVE_LIBZ
-
 int
 Ns_Compress(char *buf, int len, Tcl_DString *outPtr, int level)
 {
+#ifndef HAVE_LIBZ
+    return NS_ERROR;
+#else
     uLongf glen;
     char *gbuf;
     uLong crc;
@@ -105,17 +106,6 @@ Ns_Compress(char *buf, int len, Tcl_DString *outPtr, int level)
     footer[0] = htonl(crc);
     footer[1] = htonl(len);
     Tcl_DStringAppend(outPtr, (char *) footer, sizeof(footer));
-
     return NS_OK;
-}
-
-#else
-
-int
-Ns_Compress(char *buf, int len, Tcl_DString *outPtr, int level)
-{
-    return NS_ERROR;
-}
-
 #endif
-
+}
