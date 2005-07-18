@@ -37,7 +37,7 @@ static const char *RCSID = "@(#) $Header$, compiled: " __DATE__ " " __TIME__;
 
 #include "nsd.h"
 
-static int ReturnObjCmd(NsInterp *itPtr, int objc, Tcl_Obj **objv,
+static int ExceptionObjCmd(NsInterp *itPtr, int objc, Tcl_Obj **objv,
 			int exception);
 static int EvalObjCmd(NsInterp *itPtr, int objc, Tcl_Obj **objv,
 		      int safe);
@@ -472,25 +472,25 @@ int
 NsTclAdpReturnObjCmd(ClientData arg, Tcl_Interp *interp, int objc,
 		     Tcl_Obj **objv)
 {
-    return ReturnObjCmd(arg, objc, objv, ADP_RETURN);
+    return ExceptionObjCmd(arg, objc, objv, ADP_RETURN);
 }
 
 int
 NsTclAdpBreakObjCmd(ClientData arg, Tcl_Interp *interp, int objc,
 		    Tcl_Obj **objv)
 {
-    return ReturnObjCmd(arg, objc, objv, ADP_BREAK);
+    return ExceptionObjCmd(arg, objc, objv, ADP_BREAK);
 }
 
 int
 NsTclAdpAbortObjCmd(ClientData arg, Tcl_Interp *interp, int objc,
 		    Tcl_Obj **objv)
 {
-    return ReturnObjCmd(arg, objc, objv, ADP_ABORT);
+    return ExceptionObjCmd(arg, objc, objv, ADP_ABORT);
 }
 
 static int
-ReturnObjCmd(NsInterp *itPtr, int objc, Tcl_Obj **objv, int exception)
+ExceptionObjCmd(NsInterp *itPtr, int objc, Tcl_Obj **objv, int exception)
 {
     if (objc != 1 && objc != 2) {
 	Tcl_WrongNumArgs(itPtr->interp, 1, objv, "?retval?");
