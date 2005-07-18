@@ -65,6 +65,7 @@ extern Tcl_ObjCmdProc
     NsTclAdpStreamObjCmd,
     NsTclAdpMimeTypeObjCmd,
     NsTclAtCloseObjCmd,
+    NsTclCacheObjCmd,
     NsTclChanObjCmd,
     NsTclChmodObjCmd,
     NsTclCondObjCmd,
@@ -157,6 +158,7 @@ extern Tcl_ObjCmdProc
     NsTclStartContentObjCmd,
     NsTclStrftimeObjCmd,
     NsTclSymlinkObjCmd,
+    NsTclThreadObjCmd,
     NsTclTimeObjCmd,
     NsTclTmpNamObjCmd,
     NsTclTruncateObjCmd,
@@ -212,7 +214,6 @@ extern Tcl_CmdProc
     NsTclSchedWeeklyCmd,
     NsTclShareCmd,
     NsTclStripHtmlCmd,
-    NsTclThreadCmd,
     NsTclUnscheduleCmd;
 
 /*
@@ -242,6 +243,7 @@ static Cmd cmds[] = {
     {"ns_atexit", NsTclAtExitCmd, NULL},
     {"ns_atshutdown", NsTclAtShutdownCmd, NULL},
     {"ns_atsignal", NsTclAtSignalCmd, NULL},
+    {"ns_cache", NULL, NsTclCacheObjCmd},
     {"ns_cache_flush", NsTclCacheFlushCmd, NULL},
     {"ns_cache_keys", NsTclCacheKeysCmd, NULL},
     {"ns_cache_names", NsTclCacheNamesCmd, NULL},
@@ -321,7 +323,7 @@ static Cmd cmds[] = {
     {"ns_sockselect", NULL, NsTclSelectObjCmd},
     {"ns_striphtml", NsTclStripHtmlCmd, NULL},
     {"ns_symlink", NULL, NsTclSymlinkObjCmd},
-    {"ns_thread", NsTclThreadCmd, NULL},
+    {"ns_thread", NULL, NsTclThreadObjCmd},
     {"ns_time", NULL, NsTclTimeObjCmd},
     {"ns_tmpnam", NULL, NsTclTmpNamObjCmd},
     {"ns_truncate", NULL, NsTclTruncateObjCmd},
