@@ -61,6 +61,10 @@ Ns_ModuleInit(char *server, char *module)
 {
     static int once;
 
+    if (server == NULL) {
+	Ns_Log(Error, "%s: attempt to load outside a virual server", module);
+	return NS_ERROR;
+    }
     if (!once) {
 	NsDbInitPools();
 	once = 1;
