@@ -58,7 +58,11 @@ static const char *RCSID = "@(#) $Header$, compiled: " __DATE__ " " __TIME__;
 void
 Ns_QuoteHtml(Ns_DString *pds, char *string)
 {
-    while (*string != '\0') {
+    char *end, *next;
+
+    end = string + strlen(string);
+    do {
+	next = Tcl_UtfNext(string);
         switch (*string) {
         case '<':
             Ns_DStringAppend(pds, "&lt;");
@@ -81,11 +85,11 @@ Ns_QuoteHtml(Ns_DString *pds, char *string)
 	    break;
 	    
 	default:
-            Ns_DStringNAppend(pds, string, 1);
+            Ns_DStringNAppend(pds, string, next - string);
             break;
         }
-        ++string;
-    }
+	string = next;
+    } while (string < end);
 }
 
 
