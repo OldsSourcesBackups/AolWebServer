@@ -178,6 +178,8 @@ NsConfUpdate(void)
     }
     if (GetBool("debug", LOG_DEBUG_BOOL)) {
 	nsconf.log.flags |= LOG_DEBUG;
+    } else if (GetBool("logdebug", LOG_DEBUG_BOOL)) {
+        nsconf.log.flags |= LOG_DEBUG;
     }
     if (GetBool("logdev", LOG_DEV_BOOL)) {
 	nsconf.log.flags |= LOG_DEV;
