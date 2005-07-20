@@ -454,12 +454,14 @@ NsTclLogObjCmd(ClientData arg, Tcl_Interp *interp, int objc,
 	severity = Bug;
     } else if (STRIEQ(severitystr, "debug")) {
 	severity = Debug;
+    } else if (STRIEQ(severitystr, "dev")) {
+        severity = Dev;
     } else if (Tcl_GetIntFromObj(NULL, objv[1], &i) == TCL_OK) {
 	severity = i;
     } else {
 	Tcl_AppendResult(interp, "unknown severity: \"", severitystr,
 	    "\": should be notice, warning, error, "
-	    "fatal, bug, debug or integer value", NULL);
+	    "fatal, bug, debug, dev, or integer value", NULL);
 	return TCL_ERROR;
     }
 
