@@ -223,7 +223,7 @@ NsConfUpdate(void)
      */
      
     if (GetBool("dnscache", DNS_CACHE_BOOL)) {
-	int max = GetInt("dnscachemaxentries", 100);
+	int max = GetInt("dnscachemaxentries", DNS_MAX_ENTRIES);
 	i = GetInt("dnscachetimeout", DNS_TIMEOUT_INT);
 	if (max > 0 && i > 0) {
 	    i *= 60; /* NB: Config minutes, seconds internally. */
