@@ -374,6 +374,7 @@ GetAddr(Ns_DString *dsPtr, char *host)
             ia.s_addr = ptr->s_addr;
             Tcl_DStringAppendElement(dsPtr, ns_inet_ntoa(ia));
             status = NS_TRUE;
+            ptr = (struct in_addr *) he.h_addr_list[i++];
         }
     }
     return status;
