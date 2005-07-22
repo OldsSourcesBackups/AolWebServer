@@ -29,8 +29,7 @@
 # $Header$
 #
 
-AOLSERVER ?= /usr/local/aolserver
-include $(AOLSERVER)/include/Makefile.global
+include ../include/Makefile.global
 
 MAN3 := $(wildcard *.3)
 MANN := $(wildcard *.n)
@@ -53,11 +52,13 @@ install-man1:
 	done
 
 install-man3:
+	$(MKDIR) $(MAN3_DIR)
 	for i in $(MAN3); do \
 		sh $(MAN_INST) $$i $(MAN3_DIR)/; \
 	done
 
 install-mann:
+	$(MKDIR) $(MANN_DIR)
 	for i in $(MANN); do \
 		sh $(MAN_INST) $$i $(MANN_DIR)/; \
 	done
