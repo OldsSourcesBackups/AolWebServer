@@ -1116,7 +1116,7 @@ CgiCopy(Cgi *cgiPtr, Ns_Conn *conn)
                 ++value;
             }
             if (STRIEQ(ds.string, "status")) {
-                httpstatus = atoi(value);
+                httpstatus = (int) strtol(value, NULL, 10);
             } else if (STRIEQ(ds.string, "location")) {
                 httpstatus = 302;
                 if (*value == '/') {
