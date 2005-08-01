@@ -859,7 +859,7 @@ AdpLogError(NsInterp *itPtr)
     Ns_DStringPrintf(&ds, "\n    at line %d in ",
 		     framePtr->line + interp->errorLine);
     while (framePtr != NULL) {
-	Ns_DStringPrintf(&ds, "adp %.40s", Tcl_GetString(framePtr->objv[0]));
+	Ns_DStringPrintf(&ds, "adp %s", Tcl_GetString(framePtr->objv[0]));
 	framePtr = framePtr->prevPtr;
 	if (framePtr != NULL) {
 	    Ns_DStringAppend(&ds, "\n    included from ");
