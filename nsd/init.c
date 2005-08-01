@@ -45,7 +45,6 @@ static const char *RCSID = "@(#) $Header$, compiled: " __DATE__ " " __TIME__;
  *
  *	Library entry point for libnsd.  This routine calls various
  *	data structure initialization functions throughout the core.
- *	Order of the initialization calls is significant.
  *
  * Results:
  	None.
@@ -63,26 +62,42 @@ NsdInit(void)
 
     if (!once) {
 	once = 1;
+
+	/*
+	 * Log must be initialized first in case later inits log messages.
+	 */
+
+	NsInitFd();
+    	NsInitLog();
+
+	/*
+	 * Caches and URL space are used by some of the remaining inits.
+	 */
+
+    	NsInitCache();
+    	NsInitUrlSpace();
+
+	/*
+	 * Order of the remaining inits is not significant.
+	 */
+
 #ifndef _WIN32
     	NsInitBinder();
 #endif
-    	NsInitCache();
     	NsInitConf();
+    	NsInitConfig();
+    	NsInitDrivers();
     	NsInitEncodings();
-	NsInitFd();
+        NsInitLimits();
     	NsInitListen();
-    	NsInitLog();
-	NsInitInfo();
     	NsInitMimeTypes();
     	NsInitModLoad();
-    	NsInitProcInfo();
-    	NsInitDrivers();
-    	NsInitUrlSpace();
-    	NsInitQueue();
-        NsInitLimits();
         NsInitPools();
-    	NsInitSched();
-    	NsInitTcl();
+    	NsInitProcInfo();
+    	NsInitQueue();
     	NsInitRequests();
+    	NsInitSched();
+    	NsInitServers();
+    	NsInitTcl();
     }
 }
