@@ -643,7 +643,6 @@ NsTclUrl2FileObjCmd(ClientData arg, Tcl_Interp *interp, int objc, Tcl_Obj *CONST
     NsUrlToFile(&ds, itPtr->servPtr, Tcl_GetString(objv[1]));
     Tcl_SetResult(interp, ds.string, TCL_VOLATILE);
     Ns_DStringFree(&ds);
-    
     return TCL_OK;
 }
 
@@ -1026,7 +1025,7 @@ NsTclChanObjCmd(ClientData arg, Tcl_Interp *interp, int objc, Tcl_Obj *CONST obj
     NsServer *servPtr = itPtr->servPtr;
     Tcl_Channel chan = NULL;
     char *name, *chanName;
-    NsRegChan *regChan;
+    NsRegChan *regChan = NULL;
     int new, shared;
     Tcl_HashTable *tabPtr;
     Tcl_HashEntry *hPtr;

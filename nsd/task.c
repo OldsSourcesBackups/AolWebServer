@@ -644,7 +644,7 @@ static int
 SignalQueue(Task *taskPtr, int bit)
 {
     TaskQueue *queuePtr = taskPtr->queuePtr;
-    int pending, shutdown;
+    int pending = 0, shutdown;
 
     Ns_MutexLock(&queuePtr->lock);
     shutdown = queuePtr->shutdown;

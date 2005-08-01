@@ -158,7 +158,7 @@ NsTclCacheObjCmd(ClientData arg, Tcl_Interp *interp, int objc, Tcl_Obj **objv)
     char *key, *pattern, *var;
     Ns_Entry *entry;
     Ns_CacheSearch search;
-    Tcl_Obj *objPtr;
+    Tcl_Obj *objPtr = NULL;
     Ns_Time now, timeout;
 
     if (objc < 2) {
