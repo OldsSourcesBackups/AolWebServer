@@ -78,7 +78,8 @@ static int devNull;
  *	None.
  *
  * Side effects:
- *	Will open a shared fd to /dev/null.
+ *	Will open a shared fd to /dev/null and ensure stdin, stdout,
+ *	and stderr are open on something.
  *
  *----------------------------------------------------------------------
  */
@@ -86,7 +87,30 @@ static int devNull;
 void
 NsInitFd(void)
 {
-    devNull = open(DEVNULL, O_RDONLY);
+    int fd;
+
+    /*
+     * Ensure fd 0, 1, and 2 are open on at least /dev/null.
+     */
+     
+    fd = open(DEVNULL, O_RDONLY);
+    if (fd > 0) {
+	close(fd);
+    }
+    fd = open(DEVNULL, O_WRONLY);
+    if (fd > 0 && fd != 1) {
+	close(fd);
+    }
+    fd = open(DEVNULL, O_WRONLY);
+    if (fd > 0 && fd != 2) {
+	close(fd);
+    }
+
+    /*
+     * Open a fd on /dev/null which can be later re-used.
+     */
+
+    devNull = open(DEVNULL, O_RDWR);
     if (devNull < 0) {
 	Ns_Fatal("fd: open(%s) failed: %s", DEVNULL, strerror(errno));
     }
