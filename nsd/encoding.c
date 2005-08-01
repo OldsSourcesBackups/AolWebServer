@@ -483,7 +483,9 @@ badargs:
 	flags = 0;
 	idx = 1;
     }
-    server = itPtr->servPtr->server;
+    if (NsTclGetServer(itPtr, &server) != TCL_OK) {
+	return TCL_ERROR;
+    }
     method = Tcl_GetString(objv[idx++]);
     url = Tcl_GetString(objv[idx++]);
     charset = Tcl_GetString(objv[idx++]);

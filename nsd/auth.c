@@ -125,6 +125,7 @@ NsTclRequestAuthorizeObjCmd(ClientData arg, Tcl_Interp *interp, int objc,
 			    Tcl_Obj *CONST objv[])
 {
     NsInterp   *itPtr = arg;
+    char       *server;
     int         status;
 
     if ((objc != 5) && (objc != 6)) {
@@ -132,7 +133,10 @@ NsTclRequestAuthorizeObjCmd(ClientData arg, Tcl_Interp *interp, int objc,
 			"method url authuser authpasswd ?ipaddr?");
         return TCL_ERROR;
     }
-    status = Ns_AuthorizeRequest(itPtr->servPtr->server, 
+    if (NsTclGetServer(itPtr, &server) != TCL_OK) {
+	return TCL_ERROR;
+    }
+    status = Ns_AuthorizeRequest(server,
 	    Tcl_GetString(objv[1]), 
 	    Tcl_GetString(objv[2]),
 	    Tcl_GetString(objv[3]), 

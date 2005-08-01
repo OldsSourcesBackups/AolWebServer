@@ -643,26 +643,18 @@ NsTclInfoObjCmd(ClientData arg, Tcl_Interp *interp, int objc, Tcl_Obj **objv)
 	break;
 
     case IServersIdx:
-	Tcl_SetResult(interp, nsconf.servers.string, TCL_STATIC);
+	Tcl_SetResult(interp, NsGetServers(), TCL_STATIC);
 	break;
 
     case IServerIdx:
-        server = itPtr->servPtr ? itPtr->servPtr->server : nsconf.server;
-        if (server == NULL) {
-            Tcl_SetResult(interp, "no server", TCL_STATIC);
+	if (NsTclGetServer(itPtr, &server) != TCL_OK) {
             return TCL_ERROR;
         }
-
-        Tcl_SetResult(interp, server, TCL_STATIC);
+        Tcl_SetResult(interp, itPtr->servPtr->server, TCL_STATIC);
         break;
 
     case ITclLibIdx:
     case IPageRootIdx:
-	if (itPtr->servPtr == NULL) {
-	    Tcl_SetResult(interp, "no server", TCL_STATIC);
-	    return TCL_ERROR;
-	}
-
 	if (opt == ITclLibIdx) {
 	    Tcl_SetResult(interp, itPtr->servPtr->tcl.library, TCL_STATIC);
 	} else {
