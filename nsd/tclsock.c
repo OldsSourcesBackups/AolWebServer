@@ -773,7 +773,7 @@ NsTclSockCallbackObjCmd(ClientData arg, Tcl_Interp *interp, int objc,
 
     sock = ns_sockdup(sock);
     cbPtr = ns_malloc(sizeof(TclSockCallback) + Tcl_GetCharLength(objv[2]));
-    cbPtr->server = (itPtr->servPtr ? itPtr->servPtr->server : NULL);
+    cbPtr->server = itPtr->servPtr->server;
     cbPtr->chan = NULL;
     cbPtr->when = when;
     strcpy(cbPtr->script, Tcl_GetString(objv[2]));
@@ -826,7 +826,7 @@ NsTclSockListenCallbackObjCmd(ClientData arg, Tcl_Interp *interp, int objc,
         addr = NULL;
     }
     lcbPtr = ns_malloc(sizeof(ListenCallback) + Tcl_GetCharLength(objv[3]));
-    lcbPtr->server = (itPtr->servPtr ? itPtr->servPtr->server : NULL);
+    lcbPtr->server = itPtr->servPtr->server;
     strcpy(lcbPtr->script, Tcl_GetString(objv[3]));
     if (Ns_SockListenCallback(addr, port, SockListenCallback, lcbPtr) != NS_OK) {
 	Tcl_SetResult(interp, "could not register callback", TCL_STATIC);

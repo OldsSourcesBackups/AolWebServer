@@ -481,7 +481,7 @@ NsTclJobObjCmd(ClientData arg, Tcl_Interp *interp, int objc, Tcl_Obj **objv)
             /*
              * Create a new job and add to the Thread Pool's list of jobs.
              */
-            jobPtr = NewJob((itPtr->servPtr ? itPtr->servPtr->server : NULL),
+            jobPtr = NewJob(itPtr->servPtr->server,
                             queuePtr->name,
                             job_type,
                             objv[argIndex++]);
