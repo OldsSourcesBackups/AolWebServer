@@ -479,6 +479,10 @@ CreateServer(char *server)
     if (servPtr->adp.debuginit == NULL) {
     	servPtr->adp.debuginit = "ns_adp_debuginit";
     }
+    if (!Ns_ConfigGetInt(path, "tracesize", &i)) {
+        i = 40;
+    }
+    servPtr->adp.tracesize = i;
     if (!Ns_ConfigGetInt(path, "cachesize", &i)) {
 	i = 5 * 1024 * 1000;
     }

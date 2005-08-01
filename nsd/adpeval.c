@@ -1198,8 +1198,8 @@ AdpTrace(NsInterp *itPtr, char *ptr, int len)
 	type = 'S';
 	len = -len;
     }
-    if (len > 40) {
-	len = 40;
+    if (len > itPtr->servPtr->adp.tracesize) {
+	len = itPtr->servPtr->adp.tracesize;
     }
     Ns_Log(Notice, "adp[%d%c]: %.*s", itPtr->adp.depth, type, len, ptr);
 }
