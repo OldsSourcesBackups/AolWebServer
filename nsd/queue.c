@@ -252,7 +252,7 @@ NsTclServerObjCmd(ClientData arg, Tcl_Interp *interp, int objc,
 	break;
 
     case SKeepaliveIdx:
-        Tcl_SetObjResult(interp, Tcl_NewIntObj(nsconf.keepalive.npending));
+        Tcl_SetObjResult(interp, Tcl_NewIntObj(0/*nsconf.keepalive.npending*/));
 	break;
 
     case SConnectionsIdx:
