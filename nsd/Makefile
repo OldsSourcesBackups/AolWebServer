@@ -36,6 +36,7 @@ PGM	= nsd
 PGMOBJS	= main.o
 LIBINIT	= NsdInit
 HDRS	= nsd.h
+SRCS	:= $(wildcard *.c ../nsthread/*.c)
 
 LOBJS	= adpcmds.o adpeval.o adpparse.o adprequest.o auth.o binder.o \
 	  cache.o callbacks.o cls.o compress.o config.o conn.o connio.o \
@@ -57,6 +58,9 @@ include ../include/Makefile.build
 
 stamp.o: $(LOBJS)
 	$(CC) -c -o stamp.o stamp.c
+
+tags: $(SRCS)
+	ctags $(SRCS)
 
 install-init:
 	$(INSTALL_DATA) init.tcl $(INSTBIN)/
