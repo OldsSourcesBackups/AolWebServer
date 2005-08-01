@@ -305,11 +305,12 @@ FastGetRestart(Ns_Conn *conn, char *page)
 int
 NsFastGet(void *arg, Ns_Conn *conn)
 {
-    Ns_DString      ds;
-    NsServer  	   *servPtr = arg;
+    Conn	   *connPtr = (Conn *) conn;
+    NsServer  	   *servPtr = connPtr->servPtr;
     char	   *url = conn->request->url;
-    int             result, i;
+    Ns_DString      ds;
     struct stat	    st;
+    int             result, i;
 
     Ns_DStringInit(&ds);
     if (NsUrlToFile(&ds, servPtr, url) != NS_OK
