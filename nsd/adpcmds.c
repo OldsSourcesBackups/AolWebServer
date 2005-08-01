@@ -48,6 +48,44 @@ static int GetOutput(ClientData arg, Tcl_DString **dsPtrPtr);
 /*
  *----------------------------------------------------------------------
  *
+ * NsTclAdpIdentObjCmd --
+ *
+ *	Set RCS/CVS ident string for current file.
+ *
+ * Results:
+ *	A standard Tcl result.
+ *
+ * Side effects:
+ *	Depends on subcommand.
+ *
+ *----------------------------------------------------------------------
+ */
+
+int
+NsTclAdpIdentObjCmd(ClientData arg, Tcl_Interp *interp, int objc,
+		   Tcl_Obj **objv)
+{
+    AdpFrame *framePtr;
+
+    if (objc != 2) {
+	Tcl_WrongNumArgs(interp, 1, objv, "ident");
+	return TCL_ERROR;
+    }
+    if (GetFrame(arg, &framePtr) != TCL_OK) {
+	return TCL_ERROR;
+    }
+    if (framePtr->ident != NULL) {
+	Tcl_DecrRefCount(framePtr->ident);
+    }
+    framePtr->ident = objv[1];
+    Tcl_IncrRefCount(framePtr->ident);
+    return TCL_OK;
+}
+
+
+/*
+ *----------------------------------------------------------------------
+ *
  * NsTclAdpCtlObjCmd --
  *
  *	ADP processing control.
