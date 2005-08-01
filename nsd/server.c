@@ -472,8 +472,14 @@ CreateServer(char *server)
     if (Ns_ConfigGetBool(path, "trace", &i) && i) {
     	servPtr->adp.flags |= ADP_TRACE;
     }
-    if (!Ns_ConfigGetBool(path, "errordetail", &i) || i) {
+    if (!Ns_ConfigGetBool(path, "detailerror", &i) || i) {
     	servPtr->adp.flags |= ADP_DETAIL;
+    }
+    if (Ns_ConfigGetBool(path, "stricterror", &i) && i) {
+    	servPtr->adp.flags |= ADP_STRICT;
+    }
+    if (Ns_ConfigGetBool(path, "displayerror", &i) && i) {
+    	servPtr->adp.flags |= ADP_DISPLAY;
     }
     servPtr->adp.debuginit = Ns_ConfigGetValue(path, "debuginit");
     if (servPtr->adp.debuginit == NULL) {
