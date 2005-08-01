@@ -47,6 +47,35 @@ static Tcl_CmdProc ParamCmd;
 static Ns_Set     *GetSection(char *section, int create);
 static char       *ConfigGet(char *section, char *key, int exact);
 
+/*
+ * Static variables defined in this file.
+ */
+
+static Tcl_HashTable sections;
+
+
+/*
+ *----------------------------------------------------------------------
+ *
+ * NsInitConfig --
+ *
+ *	Initialize the config interface.
+ *
+ * Results:
+ *	None.
+ *
+ * Side effects:
+ *	None.
+ *
+ *----------------------------------------------------------------------
+ */
+
+void
+NsInitConfig(void)
+{
+    Tcl_InitHashTable(&sections, TCL_STRING_KEYS);
+}
+
 
 /*
  *----------------------------------------------------------------------
@@ -281,10 +310,10 @@ Ns_ConfigGetSections(void)
     Tcl_HashSearch  search;
     int     	    n;
     
-    n = nsconf.sections.numEntries + 1;
+    n = sections.numEntries + 1;
     sets = ns_malloc(sizeof(Ns_Set *) * n);
     n = 0;
-    hPtr = Tcl_FirstHashEntry(&nsconf.sections, &search);
+    hPtr = Tcl_FirstHashEntry(&sections, &search);
     while (hPtr != NULL) {
     	sets[n++] = Tcl_GetHashValue(hPtr);
     	hPtr = Tcl_NextHashEntry(&search);
@@ -622,9 +651,9 @@ GetSection(char *section, int create)
  
     set = NULL;
     if (!create) {
-	hPtr = Tcl_FindHashEntry(&nsconf.sections, section);
+	hPtr = Tcl_FindHashEntry(&sections, section);
     } else {
-    	hPtr = Tcl_CreateHashEntry(&nsconf.sections, section, &new);
+    	hPtr = Tcl_CreateHashEntry(&sections, section, &new);
     	if (new) {
 	    set = Ns_SetCreate(section);
 	    Tcl_SetHashValue(hPtr, set);

@@ -89,16 +89,32 @@ NsRemovePidFile(char *procname)
     }
 }
 
+
+/*
+ *----------------------------------------------------------------------
+ *
+ * GetFile --
+ *
+ *	Return the server process id file name.
+ *
+ * Results:
+ *	Pointer to filename in static string 
+ *
+ * Side effects:
+ *	None.
+ *
+ *----------------------------------------------------------------------
+ */
+
 static char *
 GetFile(char *procname)
 {
     static char *file;
+    Ns_DString ds;
     
     if (file == NULL) {
-    	file = Ns_ConfigGetValue(NS_CONFIG_PARAMETERS, "pidfile");
+    	file = NsParamString("pidfile", NULL);
 	if (file == NULL) {
-    	    Ns_DString ds;
-
 	    Ns_DStringInit(&ds);
 	    Ns_HomePath(&ds, "log/nspid.", NULL);
 	    Ns_DStringAppend(&ds, procname);
