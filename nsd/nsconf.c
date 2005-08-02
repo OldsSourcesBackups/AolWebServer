@@ -209,7 +209,7 @@ NsParamString(char *key, char *def)
 {
     char *val;
 
-    val = Ns_ConfigGet(NS_CONFIG_PARAMETERS, key);
+    val = Ns_ConfigGetValue(NS_CONFIG_PARAMETERS, key);
     if (val == NULL) {
 	val = def;
     }
