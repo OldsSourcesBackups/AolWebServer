@@ -53,7 +53,7 @@ install-binaries: all
 		$(INSTALL_DATA) $$i $(AOLSERVER)/modules/tcl/; \
 	done
 	$(INSTALL_DATA) sample-config.tcl $(AOLSERVER)/
-	$(INSTALL_DATA) index.adp $(AOLSERVER)/servers/server1/pages/
+	$(INSTALL_DATA) -n index.adp $(AOLSERVER)/servers/server1/pages/
 	$(INSTALL_SH) install-sh $(INSTBIN)/
 	for i in $(dirs); do \
 		(cd $$i && $(MAKE) install) || exit 1; \
