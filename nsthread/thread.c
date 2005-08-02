@@ -523,12 +523,12 @@ Ns_CheckStack(void)
      */
 
     if (thrPtr->flags & FLAG_STACKDOWN) {
-	limit = thrPtr->stackaddr - thrPtr->stacksize;
+	limit = (caddr_t) thrPtr->stackaddr - thrPtr->stacksize;
 	if ((caddr_t) &limit < limit) {
 	    return NS_BREAK;
 	}
     } else {
-	limit = thrPtr->stackaddr + thrPtr->stacksize;
+	limit = (caddr_t) thrPtr->stackaddr + thrPtr->stacksize;
 	if ((caddr_t) &limit > limit) {
 	    return NS_BREAK;
 	}

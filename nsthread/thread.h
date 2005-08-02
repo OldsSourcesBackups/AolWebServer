@@ -40,6 +40,10 @@
 
 #include "nsthread.h"
 
+#ifdef WIN32
+typedef char *caddr_t;
+#endif
+
 extern int    NsGetStack(void **addrPtr, size_t *sizePtr);
 extern void   NsthreadsInit(void);
 extern void   NsInitThreads(void);
