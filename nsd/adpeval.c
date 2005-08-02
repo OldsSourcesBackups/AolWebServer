@@ -978,7 +978,7 @@ AdpEval(NsInterp *itPtr, AdpCode *codePtr, Objs *objsPtr)
 	     */
 
     	    err = AdpLogError(itPtr);
-	    if (itPtr->adp.flags & ADP_DISPLAY) {
+	    if (itPtr->servPtr->adp.flags & ADP_DISPLAY) {
 		Ns_DStringInit(&buf);
 		Ns_DStringAppend(&buf, "<br><pre>\n");
 		Ns_QuoteHtml(&buf, err);
@@ -986,7 +986,7 @@ AdpEval(NsInterp *itPtr, AdpCode *codePtr, Objs *objsPtr)
 		NsAdpAppend(itPtr, buf.string, buf.length);
 		Ns_DStringFree(&buf);
 	    }
-	    if (itPtr->adp.flags & ADP_STRICT) {
+	    if (itPtr->servPtr->adp.flags & ADP_STRICT) {
 		return TCL_ERROR;
 	    }
 	}
