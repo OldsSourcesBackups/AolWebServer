@@ -134,7 +134,7 @@ Ns_AdpRequestEx(Ns_Conn *conn, char *file, Ns_Time *ttlPtr)
      */
 
     servPtr = connPtr->servPtr;
-    if ((servPtr->adp.flags & ADP_DEBUG) &&
+    if ((servPtr->adp.sflags & ADP_DEBUG) &&
 	STREQ(conn->request->method, "GET") &&
 	(query = Ns_ConnGetQuery(conn)) != NULL) {
 	itPtr->adp.debugFile = Ns_SetIGet(query, "debug");
@@ -144,7 +144,7 @@ Ns_AdpRequestEx(Ns_Conn *conn, char *file, Ns_Time *ttlPtr)
      * Queue the Expires header if enabled.
      */
 
-    if (servPtr->adp.flags & ADP_EXPIRE) {
+    if (servPtr->adp.sflags & ADP_EXPIRE) {
 	Ns_ConnCondSetHeaders(conn, "Expires", "now");
     }
 

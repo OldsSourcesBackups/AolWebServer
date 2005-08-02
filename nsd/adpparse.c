@@ -229,7 +229,7 @@ NsAdpParse(AdpCode *codePtr, NsServer *servPtr, char *utf, int flags)
      * other tags.
      */
 
-    flags = servPtr->adp.flags | flags;
+    flags = servPtr->adp.sflags | flags;
     while ((s = strstr(utf, "<%")) && (e = strstr(s, "%>"))) {
 	/*
 	 * Parse text preceeding the script.
