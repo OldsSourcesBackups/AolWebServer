@@ -882,11 +882,15 @@ ConnSend(Ns_Conn *conn, int nsend, Tcl_Channel chan, FILE *fp, int fd,
     	} else if (off < 0) {
 	    nread = read(fd, buf, toread);
 	} else {
+#ifdef WIN32
+	    nread = -1;
+#else
 	    nread = pread(fd, buf, toread, off);
 	    if (nread > 0) {
 		off += (off_t) nread;
 	    }
-    	}
+#endif
+	}
 	if (nread == -1) {
 	    status = NS_ERROR;
 	} else if (nread == 0) { 
