@@ -976,8 +976,8 @@ GetSet(Tcl_Interp *interp, char *flist, int write, fd_set **setPtrPtr,
             status = TCL_ERROR;
             break;
         }
-        if (sock > *maxPtr) {
-            *maxPtr = sock;
+        if (sock > (SOCKET) *maxPtr) {
+            *maxPtr = (int) sock;
         }
         FD_SET(sock, setPtr);
     }

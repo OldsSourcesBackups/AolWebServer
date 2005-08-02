@@ -217,7 +217,7 @@ NsAdpAppend(NsInterp *itPtr, char *buf, int len)
     Tcl_DString *bufPtr = itPtr->adp.framePtr->outputPtr;
 
     Ns_DStringNAppend(bufPtr, buf, len);
-    if (bufPtr->length > itPtr->adp.bufsize
+    if (bufPtr->length > (int) itPtr->adp.bufsize
 	    && NsAdpFlush(itPtr, 1) != TCL_OK) {
 	return TCL_ERROR;
     }
