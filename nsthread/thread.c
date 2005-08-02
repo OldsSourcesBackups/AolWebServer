@@ -494,10 +494,12 @@ CleanupThread(void *arg)
  *	Check a thread stack for overflow.
  *
  * Results:
- *	NS_ERROR if overflow appears possible, NS_OK otherwise.
+ *	NS_OK:	   Stack appears ok.
+ *	NS_BREAK:  Overflow appears likely.
+ *	NS_ERROR:  Stack address/size unknown.
  *
  * Side effects:
- *	A new thread is allocated and started.
+ *	None.
  *
  *----------------------------------------------------------------------
  */
