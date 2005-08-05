@@ -118,7 +118,7 @@ NsInitLog(void)
 /*
  *----------------------------------------------------------------------
  *
- * NsLogConfig --
+ * NsLogConf --
  *
  *	Config the logging interface.
  *

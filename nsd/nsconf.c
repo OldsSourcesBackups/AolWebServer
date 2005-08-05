@@ -158,6 +158,7 @@ NsConfUpdate(void)
     }
     Ns_ThreadStackSize(stacksize);
 
+    NsLogConf();
     NsEnableDNSCache();
     NsUpdateEncodings();
     NsUpdateMimeTypes();
