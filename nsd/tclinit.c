@@ -1641,7 +1641,7 @@ NewInterpData(Tcl_Interp *interp, char *server)
     Tcl_InitHashTable(&itPtr->sets, TCL_STRING_KEYS);
     Tcl_InitHashTable(&itPtr->chans, TCL_STRING_KEYS);	
     Tcl_InitHashTable(&itPtr->https, TCL_STRING_KEYS);	
-    Tcl_DStringInit(&itPtr->adp.output);
+    NsAdpInit(itPtr);
     itPtr->adp.cwd = Ns_PageRoot(server);
 
     /*
@@ -1743,7 +1743,7 @@ FreeInterpData(ClientData arg, Tcl_Interp *interp)
 {
     NsInterp *itPtr = arg;
 
-    NsFreeAdp(itPtr);
+    NsAdpFree(itPtr);
     Tcl_DeleteHashTable(&itPtr->sets);
     Tcl_DeleteHashTable(&itPtr->chans);
     Tcl_DeleteHashTable(&itPtr->https);
@@ -1816,7 +1816,6 @@ DeleteData(void *arg)
     Ns_MutexLock(&lock);
     Tcl_DeleteHashEntry(dataPtr->hPtr);
     Ns_MutexUnlock(&lock);
-    Tcl_AsyncDelete(dataPtr->cancel);
     hPtr = Tcl_FirstHashEntry(&dataPtr->interps, &search);
     while (hPtr != NULL) {
 	while ((itPtr = Tcl_GetHashValue(hPtr)) != NULL) {
@@ -1826,6 +1825,7 @@ DeleteData(void *arg)
 	hPtr = Tcl_NextHashEntry(&search);
     }
     Tcl_DeleteHashTable(&dataPtr->interps);
+    Tcl_AsyncDelete(dataPtr->cancel);
     ns_free(dataPtr);
 }
 
