@@ -30,6 +30,8 @@
 # $Header$
 #
 
+LIB	 =  nscgi
+LIBOBJS  =  nscgi.o
 MOD      =  nscgi.so
-OBJS     =  nscgi.o
+MODINIT	 =  NsCgi_ModInit
 include  ../include/Makefile.build
