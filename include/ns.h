@@ -499,6 +499,12 @@ typedef char *(Ns_LocationProc) (Ns_Conn *conn);
 typedef void  (Ns_QueueWaitProc) (Ns_Conn *conn, SOCKET sock, void *arg, int why);
 
 /*
+ * init.c:
+ */
+
+NS_EXTERN void Ns_LibInit(void);
+
+/*
  * adpparse.c:
  */
 
