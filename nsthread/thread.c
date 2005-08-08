@@ -108,7 +108,7 @@ static Ns_Tls key;
 /*
  *----------------------------------------------------------------------
  *
- * NsInitThreads --
+ * NsThreads_LibInit --
  *
  *	Initialize threads interface.
  *
@@ -122,12 +122,13 @@ static Ns_Tls key;
  */
 
 void
-NsInitThreads(void)
+NsThreads_LibInit(void)
 {
     static int once = 0;
 
     if (!once) {
 	once = 1;
+	NsInitThreads();
     	NsInitMaster();
     	NsInitReentrant();
 	Ns_MutexSetName(&threadlock, "ns:threads");
