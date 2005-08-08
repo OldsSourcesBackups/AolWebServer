@@ -281,6 +281,7 @@ NS_EXTERN int ns_signal(int sig, void (*proc)(int));
  * thread.c:
  */
 
+NS_EXTERN void NsThreads_LibInit(void);
 NS_EXTERN void Ns_ThreadCreate(Ns_ThreadProc *proc, void *arg, long stackSize,
 			    Ns_Thread *resultPtr);
 NS_EXTERN void Ns_ThreadExit(void *arg);
