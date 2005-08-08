@@ -41,7 +41,7 @@ all:
 		( cd $$i && $(MAKE) all) || exit 1; \
 	done
 
-install: install-binaries install-doc
+install: install-binaries install-doc install-util
 
 install-binaries: all
 	for i in bin lib log include modules/tcl servers/server1/pages; do \
@@ -72,7 +72,13 @@ install-tests-new:
 	done
 
 install-doc:
+	$(INSTALL_SH) doc/nsinstall-man.sh $(INSTBIN)/
 	cd doc && $(MAKE) install
+
+install-util:
+	for i in util/*.sh util/*.tcl; do \
+		$(INSTALL_SH) $$i $(INSTBIN)/; \
+	done
 
 test: all
 	cd tests/new && ./all.tcl
