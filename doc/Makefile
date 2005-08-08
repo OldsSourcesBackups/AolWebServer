@@ -29,39 +29,13 @@
 # $Header$
 #
 
-include ../include/Makefile.global
 
+NSLIBS = $(wildcard $(AOLSERVER)/lib/libns*$(LIBEXT))
 MAN3 := $(wildcard *.3)
 MANN := $(wildcard *.n)
 MAN1 := $(wildcard *.1)
-MAN_DIR = $(AOLSERVER)/man
-MAN1_DIR = $(MAN_DIR)/man1
-MAN3_DIR = $(MAN_DIR)/man3
-MANN_DIR = $(MAN_DIR)/mann
-MAN_INST = nsinstall-man.sh
-NSLIBS = $(wildcard $(AOLSERVER)/lib/libns*$(LIBEXT))
 
-all: install
-
-install: install-man1 install-man3 install-mann
-
-install-man1:
-	$(MKDIR) $(MAN1_DIR)
-	for i in $(MAN1); do \
-		sh $(MAN_INST) $$i $(MAN1_DIR)/; \
-	done
-
-install-man3:
-	$(MKDIR) $(MAN3_DIR)
-	for i in $(MAN3); do \
-		sh $(MAN_INST) $$i $(MAN3_DIR)/; \
-	done
-
-install-mann:
-	$(MKDIR) $(MANN_DIR)
-	for i in $(MANN); do \
-		sh $(MAN_INST) $$i $(MANN_DIR)/; \
-	done
+include ../include/Makefile.build
 
 missing: 
 	@nm $(NSLIBS) | awk '/T _Ns_/ {print $$3}' | sort > lib.out
