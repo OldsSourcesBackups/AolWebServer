@@ -33,7 +33,8 @@
 NSBUILD=1
 include include/Makefile.global
 
-dirs   = nsthread nsd nssock nsssl nscgi nscp nslog nsperm nsdb nsext nspd
+dirs   = nsthread nsd nssock nsssl nscgi nscp nslog nsperm nsdb nsext nspd \
+	 nstclsh
 
 all: 
 	@for i in $(dirs); do \
@@ -46,7 +47,8 @@ install-binaries: all
 	for i in bin lib log include modules/tcl servers/server1/pages; do \
 		$(MKDIR) $(AOLSERVER)/$$i; \
 	done
-	for i in include/*.h include/Makefile.global include/Makefile.module; do \
+	for i in include/*.h include/ns*init.c \
+			include/Makefile.global include/Makefile.module; do \
 		$(INSTALL_DATA) $$i $(AOLSERVER)/include/; \
 	done
 	for i in tcl/*.tcl; do \
