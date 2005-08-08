@@ -252,6 +252,13 @@ Ns_TclCreateInterp(void)
 int
 Ns_TclInit(Tcl_Interp *interp)
 {
+    /*
+     * Initialize libnsd if not already initialized at library load
+     * time.
+     */
+
+    Ns_LibInit();
+
     NewInterpData(interp, NULL);
     return TCL_OK;
 }

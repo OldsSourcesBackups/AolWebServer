@@ -99,6 +99,12 @@ Ns_Main(int argc, char **argv, Ns_ServerInitProc *initProc)
 #endif
 
     /*
+     * Initialize libnsd.
+     */
+
+    Ns_LibInit();
+
+    /*
      * Mark the server stopped until initialization is complete.
      */
 

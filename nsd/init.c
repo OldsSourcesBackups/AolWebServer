@@ -41,10 +41,11 @@ static const char *RCSID = "@(#) $Header$, compiled: " __DATE__ " " __TIME__;
 /*
  *----------------------------------------------------------------------
  *
- * NsdInit --
+ * Ns_LibInit --
  *
- *	Library entry point for libnsd.  This routine calls various
- *	data structure initialization functions throughout the core.
+ *	Initializes core nsd library.  Should be called automatically
+ *	during dynamic library initialization, otherwise explicitly for
+ *	static builds.
  *
  * Results:
  	None.
@@ -56,12 +57,18 @@ static const char *RCSID = "@(#) $Header$, compiled: " __DATE__ " " __TIME__;
  */
 
 void
-NsdInit(void)
+Ns_LibInit(void)
 {
     static int once = 0;
 
     if (!once) {
 	once = 1;
+
+	/*
+	 * Initialize the threads interface.
+	 */
+
+	NsThreads_LibInit();
 
 	/*
 	 * Log must be initialized first in case later inits log messages.

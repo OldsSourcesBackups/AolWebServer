@@ -32,9 +32,9 @@
 
 INSTALL	= install-init
 LIB	= nsd
+LIBINIT	= Ns_LibInit
 PGM	= nsd
 PGMOBJS	= main.o
-LIBINIT	= NsdInit
 HDRS	= nsd.h
 SRCS	:= $(wildcard *.c ../nsthread/*.c)
 
