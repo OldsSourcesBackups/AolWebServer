@@ -189,6 +189,35 @@ Ns_ConnContent(Ns_Conn *conn)
 /*
  *----------------------------------------------------------------------
  *
+ * Ns_ConnContentOnDisk --
+ *
+ *	Return 1 if the content has been copied to a temp file, either
+ *	because it was greater than maxinput, or because Ns_ConnContentFd
+ *	has been called.  Returns 0, otherwise.  This is useful in the case
+ *	the application wants to be as efficient as possible, and not cause
+ *	excess file creation or mmap()ing.
+ *
+ * Results:
+ *	0 if content only in RAM, 1 if in /tmp file.
+ *
+ * Side effects:
+ *	None.
+ *
+ *----------------------------------------------------------------------
+ */
+
+int
+Ns_ConnContentOnDisk(Ns_Conn *conn)
+{
+    Conn *connPtr = (Conn *) conn;
+
+    return connPtr->tfd > -1;
+}
+
+
+/*
+ *----------------------------------------------------------------------
+ *
  * Ns_ConnContentFd --
  *
  *	Return open fd with request content.  The fd is owned by the
