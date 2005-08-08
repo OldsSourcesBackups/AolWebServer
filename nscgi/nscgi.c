@@ -150,7 +150,6 @@ NsCgi_ModInit(char *server, char *module)
     Ns_Set         *set;
     Ns_DString      ds;
     Mod		   *modPtr;
-    static int	    initialized;
 
     /*
      * Config basic options.
