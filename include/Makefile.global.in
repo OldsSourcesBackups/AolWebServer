@@ -111,7 +111,10 @@ endif
 # Add dynamic library entry point flags.
 ifdef LIBINIT
     ifneq (,$(findstring Darwin,$(uname)))
-	LDLIB	+= -init _init
+	INIT	 =  _$(LIBINIT)
+	LDLIB	+= -init _$(INIT)
+    else
+	INIT	 =  _init
     endif
 endif
  

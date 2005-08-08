@@ -37,10 +37,10 @@ static const char *RCSID = "@(#) $Header$, compiled: " __DATE__ " " __TIME__;
 
 #include "ns.h"
 
-extern void NS_LIBINIT(void);
-
 void
-_init(void)
+NS_INIT(void)
 {
+    extern void NS_LIBINIT(void);
+
     NS_LIBINIT();
 }
