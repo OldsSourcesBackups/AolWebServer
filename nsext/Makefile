@@ -32,7 +32,7 @@
 LIB	= nsext
 LIBOBJS	= msg.o
 MOD	= nsext.so
-OBJS	= nsext.o
+MODOBJS	= nsext.o
 MODLIBS	= -L../nsdb -lnsdb
 HDRS	= ../include/nsextmsg.h
 include ../include/Makefile.build
