@@ -37,13 +37,11 @@ static const char *RCSID = "@(#) $Header$, compiled: " __DATE__ " " __TIME__;
 
 #include "db.h"
 
-int Ns_ModuleVersion = 1;
-
 
 /*
  *----------------------------------------------------------------------
  *
- * Ns_ModuleInit --
+ * NsDb_ModInit --
  *
  *	Module initialization point.
  *
@@ -57,7 +55,7 @@ int Ns_ModuleVersion = 1;
  */
 
 int
-Ns_ModuleInit(char *server, char *module)
+NsDb_ModInit(char *server, char *module)
 {
     static int once;
 

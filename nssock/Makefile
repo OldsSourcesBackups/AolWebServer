@@ -30,6 +30,8 @@
 # $Header$
 #
 
+LIB	 =  nssock
+LIBOBJS  =  nssock.o
 MOD      =  nssock.so
-OBJS     =  nssock.o
+MODINIT	 =  NsSock_ModInit
 include  ../include/Makefile.build

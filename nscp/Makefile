@@ -30,6 +30,8 @@
 # $Header$
 #
 
+LIB	 =  nscp
+LIBOBJS  =  nscp.o
 MOD      =  nscp.so
-OBJS     =  nscp.o
+MODINIT	 =  NsCp_ModInit
 include  ../include/Makefile.build

@@ -92,13 +92,11 @@ static unsigned char dont_echo[]  = {TN_IAC, TN_DONT, TN_ECHO};
 static unsigned char will_echo[]  = {TN_IAC, TN_WILL, TN_ECHO};
 static unsigned char wont_echo[]  = {TN_IAC, TN_WONT, TN_ECHO};
 
-int Ns_ModuleVersion = 1;
-
 
 /*
  *----------------------------------------------------------------------
  *
- * Ns_ModuleInit --
+ * NsCp_Init --
  *
  *	Load the config parameters, setup the structures, and
  *	listen on the control port.
@@ -114,7 +112,7 @@ int Ns_ModuleVersion = 1;
  */
  
 int
-Ns_ModuleInit(char *server, char *module)
+NsCp_Init(char *server, char *module)
 {
     Mod *modPtr;
     char *path, *addr, *pass, *user, *key, *end;

@@ -42,12 +42,6 @@ static const char *RCSID = "@(#) $Header$, compiled: " __DATE__ " " __TIME__;
 #endif
 
 /*
- * For AOLserver
- */
-
-int Ns_ModuleVersion = 1;
-
-/*
  * The following structure is allocated for each instance of the module.
  */
 
@@ -120,7 +114,7 @@ static Tcl_HashTable   serversTable;
 /*
  *----------------------------------------------------------------------
  *
- * Ns_ModuleInit --
+ * NsPerm_ModInit --
  *
  *	Initialize the perms module 
  *
@@ -134,7 +128,7 @@ static Tcl_HashTable   serversTable;
  */
 
 int
-Ns_ModuleInit(char *server, char *module)
+NsPerm_ModInit(char *server, char *module)
 {
     Server *servPtr;
     char *path;

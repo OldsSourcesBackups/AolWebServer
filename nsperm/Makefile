@@ -30,8 +30,10 @@
 # $Header$
 #
 
+LIB	 =  nsperm
+LIBOBJS  =  nsperm.o
 MOD      =  nsperm.so
-OBJS     =  nsperm.o
+MODINIT	 =  NsPerm_ModInit
 MODINST	 =  cpfiles
 
 include ../include/Makefile.build
@@ -46,5 +48,5 @@ cpfiles:
 	$(INSTALL_DATA) compat.tcl $(modtcl)/
 	$(MKDIR) $(moddat)
 	for f in passwd group hosts.allow hosts.deny perms; do \
-		test -f $(moddat)/$$f || $(INSTALL_DATA) $$f $(moddat)/; \
+		$(INSTALL_DATA) -n $$f $(moddat)/; \
 	done
