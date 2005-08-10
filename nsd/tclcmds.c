@@ -429,7 +429,7 @@ static char *initScript = \
 	    if [catch {eval _ns_adp_include $args} errMsg] {\n\
 		return -code error $errMsg\n\
 	    }\n\
-	    return -code -ok\n\
+	    return -code ok\n\
 	}";
 
 
