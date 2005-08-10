@@ -215,17 +215,6 @@ proc _ns_helper_eval {args} {
     return -code $code $result
 }
 
-#
-# ns_adp_include --
-#
-#   Wrapper for _ns_adp_include to ensure a
-#   new call frame with private variables.
-#
-
-proc ns_adp_include {args} {
-    eval _ns_adp_include $args
-}
-
 
 #
 # ns_init --
