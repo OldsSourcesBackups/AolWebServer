@@ -177,6 +177,7 @@ Ns_RegisterReturn(int status, char *url)
 void
 Ns_ConnConstructHeaders(Ns_Conn *conn, Ns_DString *dsPtr)
 {
+    Conn *connPtr = (Conn *) conn;
     int   i, status;
     char *reason;
     char *value, *keep;
@@ -194,8 +195,9 @@ Ns_ConnConstructHeaders(Ns_Conn *conn, Ns_DString *dsPtr)
 	    break;
 	}
     }
-    Ns_DStringPrintf(dsPtr, "HTTP/%u.%u %d %s\r\n",
-		     nsconf.http.major, nsconf.http.minor,
+    Ns_DStringPrintf(dsPtr, "HTTP/%u.%u %d %s\r\n", 
+		     _MIN((connPtr->major), nsconf.http.major),
+		     _MIN((connPtr->minor), nsconf.http.minor),
 		     status, reason);
 
     /*
