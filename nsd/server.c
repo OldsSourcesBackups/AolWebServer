@@ -484,6 +484,9 @@ CreateServer(char *server)
     if (Ns_ConfigGetBool(path, "trimspace", &i) && i) {
     	servPtr->adp.flags |= ADP_TRIM;
     }
+    if (!Ns_ConfigGetBool(path, "autoabort", &i) || i) {
+    	servPtr->adp.flags |= ADP_AUTOABORT;
+    }
     servPtr->adp.debuginit = Ns_ConfigGetValue(path, "debuginit");
     if (servPtr->adp.debuginit == NULL) {
     	servPtr->adp.debuginit = "ns_adp_debuginit";
