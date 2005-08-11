@@ -113,14 +113,16 @@ NsTclAdpCtlObjCmd(ClientData arg, Tcl_Interp *interp, int objc,
     char *id;
     static CONST char *opts[] = {
 	"bufsize", "channel",
-	"detailerror", "displayerror", "expire", "gzip", "nocache",
-	"safe", "singlescript", "stricterror", "trace", "trimspace",
+	"autoabort", "detailerror", "displayerror", "expire", "gzip",
+	"nocache", "safe", "singlescript", "stricterror", "trace",
+	"trimspace",
 	NULL
     };
     enum {
 	CBufSizeIdx, CChanIdx,
-	CDetailIdx, CDispIdx, CExpireIdx, CGzipIdx, CNoCacheIdx,
-	CSafeIdx, CSingleIdx, CStrictIdx, CTraceIdx, CTrimIdx
+	CAbortIdx, CDetailIdx, CDispIdx, CExpireIdx, CGzipIdx,
+	CNoCacheIdx, CSafeIdx, CSingleIdx, CStrictIdx, CTraceIdx,
+	CTrimIdx
     };
     int opt, flag, old, new;
 
@@ -178,6 +180,9 @@ NsTclAdpCtlObjCmd(ClientData arg, Tcl_Interp *interp, int objc,
 	}
 	flag = 0;
     	switch (opt) {
+	case CAbortIdx:
+	    flag = ADP_AUTOABORT;
+	    break;
 	case CDetailIdx:
 	    flag = ADP_DETAIL;
 	    break;
