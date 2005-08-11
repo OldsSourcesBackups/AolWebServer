@@ -670,6 +670,8 @@ NS_EXTERN int Ns_ConnGetKeepAliveFlag(Ns_Conn *conn);
 NS_EXTERN void Ns_ConnSetKeepAliveFlag(Ns_Conn *conn, int flag);
 NS_EXTERN int Ns_ConnGetWriteEncodedFlag(Ns_Conn *conn);
 NS_EXTERN void Ns_ConnSetWriteEncodedFlag(Ns_Conn *conn, int flag);
+NS_EXTERN int Ns_ConnGetGzipFlag(Ns_Conn *conn);
+NS_EXTERN void Ns_ConnSetGzipFlag(Ns_Conn *conn, int flag);
 NS_EXTERN void Ns_ConnSetUrlEncoding(Ns_Conn *conn, Tcl_Encoding encoding);
 
 /*
