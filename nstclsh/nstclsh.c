@@ -37,8 +37,21 @@ static const char *RCSID = "@(#) $Header$, compiled: " __DATE__ " " __TIME__;
 
 #include "ns.h"
 
-void
+static Tcl_AppInitProc AppInit;
+
+int
 main(int argc, char **argv)
 {
-    Tcl_Main(argc, argv, Ns_TclInit);
+    Tcl_Main(argc, argv, AppInit);
+    return 0;
+}
+
+static int
+AppInit(Tcl_Interp *interp)
+{
+    if (Tcl_Init(interp) != TCL_OK ||
+	Ns_TclInit(interp) != TCL_OK) {
+	return TCL_ERROR;
+    }
+    return TCL_OK;
 }
