@@ -59,8 +59,6 @@ static int sigpending;
 
 #define SysErrMsg()    (NsWin32ErrMsg(GetLastError()))
 
-void NsdInit(void);
-
 
 /*
  *----------------------------------------------------------------------
@@ -85,12 +83,13 @@ DllMain(HANDLE hModule, DWORD why, LPVOID lpReserved)
     WSADATA         wsd;
 
     if (why == DLL_PROCESS_ATTACH) {
+	NsThreads_LibInit();
 	Ns_TlsAlloc(&tls, ns_free);
 	if (WSAStartup(MAKEWORD(1, 1), &wsd) != 0) {
             return FALSE;
         }
         DisableThreadLibraryCalls(hModule);
-        NsdInit();
+	Ns_LibInit();
     } else if (why == DLL_PROCESS_DETACH) {
         WSACleanup();
     }
