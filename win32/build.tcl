@@ -10,6 +10,11 @@ set DEBUG 0
 set INSTALLDIR "./installed"
 set TCLDIR "../tcl_core-8-4-6/win/installed"
 
+set BUILD "debug"
+set DEBUG 1
+set INSTALLDIR "c:/jim/aolserver"
+set TCLDIR "c:/jim/demo/Tcl"
+
 namespace eval ::make {
     proc flag {key args} {
         variable flags
