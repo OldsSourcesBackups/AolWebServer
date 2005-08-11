@@ -61,7 +61,6 @@ int
 NsTclGetConn(NsInterp *itPtr, Ns_Conn **connPtr)
 {
     if (itPtr->conn == NULL) {
-	Tcl_AddErrorInfo(itPtr->interp, "no connection");
 	Tcl_SetResult(itPtr->interp, "no connection", TCL_STATIC);
 	return TCL_ERROR;
     }
