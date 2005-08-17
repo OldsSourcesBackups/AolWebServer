@@ -38,6 +38,7 @@
 #ifndef THREAD_H
 #define THREAD_H
 
+#define NSTHREAD_EXPORTS
 #include "nsthread.h"
 
 #ifdef WIN32
