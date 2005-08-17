@@ -35,7 +35,7 @@
 
 static const char *RCSID = "@(#) $Header$, compiled: " __DATE__ " " __TIME__;
 
-#include "ns.h"
+#include "nsd.h"
 #ifdef HAVE_ZLIB_H
 #include <zlib.h>
 #endif

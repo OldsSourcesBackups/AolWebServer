@@ -63,7 +63,7 @@ static Ns_Mutex lock;
  *----------------------------------------------------------------------
  */
 
-int
+SOCKET
 NsSockGetBound(struct sockaddr_in *saPtr)
 {
     SOCKET sock = INVALID_SOCKET;
