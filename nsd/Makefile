@@ -50,7 +50,7 @@ OBJS	= adpcmds.o adpeval.o adpparse.o adprequest.o auth.o binder.o \
 	  tclsock.o tclthread.o tclvar.o tclxkeylist.o url.o \
 	  urlencode.o urlopen.o urlspace.o uuencode.o stamp.o
 
-UNXOBJS	= unix.o
+UNIXOBJS= unix.o 
 WINOBJS	= nswin32.o getopt.o
 
 include ../include/ns.mak
