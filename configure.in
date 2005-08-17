@@ -51,6 +51,7 @@ if test "${TCL_THREADS}" != "1"; then
 fi
 SC_ENABLE_SYMBOLS
 
+AC_SUBST(TCLSH)
 AC_SUBST(TCL_LIB_SPEC)
 AC_SUBST(TCL_LIBS)
 AC_SUBST(TCL_INCLUDE_SPEC)
@@ -240,4 +241,4 @@ fi
 # Create Makefile.global.
 #
 
-AC_OUTPUT(include/Makefile.global include/Makefile.module)
+AC_OUTPUT(include/ns.mak)

@@ -36,7 +36,7 @@
 #	AOLserver autoconf include which simply includes Tcl's tcl.m4.
 #
 
-builtin(include,../tcl8.4/unix/tcl.m4)
+builtin(include,../tcl/unix/tcl.m4)
 
 
 dnl

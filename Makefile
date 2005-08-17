@@ -37,11 +37,14 @@ include include/ns.mak
 
 all: build
 
-build clean:
-	$(MAKEALL) $* $(dirs)
+build:
+	$(MAKEALL) build $(dirs)
+
+clean:
+	$(MAKEALL) clean $(dirs)
 
 install:
-	$(MAKEALL) $* $(dirs)
+	$(MAKEALL) install $(dirs)
 	$(INST) -d $(AOLSERVER) sample-config.tcl
 	$(INST) -d $(AOLSERVER)/servers/server1/pages -n index.adp
 	$(INST) -d $(AOLSERVER)/modules/tcl tcl/*.tcl
