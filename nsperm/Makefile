@@ -30,23 +30,16 @@
 # $Header$
 #
 
-LIB	 =  nsperm
-LIBOBJS  =  nsperm.o
-MOD      =  nsperm.so
+MOD	 =  nsperm
+OBJS	 =  nsperm.o
 MODINIT	 =  NsPerm_ModInit
-MODINST	 =  cpfiles
+INSTALL	 =  install-perm
 
-include ../include/Makefile.build
+include ../include/ns.mak
 
-moddir	 = nsperm
-moddat	 = $(INSTSRVMOD)/$(moddir)
-modtcl	 = $(INSTTCL)/$(moddir)
+modtcl	 = $(AOLSERVER)/modules/tcl/$(MOD)
+moddat	 = $(AOLSERVER)/servers/server1/modules/$(MOD)
 
-cpfiles:
-	$(MKDIR) $(modtcl)
-	$(INSTALL_DATA) init.tcl $(modtcl)/
-	$(INSTALL_DATA) compat.tcl $(modtcl)/
-	$(MKDIR) $(moddat)
-	for f in passwd group hosts.allow hosts.deny perms; do \
-		$(INSTALL_DATA) -n $$f $(moddat)/; \
-	done
+install-perm:
+	$(INST) -d $(modtcl) init.tcl compat.tcl 
+	$(INST) -d $(moddat) -n passwd group hosts.allow hosts.deny perms

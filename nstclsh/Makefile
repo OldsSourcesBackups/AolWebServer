@@ -32,4 +32,4 @@
 
 PGM      =  nstclsh
 PGMOBJS  =  nstclsh.o
-include  ../include/Makefile.build
+include  ../include/ns.mak

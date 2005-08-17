@@ -30,8 +30,7 @@
 # $Header$
 #
 
-LIB	 =  nslog
-LIBOBJS  =  nslog.o
-MOD      =  nslog.so
+MOD	 =  nslog
+OBJS  	 =  nslog.o
 MODINIT	 =  NsLog_ModInit
-include  ../include/Makefile.build
+include  ../include/ns.mak

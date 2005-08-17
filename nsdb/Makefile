@@ -29,9 +29,8 @@
 #
 # $Header$
 
-LIB	= nsdb
-LIBOBJS	= dbinit.o dbdrv.o dbtcl.o dbutil.o nsdb.o
-MOD	= nsdb.so
-MODINIT = NsDb_ModInit
 HDRS	= db.h
-include ../include/Makefile.build
+MOD	= nsdb
+OBJS	= dbinit.o dbdrv.o dbtcl.o dbutil.o nsdb.o
+MODINIT = NsDb_ModInit
+include ../include/ns.mak
