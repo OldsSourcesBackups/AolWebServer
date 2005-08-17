@@ -40,6 +40,15 @@
 
 #include "ns.h"
 
+#ifdef NSDB_EXPORTS
+#undef NS_EXTERN
+#ifdef __cpluscplus
+#define NS_EXTERN extern "C" NS_EXPORT
+#else
+#define NS_EXTERN extern NS_EXPORT
+#endif
+#endif
+
 /*
  * The following are nsdb return codes.
  */
