@@ -60,6 +60,7 @@ NAMES=`sed -n '
 SECTION=`echo $MANPAGE | sed 's/.*\(.\)$/\1/'`
 SRCDIR=`dirname $MANPAGE`
 FIRST=""
+/bin/mkdir -p $DIR
 for f in $NAMES; do
     f=$f.$SECTION$SUFFIX
     if test -z "$FIRST" ; then
