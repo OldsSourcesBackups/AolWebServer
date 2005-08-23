@@ -63,4 +63,5 @@ NsThreadFatal(char *func, char *osfunc, int err)
 #else
     Tcl_Panic("nsthreads: %s failed in %s: %s", osfunc, func, strerror(err));
 #endif
+    abort();
 }
