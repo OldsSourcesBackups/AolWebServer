@@ -335,6 +335,52 @@ NsTclRegisterTraceObjCmd(ClientData arg, Tcl_Interp *interp, int objc, Tcl_Obj *
 /*
  *----------------------------------------------------------------------
  *
+ * NsTclRegisterFastPathObjCmd --
+ *
+ *	Implements ns_register_fastpath as obj command.
+ *
+ * Results:
+ *	Tcl result. 
+ *
+ * Side effects:
+ *	See docs. 
+ *
+ *----------------------------------------------------------------------
+ */
+
+int
+NsTclRegisterFastPathObjCmd(ClientData arg, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[])
+{
+    NsInterp *itPtr = arg;
+    NsServer *servPtr = itPtr->servPtr;
+    char     *server, *method, *url;
+    int       flags, idx;
+
+    if (objc < 3 || objc > 4) {
+    badargs:
+        Tcl_WrongNumArgs(interp, 1, objv, "?-noinherit? method url");
+        return TCL_ERROR;
+    }
+    flags = 0;
+    idx = 1;
+    if (objc == 4) {
+        if (!STREQ(Tcl_GetString(objv[1]), "-noinherit")) {
+            goto badargs;
+        }
+        flags = NS_OP_NOINHERIT;
+        idx++;
+    }
+    server = servPtr->server;
+    method = Tcl_GetString(objv[idx++]);
+    url = Tcl_GetString(objv[idx++]);
+    Ns_RegisterRequest(server, method, url, Ns_FastPathOp, NULL, servPtr, flags);
+    return TCL_OK;
+}
+
+
+/*
+ *----------------------------------------------------------------------
+ *
  * AdpRequest --
  *
  *	Ns_OpProc for registered ADP's.

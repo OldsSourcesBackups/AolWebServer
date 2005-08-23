@@ -289,7 +289,7 @@ FastGetRestart(Ns_Conn *conn, char *page)
 
 /*
  *----------------------------------------------------------------------
- * NsFastGet --
+ * Ns_FastPathOp --
  *
  *      Return the contents of a URL.
  *
@@ -303,7 +303,7 @@ FastGetRestart(Ns_Conn *conn, char *page)
  */
 
 int
-NsFastGet(void *arg, Ns_Conn *conn)
+Ns_FastPathOp(void *arg, Ns_Conn *conn)
 {
     Conn	   *connPtr = (Conn *) conn;
     NsServer  	   *servPtr = connPtr->servPtr;

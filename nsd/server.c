@@ -199,8 +199,8 @@ NsInitServer(char *server, Ns_ServerInitProc *initProc)
      * register by default for all URL's.
      */
 
-    RegisterMap(server, "fastpath", "/", NsFastGet);
-    RegisterMaps(server, "fastpath", NsFastGet);
+    RegisterMap(server, "fastpath", "/", Ns_FastPathOp);
+    RegisterMaps(server, "fastpath", Ns_FastPathOp);
     RegisterMaps(server, "adp", NsAdpProc);
 
     /*

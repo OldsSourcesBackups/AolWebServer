@@ -733,6 +733,7 @@ NS_EXTERN void Ns_SetUrlToFileProc(char *server, Ns_UrlToFileProc *procPtr);
 NS_EXTERN int Ns_UrlToFile(Ns_DString *dsPtr, char *server, char *url);
 NS_EXTERN int Ns_UrlIsFile(char *server, char *url);
 NS_EXTERN int Ns_UrlIsDir(char *server, char *url);
+NS_EXTERN int Ns_FastPathOp(void *arg, Ns_Conn *conn);
 
 /*
  * filter.c:
