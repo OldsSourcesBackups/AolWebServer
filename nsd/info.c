@@ -512,7 +512,7 @@ NsTclInfoObjCmd(ClientData arg, Tcl_Interp *interp, int objc, Tcl_Obj **objv)
 	IPidIdx, IPlatformIdx, IPoolsIdx, IScheduledIdx, IServerIdx, IServersIdx,
 	sockICallbacksIdx, ITagIdx, ITclLibIdx, IThreadsIdx, IUptimeIdx,
 	IVersionIdx, IWinntIdx,
-    } opt;
+    } _nsmayalias opt;
 
     if (objc != 2) {
 	Tcl_WrongNumArgs(interp, 1, objv, "option");

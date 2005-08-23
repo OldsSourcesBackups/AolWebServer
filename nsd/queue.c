@@ -225,7 +225,7 @@ NsTclServerObjCmd(ClientData arg, Tcl_Interp *interp, int objc,
     enum {
 	 SActiveIdx, SAllIdx, SConnectionsIdx, SKeepaliveIdx, SPoolsIdx,
 	 SQueuedIdx, SThreadsIdx, SWaitingIdx,
-    } opt;
+    } _nsmayalias opt;
 
     if (objc != 2 && objc != 3) {
 	Tcl_WrongNumArgs(interp, 1, objv, "option ?pool?");

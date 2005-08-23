@@ -61,6 +61,6 @@ extern void   NsCleanupTls(void **slots);
 extern void **NsGetTls(void);
 extern void   NsThreadMain(void *arg);
 extern void   NsCreateThread(void *arg, long stacksize, Ns_Thread *threadPtr);
-extern void   NsThreadFatal(char *func, char *osfunc, int err);
+extern void   NsThreadFatal(char *func, char *osfunc, int err) _nsnoreturn;
 
 #endif /* THREAD_H */

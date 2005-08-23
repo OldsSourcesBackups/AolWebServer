@@ -426,7 +426,7 @@ NsTclLogCtlObjCmd(ClientData arg, Tcl_Interp *interp, int objc,
 	CFlushIdx,
 	CReleaseIdx,
 	CTruncIdx
-    } opt;
+    } _nsmayalias opt;
 
     if (objc < 2) {
         Tcl_WrongNumArgs(interp, 1, objv, "option ?arg?");

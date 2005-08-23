@@ -38,6 +38,10 @@
 #ifndef NSTHREAD_H
 #define NSTHREAD_H
 
+
+#include "nsattributes.h"
+
+
 #ifdef _WIN32
 #define NS_EXPORT		__declspec(dllexport)
 #define NS_IMPORT		__declspec(dllimport)
@@ -195,12 +199,12 @@ NS_EXTERN void Ns_MasterUnlock(void);
  * memory.c:
  */
 
-NS_EXTERN void *ns_malloc(size_t size);
-NS_EXTERN void *ns_calloc(size_t num, size_t size);
+NS_EXTERN void *ns_malloc(size_t size) _nsmalloc;
+NS_EXTERN void *ns_calloc(size_t num, size_t size) _nsmalloc;
 NS_EXTERN void ns_free(void *buf);
 NS_EXTERN void *ns_realloc(void *buf, size_t size);
-NS_EXTERN char *ns_strdup(const char *string);
-NS_EXTERN char *ns_strcopy(const char *string);
+NS_EXTERN char *ns_strdup(const char *string) _nsmalloc;
+NS_EXTERN char *ns_strcopy(const char *string) _nsmalloc;
 
 /*
  * mutex.c:

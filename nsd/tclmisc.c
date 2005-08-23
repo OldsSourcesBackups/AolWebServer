@@ -440,7 +440,7 @@ NsTclTimeObjCmd(ClientData dummy, Tcl_Interp *interp, int objc, Tcl_Obj **objv)
     enum {
 	TAdjustIdx, TDiffIdx, TGetIdx, TIncrIdx, TMakeIdx,
 	TSecondsIdx, TMicroSecondsIdx
-    } opt;
+    } _nsmayalias opt;
 
     if (objc < 2) {
     	Tcl_SetLongObj(Tcl_GetObjResult(interp), time(NULL));

@@ -1035,7 +1035,7 @@ NsTclChanObjCmd(ClientData arg, Tcl_Interp *interp, int objc, Tcl_Obj *CONST obj
     };
     enum {
 	CCleanupIdx, CListIdx, CCreateIdx, CPutIdx, CGetIdx
-    } opt;
+    } _nsmayalias opt;
 
     if (objc < 2) {
 	Tcl_WrongNumArgs(interp, 1, objv, "command ?args?");

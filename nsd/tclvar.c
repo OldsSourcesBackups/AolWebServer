@@ -390,7 +390,7 @@ NsTclNsvArrayObjCmd(ClientData arg, Tcl_Interp *interp, int objc, Tcl_Obj **objv
     };
     enum {
 	CSetIdx, CResetIdx, CGetIdx, CNamesIdx, CSizeIdx, CExistsIdx
-    } opt;
+    } _nsmayalias opt;
 
     if (objc < 2) {
     	Tcl_WrongNumArgs(interp, 1, objv, "option ...");
@@ -777,7 +777,7 @@ NsTclVarObjCmd(ClientData arg, Tcl_Interp *interp, int objc,
     };
     enum {
 	VExistsIdx, VGetIdx, VListIdx, VSetIdx, VUnsetIdx
-    } opt; 
+    } _nsmayalias opt; 
 
     if (objc < 2) {
 	Tcl_WrongNumArgs(interp, 1, objv, "option ?args?");
