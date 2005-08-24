@@ -45,7 +45,6 @@ ns_section "ns/encodings"
 
 ns_section "ns/threads"
     ns_param stacksize [expr 128 * 1024]
-    ns_param mutexmeter true
 
 ns_section "ns/servers"
     ns_param server1 "server1"
