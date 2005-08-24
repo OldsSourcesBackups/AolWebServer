@@ -46,7 +46,7 @@ clean:
 install:
 	$(MAKEALL) install $(dirs)
 	$(INST) -d $(AOLSERVER)/log
-	$(INST) -d $(AOLSERVER) sample-config.tcl
+	$(INST) -d $(AOLSERVER) examples/config/base.tcl
 	$(INST) -d $(AOLSERVER)/servers/server1/pages -n index.adp
 	$(INST) -d $(AOLSERVER)/modules/tcl tcl/*.tcl
 	$(INST) -d $(INSTBIN) util/*.tcl
