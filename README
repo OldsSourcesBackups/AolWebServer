@@ -132,19 +132,16 @@ such as HP/UX should be easy.  To compile and install AOLserver:
 	to get started:
 
 	% cd /usr/local/aolserver
-	% cp sample-config.tcl nsd.tcl
+	% cp base.tcl nsd.tcl
 	% vi nsd.tcl
 
+        Additional configuration examples can be found in the 
+        examples/config directory.
 
 3e.	Try running the server in a shell window:
 
 	% cd /usr/local/aolserver
 	% bin/nsd -ft nsd.tcl
-
-
-More information on configuration and running AOLserver can be
-found within the sample-config.tcl script and the AOLserver.n man
-page.
 
 
 4. Mailing lists
