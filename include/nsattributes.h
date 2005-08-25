@@ -75,9 +75,9 @@
 # define _nspure         __attribute__ ((pure))
 # undef _nsconst
 # define _nsconst        __attribute__ ((const))
-# undef _nslikely(x) x
+# undef _nslikely
 # define _nslikely(x)    __builtin_expect((x),1)
-# undef _nsunlikely(x) x
+# undef _nsunlikely
 # define _nsunlikely(x)  __builtin_expect((x),0)
 #endif
 
@@ -89,13 +89,13 @@
 # undef _nsprintflike
 # define _nsprintflike(fmtarg, firstvararg) \
              __attribute__((format (printf, fmtarg, firstvararg)))
-# undef _nsscanflike(fmtarg, firstvararg)
+# undef _nsscanflike
 # define _nsscanflike(fmtarg, firstvararg) \
              __attribute__((format (scanf, fmtarg, firstvararg)))
 #endif
 
 #if __GNUC_PREREQ(2,8)
-# undef _nsfmtarg(x)
+# undef _nsfmtarg
 # define _nsfmtarg(x)    __attribute__ ((format_arg(x)))
 #endif
 
