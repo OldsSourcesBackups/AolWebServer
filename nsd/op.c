@@ -38,6 +38,9 @@ static const char *RCSID = "@(#) $Header$, compiled: " __DATE__ " " __TIME__;
 
 #include "nsd.h"
 
+#define MAX_RECURSION 3       /* Max return direct recursion limit. */
+
+
 /*
  * The following structure defines a request procedure including user
  * routine and client data.
@@ -226,6 +229,17 @@ Ns_ConnRunRequest(Ns_Conn *conn)
         return Ns_ConnReturnServiceUnavailable(conn);
     }
 
+    /*
+     * Prevent infinite internal redirect loops.
+     */
+
+    if (connPtr->recursionCount > MAX_RECURSION) {
+        Ns_Log(Error, "return: failed to redirect '%s %s': "
+               "exceeded recursion limit of %d",
+               conn->request->method, conn->request->url, MAX_RECURSION);
+        return Ns_ConnReturnInternalError(conn);
+    }
+
     Ns_MutexLock(&ulock);
     reqPtr = Ns_UrlSpecificGet(server, conn->request->method,
     	    	    	       conn->request->url, uid);
@@ -266,7 +280,10 @@ Ns_ConnRunRequest(Ns_Conn *conn)
 int
 Ns_ConnRedirect(Ns_Conn *conn, char *url)
 {
+    Conn *connPtr = (Conn *) conn;
     int status;
+
+    ++connPtr->recursionCount;
 
     /*
      * Update the request URL.
