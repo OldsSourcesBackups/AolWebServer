@@ -74,8 +74,8 @@ Ns_LibInit(void)
 	 * Log must be initialized first in case later inits log messages.
 	 */
 
-	NsInitFd();
     	NsInitLog();
+	NsInitFd();
 
 	/*
 	 * Caches and URL space are used by some of the remaining inits.
