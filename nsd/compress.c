@@ -81,7 +81,7 @@ Ns_Compress(char *buf, int len, Tcl_DString *outPtr, int level)
      * Grow buffer for header, footer, and maximum compressed size.
      */
 
-    glen = len + (len / 100) + 13 + sizeof(header) + sizeof(footer);
+    glen = compressBound(len) + sizeof(header) + sizeof(footer);
     Tcl_DStringSetLength(outPtr, (int) glen);
 
     /*
@@ -94,6 +94,7 @@ Ns_Compress(char *buf, int len, Tcl_DString *outPtr, int level)
     if (compress2(gbuf + skip, &glen, buf, (uLong) len, level) != Z_OK) {
         return NS_ERROR;
     }
+    glen -= 4;
     memcpy(gbuf, header, sizeof(header));
     Tcl_DStringSetLength(outPtr, (int) glen + skip);
 
@@ -103,8 +104,8 @@ Ns_Compress(char *buf, int len, Tcl_DString *outPtr, int level)
 
     crc = crc32(0, Z_NULL, 0);
     crc = crc32(crc, buf, (uInt) len);
-    footer[0] = htonl(crc);
-    footer[1] = htonl(len);
+    footer[0] = crc;
+    footer[1] = len;
     Tcl_DStringAppend(outPtr, (char *) footer, sizeof(footer));
     return NS_OK;
 #endif
