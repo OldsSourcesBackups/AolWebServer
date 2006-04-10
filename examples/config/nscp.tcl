@@ -43,7 +43,7 @@
 #     debugging and auditing purposes.
 #
 
-ns_section "ns/servers/server1/modules"
+ns_section "ns/server/server1/modules"
     ns_param nscp nscp.so
 
 ns_section "ns/server/server1/module/nscp"
