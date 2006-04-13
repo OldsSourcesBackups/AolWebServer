@@ -309,10 +309,9 @@ proc ns_cleanupvars {} {
 #
 
 proc ns_reinit {} {
-    ns_cleanup
-    ns_init
+    ns_ictl runtraces deallocate
+    ns_ictl runtraces allocate
 }
-
 
 #
 # _ns_savenamespaces --
@@ -648,6 +647,14 @@ rename _ns_sourcefile   {}
 
 ns_cleanup
 _ns_savenamespaces
+
+#
+# Register the init and cleanup callbacks.
+#
+
+ns_ictl trace create {ns_ictl update}
+ns_ictl trace allocate ns_init
+ns_ictl trace deallocate ns_cleanup
 
 #
 # Kill this interp to save memory.
