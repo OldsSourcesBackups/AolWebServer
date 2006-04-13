@@ -29,13 +29,17 @@
 # $Header$
 #
 
-
+MAN := $(wildcard *.[13n])
+INSTALL=install-index
 NSLIBS = $(wildcard $(AOLSERVER)/lib/libns*$(LIBEXT))
 MAN3 := $(wildcard *.3)
-MANN := $(wildcard *.n)
-MAN1 := $(wildcard *.1)
-SRCDIR = ..
-include $(SRCDIR)/include/ns.mak
+
+all: install
+
+include ../include/ns.mak
+
+install-index:
+	$(INST) -d $(AOLSERVER)/html index.adp
 
 missing: 
 	@nm $(NSLIBS) | awk '/T _Ns_/ {print $$3}' | sort > lib.out
