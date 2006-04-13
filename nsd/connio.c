@@ -668,10 +668,10 @@ Ns_ConnReadLine(Ns_Conn *conn, Ns_DString *dsPtr, int *nreadPtr)
     Conn	   *connPtr = (Conn *) conn;
     Driver         *drvPtr = connPtr->drvPtr;
     char           *eol, *next;
-    int             nread, ncopy;
+    int             nread, ncopy, avail;
 
-    if (NsConnContent(conn, &next, NULL) == NULL
-	|| (eol = strchr(next, '\n')) == NULL
+    if (NsConnContent(conn, &next, &avail) == NULL
+	|| (eol = memchr(next, '\n', avail)) == NULL
         || (nread = (eol - next)) > drvPtr->maxline) {
 	return NS_ERROR;
     }
