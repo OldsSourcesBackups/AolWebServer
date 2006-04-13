@@ -37,11 +37,9 @@
 .BS
 '\" Note:  do not modify the .SH NAME line immediately below!
 .SH NAME
-ns_cleanup, ns_ictl, ns_init \- commands
+ns_cleanup, ns_init \- commands
 .SH SYNOPSIS
 \fBns_cleanup \fIoption \fR?\fIarg arg ...\fR?
-.sp
-\fBns_ictl \fIoption \fR?\fIarg arg ...\fR?
 .sp
 \fBns_init \fIoption \fR?\fIarg arg ...\fR?
 .BE

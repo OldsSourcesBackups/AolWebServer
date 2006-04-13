@@ -37,7 +37,7 @@
 .BS
 '\" Note:  do not modify the .SH NAME line immediately below!
 .SH NAME
-ns_chan \- commands
+ns_chan \- Facility to share open file channels between interps
 .SH SYNOPSIS
 \fBns_chan \fIoption \fR?\fIarg arg ...\fR?
 .BE
