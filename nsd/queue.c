@@ -510,6 +510,7 @@ ConnRun(Conn *connPtr)
      * Initialize the connection encodings and headers. 
      */
     
+    connPtr->outputheaders = Ns_SetCreate(NULL);
     encoding = NsGetInputEncoding(connPtr);
     if (encoding == NULL) {
     	encoding = NsGetOutputEncoding(connPtr);
@@ -587,6 +588,17 @@ ConnRun(Conn *connPtr)
 
     NsRunCleanups(conn);
     NsFreeConnInterp(connPtr);
+    if (connPtr->type != NULL) {
+        Ns_ConnSetType(conn, NULL);
+    }
+    if (connPtr->query != NULL) {
+        Ns_ConnClearQuery(conn);
+    }
+    if (connPtr->outputheaders != NULL) {
+    	Ns_SetFree(connPtr->outputheaders);
+	connPtr->outputheaders = NULL;
+    }
+    Ns_DStringTrunc(&connPtr->obuf, 0);
 }
 
 
