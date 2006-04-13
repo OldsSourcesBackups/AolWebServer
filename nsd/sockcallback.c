@@ -385,12 +385,7 @@ SockCallbackThread(void *ignored)
 	    break;
 	}
 	pfds[0].revents = 0;
-	do {
-	    n = poll(pfds, (size_t)nfds, -1);
-	} while (n < 0 && errno == EINTR);
-	if (n < 0) {
-	    Ns_Fatal("poll() failed: %s", strerror(errno));
-	}
+	n = NsPoll(pfds, (size_t) nfds, NULL);
 	if ((pfds[0].revents & POLLIN) && recv(trigPipe[0], &c, 1, 0) != 1) {
 	    Ns_Fatal("trigger read() failed: %s", strerror(errno));
 	}
