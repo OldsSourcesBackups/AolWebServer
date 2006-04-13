@@ -85,9 +85,6 @@ NsTclInitTimeType()
     if (sizeof(obj.internalRep) < sizeof(Ns_Time)) {
     	Tcl_Panic("NsTclInitObjs: sizeof(obj.internalRep) < sizeof(Ns_Time)");
     }
-    if (sizeof(int) < sizeof(long)) {
-    	Tcl_Panic("NsTclInitObjs: sizeof(int) < sizeof(long)");
-    }
     intTypePtr = Tcl_GetObjType("int");
     if (intTypePtr == NULL) {
     	Tcl_Panic("NsTclInitObjs: no int type");
@@ -215,27 +212,19 @@ UpdateStringOfTime(objPtr)
 static int
 SetTimeFromAny(Tcl_Interp *interp, Tcl_Obj *objPtr)
 {
-    char *str, *sep;
+    char *str;
     Ns_Time time;
-    int result;
 
     str = Tcl_GetString(objPtr);
-    sep = strchr(str, ':');
-    if (objPtr->typePtr == intTypePtr || sep == NULL) {
+    if (objPtr->typePtr == intTypePtr || strchr(str, ':') == NULL) {
 	if (Tcl_GetLongFromObj(interp, objPtr, &time.sec) != TCL_OK) {
 	    return TCL_ERROR;
 	}
 	time.usec = 0;
-    } else {
-	*sep = '\0';
-	result = Tcl_GetInt(interp, str, (int *) &time.sec);
-	*sep = ':';
-	if (result != TCL_OK) {
-	    return TCL_ERROR;
-	}
-	if (Tcl_GetInt(interp, sep+1, (int *) &time.usec) != TCL_OK) {
-	    return TCL_ERROR;
-	}
+    } else if (sscanf(str, "%ld:%ld", &time.sec, &time.usec) != 2) {
+	Tcl_AppendResult(interp, "invalid time spec \"", str,
+	    "\": expected sec:usec", NULL);
+	return TCL_ERROR;
     }
     Ns_AdjTime(&time);
     SetTimeInternalRep(objPtr, &time);
