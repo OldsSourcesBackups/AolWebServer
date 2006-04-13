@@ -630,6 +630,7 @@ Ns_Main(int argc, char **argv, Ns_ServerInitProc *initProc)
 
     NsRemovePidFile(procname);
     StatusMsg(3);
+    Tcl_Finalize();
     return 0;
 }
 
