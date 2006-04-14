@@ -73,11 +73,11 @@ ns_inet_ntoa(struct in_addr addr)
 {
     Tls *tlsPtr = GetTls();
     union {
-    	unsigned long l;
+    	unsigned int i;
     	unsigned char b[4];
     } u;
     
-    u.l = (unsigned long) addr.s_addr;
+    u.i = (unsigned int) addr.s_addr;
     sprintf(tlsPtr->nabuf, "%u.%u.%u.%u", u.b[0], u.b[1], u.b[2], u.b[3]);
     return tlsPtr->nabuf;
 }
