@@ -130,6 +130,11 @@ ifneq (,$(findstring SunOS,$(uname)))
     endif
 endif
 
+# Mac OS X
+ifneq (,$(findstring Darwin,$(uname)))
+    LDFLAGS     += @TCL_EXTRA_CFLAGS@
+endif
+
 # Add dynamic library entry point flags.
 ifdef DLLINIT
     ifneq (,$(findstring Darwin,$(uname)))
