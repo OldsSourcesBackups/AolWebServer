@@ -29,10 +29,14 @@
 #
 # $Header$
 
+ifndef ZLIB
+    ZLIB = /usr/lib
+endif
+
 HDRS	= nszlib.h
 MOD	= nszlib
 MAN	= ns_zlib.n
 OBJS	= nszlib.o
 MODINIT = NsZlibModInit
-DLLLIBS = -lz
+DLLLIBS = -L$(ZLIB) -lz
 include ../include/ns.mak
