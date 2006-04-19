@@ -33,36 +33,40 @@
 '\" 
 .so man.macros
 
-.TH Ns_ConnWrite 3 4.0 AOLserver "AOLserver Library Procedures"
+.TH Ns_ConnClose 3 4.0 AOLserver "AOLserver Library Procedures"
 .BS
 '\" Note:  do not modify the .SH NAME line immediately below!
 .SH NAME
-Ns_ConnClose, Ns_ConnContentSent, Ns_ConnFlush, Ns_ConnPuts, Ns_ConnSend, Ns_ConnWrite, Ns_WriteConn \- library procedures
+Ns_ConnClose \- Close an open connection
 .SH SYNOPSIS
 .nf
 \fB#include "ns.h"\fR
 .sp
-\fBNs_ConnClose\fR(\fIarg, arg\fR)
-.sp
-\fBNs_ConnContentSent\fR(\fIarg, arg\fR)
-.sp
-\fBNs_ConnFlush\fR(\fIarg, arg\fR)
-.sp
-\fBNs_ConnPuts\fR(\fIarg, arg\fR)
-.sp
-\fBNs_ConnSend\fR(\fIarg, arg\fR)
-.sp
-\fBNs_ConnWrite\fR(\fIarg, arg\fR)
-.sp
-\fBNs_WriteConn\fR(\fIarg, arg\fR)
+int
+\fBNs_ConnClose\fR(\fIconn\fR)
+.SH ARGUMENTS
+.AS Ns_Conn conn in
+.AP Ns_Conn conn in
+Pointer to open connection.
 .BE
 
 .SH DESCRIPTION
 .PP
-These functions ...
+This function calls the connection's communication driver to close
+the connection if it is not already closed.  It always returns
+NS_OK.
+.PP
+If the connection is marked for keep-alive, the underlying connection
+is not actually closed but instead returned to the driver thread
+to process additional requests, if any.  Connections are automatically
+marked for keep-alive by setting the \fINS_CONN_KEEPALIVE\fR flag
+if the client supports it by sending an appropriate
+\fIconnection-keepalive\fR header.  Keep alive can be disabled
+before a call to \fBNs_ConnClose\fR with the \fBNs_ConnSetKeepAliveFlag\fR
+routine with a zero value for the \fIflag\fR argument.
 
 .SH "SEE ALSO"
-nsd(1), info(n)
+Ns_ConnSetKeepAliveFlag(3), Ns_ConnGetKeepAliveFlag(3), Ns_ConnFlush(3)
 
 .SH KEYWORDS
-
+connection, close, keep-alive

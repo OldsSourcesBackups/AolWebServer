@@ -33,48 +33,74 @@
 '\" 
 .so man.macros
 
-.TH Ns_ConnDriver 3 4.0 AOLserver "AOLserver Library Procedures"
+.TH Ns_ConnStatus 3 4.0 AOLserver "AOLserver Library Procedures"
 .BS
 '\" Note:  do not modify the .SH NAME line immediately below!
 .SH NAME
-Ns_ConnDriverContext, Ns_ConnDriverName \- Routines to access communication driver data
+Ns_ConnGetStatus, Ns_ConnSetStatus \- Routines to manage the HTTP response status
 .SH SYNOPSIS
 .nf
 \fB#include "ns.h"\fR
 .sp
-void *
-\fBNs_ConnDriverContext\fR(\fIconn\fR)
+int
+\fBNs_ConnGetStatus\fR(\fIconn\fR)
 .sp
-char *
-\fBNs_ConnDriverName\fR(\fIconn\fR)
+void
+\fBNs_ConnSetStatus\fR(\fIconn, status\fR)
 .SH ARGUMENTS
 .AS Ns_Conn conn in
 .AP Ns_Conn conn in
 Pointer to open connection.
+.AP int status in
+Integer HTTP status code.
 .BE
 
 .SH DESCRIPTION
 .PP
-These functions provide access to the underyling communications
-driver data for an open connection.
+These routines manage the HTTP response code sent to the client in
+a later call to \fBNs_ConnFlush\fR or \fBNs_ConnFlushDirect\fR.
+Higher level routines such as the \fBNs_ConnReturn\fR functions
+normally call these routines automatically using standard HTTP
+status codes and the \fBNs_ConnQueueHeaders\fR routine can be used
+to set the status code for lower level code which bypasses
+\fBNs_ConnFlush\fR.
 
 .TP
-char *\fBNs_ConnDriverName\fR(\fIconn\fR)
-Returns the string name of the communication driver, e.g., "nssock".
-This is the name passed in the \fINs_DriverInitData\fR structure
-in a call to \fBNs_DriverInit\fR, not the module name for the
-particular instance of the loaded driver.
+int \fBNs_ConnGetStatus\fR(\fIconn\fR)
+Return the current HTTP status to be sent.
 
 .TP
-void *\fBNs_ConnDriverContent\fR(\fIconn\fR)
-Returns a pointer to the connection-specific driver context for the
-given connection.  This value is that of the \fIarg\fR element of
-the underlying \fINs_Sock\fR structure allocated by the server and
-used by communication drivers to manage private state.  If the
-connection is closed, the value returned is always NULL.
+int \fBNs_ConnSetStatus\fR(\fIconn, status\fR)
+Set the status code to be sent in the response, for example, 200
+for a normal "OK" response.  A later call to \fBNs_ConnFlush\fR
+will construct the appropriate HTTP response including the given
+status with the cooresponding string status code.
+
+.SH EXAMPLES
+.PP
+The following example demonstrates setting an odd status code
+followed by a call to \fBNs_ConnFlushDirect\fR to send some data:
+
+.CS
+	Ns_ConnSetStatus(conn, 600);
+	Ns_ConnSetType(conn, "text/plain");
+	Ns_ConnFlushDirect(conn, "hello", 5, 0);
+.CE
+
+.PP
+The following should provide similar results:
+
+.CS
+	Ns_ConnSetRequiredHeaders(conn, "text/plain", 5);
+	Ns_ConnQueueHeaders(conn, 600);
+	Ns_ConnPuts(conn, "hello");
+	Ns_ConnClose(conn);
+.CE
 
 .SH "SEE ALSO"
-Ns_DriverInit(3)
+Ns_ConnGetType(3), Ns_ConnSetType(3), Ns_ConnFlush(3),
+Ns_ConnFlushDirect(3), Ns_ConnSetRequiredHeaders(3),
+Ns_ConnQueueHeaders(3), ns_conn(n)
 
 .SH KEYWORDS
-connection, context
+connectionn, response, status

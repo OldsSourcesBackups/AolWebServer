@@ -33,48 +33,64 @@
 '\" 
 .so man.macros
 
-.TH Ns_ConnDriver 3 4.0 AOLserver "AOLserver Library Procedures"
+.TH Ns_Gzip 3 4.5 AOLserver "AOLserver Library Procedures"
 .BS
 '\" Note:  do not modify the .SH NAME line immediately below!
 .SH NAME
-Ns_ConnDriverContext, Ns_ConnDriverName \- Routines to access communication driver data
+Ns_Gzip, Ns_SetGzipProc \- GZIP compression support
 .SH SYNOPSIS
 .nf
 \fB#include "ns.h"\fR
 .sp
-void *
-\fBNs_ConnDriverContext\fR(\fIconn\fR)
+int
+\fBNs_Gzip\fR(\fIbuf, len, level, dsPtr\fR)
 .sp
-char *
-\fBNs_ConnDriverName\fR(\fIconn\fR)
+void
+\fBNs_SetGzipProc\fR(\fIproc\fR)
 .SH ARGUMENTS
-.AS Ns_Conn conn in
-.AP Ns_Conn conn in
-Pointer to open connection.
+.AS Tcl_DString dsPtr out
+.AP Tcl_DString dsPtr out
+Output buffer to placed compressed string.
+.AP int len in
+Length of string pointed to by \fIbuf\fR.
+.AP char *buf in
+Pointer to string to compress.
+.AP int level in
+Requested GZIP compression level.
+.AP Ns_GzipProc proc in
+Procedure to GZIP content.
 .BE
 
 .SH DESCRIPTION
 .PP
-These functions provide access to the underyling communications
-driver data for an open connection.
+These functions enable GZIP compress of text buffers.
 
 .TP
-char *\fBNs_ConnDriverName\fR(\fIconn\fR)
-Returns the string name of the communication driver, e.g., "nssock".
-This is the name passed in the \fINs_DriverInitData\fR structure
-in a call to \fBNs_DriverInit\fR, not the module name for the
-particular instance of the loaded driver.
+int \fBNs_Gzip\fR(\fIbuf, len, level, dsPtr\fR)
+This function compresses a string pointed to by \fIbuf\fR of length
+\fIlen\fR, appending the output to the given \fIdsPtr\fR.
+The output buffer must already be initialized.  The \fIlevel\fR
+parameter specifies the compress level between 0 and 9; see the
+documentation in the zlib.h for details.
+.sp
+The function will return NS_OK if compression was successful,
+otherwise NS_ERROR.  A call to \fBNs_SetGzipProc\fR to install a
+compression function must have already occured.  The \fInszlib\fR
+module will install a suitable function when loaded.
 
 .TP
-void *\fBNs_ConnDriverContent\fR(\fIconn\fR)
-Returns a pointer to the connection-specific driver context for the
-given connection.  This value is that of the \fIarg\fR element of
-the underlying \fINs_Sock\fR structure allocated by the server and
-used by communication drivers to manage private state.  If the
-connection is closed, the value returned is always NULL.
-
-.SH "SEE ALSO"
-Ns_DriverInit(3)
+void \fBNs_SetGzipProc\fR(\fIproc\fR)
+This function is used to install a compression function for
+\fBNs_Gzip\fR.  A call to \fBNs_SetGzipProc\fR would normally be
+in the module-load routine of a module which provides compression
+support, e.g., the \fInszlib\fR module.  The function should match
+the type \fBNs_GzipProc\fR:
+.sp
+.CS
+typedef int Ns_GzipProc(
+	char *\fIbuf\fR, int \fIlen\fR, int level, Tcl_DString *\fIdsPtr\fR
+\fR);
+.CE
 
 .SH KEYWORDS
-connection, context
+compress, gzip
