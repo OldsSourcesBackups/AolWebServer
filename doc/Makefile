@@ -30,7 +30,7 @@
 #
 
 MAN := $(wildcard *.[13n])
-INSTALL=install-index
+INSTALL=install-docs
 NSLIBS = $(wildcard $(AOLSERVER)/lib/libns*$(LIBEXT))
 MAN3 := $(wildcard *.3)
 
@@ -38,8 +38,9 @@ all: install
 
 include ../include/ns.mak
 
-install-index:
+install-docs:
 	$(INST) -d $(AOLSERVER)/html index.adp
+	$(INST) -d $(AOLSERVER)/include man.macros
 
 missing: 
 	@nm $(NSLIBS) | awk '/T _Ns_/ {print $$3}' | sort > lib.out
