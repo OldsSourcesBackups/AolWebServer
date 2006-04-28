@@ -30,14 +30,15 @@
 # $Header$
 #
 
-MOD      =  nsproxy
-PGM	 =  nsproxy
-PGMOBJS  =  nsproxy.o
-OBJS     =  nsproxylib.o
-MODOBJS  =  nsproxymod.o
-HDRS	 =  nsproxy.h
-MODINIT	 =  NsProxy_ModInit
+MOD      = nsproxy
+PGM	 = nsproxy
+PGMOBJS  = nsproxy.o
+OBJS     = nsproxylib.o
+MODOBJS  = nsproxymod.o
+HDRS	 = nsproxy.h
+MODINIT	 = NsProxy_ModInit
 INSTALL	 = install-hdr
+MAN	 = ns_proxy.n
 
 include   $(AOLSERVER)/include/ns.mak
 
