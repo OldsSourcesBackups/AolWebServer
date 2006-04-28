@@ -163,38 +163,6 @@ Ns_AdpRequestEx(Ns_Conn *conn, char *file, Ns_Time *ttlPtr)
 /*
  *----------------------------------------------------------------------
  *
- * NsAdpAppend --
- *
- *	Append content to the ADP output buffer, flushing the content
- *	if necessary.
- *
- * Results:
- *	TCL_ERROR if append and/or flush failed, TCL_OK otherwise.
- *
- * Side effects:
- *	Will set ADP error flag and leave an error message in
- *	the interp on flush failure.
- *
- *----------------------------------------------------------------------
- */
-
-int
-NsAdpAppend(NsInterp *itPtr, char *buf, int len)
-{
-    Tcl_DString *bufPtr = itPtr->adp.framePtr->outputPtr;
-
-    Ns_DStringNAppend(bufPtr, buf, len);
-    if (bufPtr->length > (int) itPtr->adp.bufsize
-	    && NsAdpFlush(itPtr, 1) != TCL_OK) {
-	return TCL_ERROR;
-    }
-    return TCL_OK;
-}
-
-
-/*
- *----------------------------------------------------------------------
- *
  * NsAdpFlush --
  *
  *	Flush output to connection response buffer. 
