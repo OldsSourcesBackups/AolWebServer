@@ -650,7 +650,7 @@ WaitFd(int fd, int event, int ms)
     pfd.revents = 0;
     do {
 	n = poll(&pfd, 1, ms);
-    } while (n < 0 && n == EINTR);
+    } while (n < 0 && errno == EINTR);
     if (n < 0 && errno != EINTR) {
 	Ns_Fatal("nsproxy: poll failed: %s", strerror(errno));
     }
