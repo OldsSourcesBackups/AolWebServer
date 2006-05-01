@@ -1444,6 +1444,7 @@ CloseProxy(Proxy *proxyPtr)
 	Ns_CondSignal(&pcond);
 	if (!once) {
 	    Ns_ThreadCreate(CloseThread, NULL, 0, NULL);
+	    once = 1;
 	}
 	Ns_MutexUnlock(&plock);
 	proxyPtr->procPtr = NULL;
