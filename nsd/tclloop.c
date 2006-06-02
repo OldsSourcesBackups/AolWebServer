@@ -525,7 +525,7 @@ NsTclLoopCtlObjCmd(arg, interp, objc, objv)
     Tcl_HashSearch search;
     Ns_Time timeout;
     int lid, result, len, status;
-    char *str;
+    char *str = "";
     Tcl_Obj *objPtr, *listPtr;
     static CONST char *opts[] = {
         "list", "info", "pause", "resume", "cancel", "eval",

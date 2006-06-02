@@ -1222,6 +1222,7 @@ badargs:
 	    break;
 	default:
 	    /* NB: Silence compiler. */
+	    when = 0;
 	    break;
 	}
 	goto trace;
