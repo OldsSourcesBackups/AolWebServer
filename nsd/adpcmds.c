@@ -160,7 +160,12 @@ NsTclAdpCtlObjCmd(ClientData arg, Tcl_Interp *interp, int objc,
 	}
 	id = Tcl_GetString(objv[2]);
 	if (*id == '\0') {
-	    itPtr->adp.chan = NULL;
+	    if (itPtr->adp.chan != NULL) {
+		if (NsAdpFlush(itPtr, 0) != TCL_OK) {
+		    return TCL_ERROR;
+		}
+	    	itPtr->adp.chan = NULL;
+	    }
 	} else {
 	    if (Ns_TclGetOpenChannel(interp, id, 1, 1, &chan) != TCL_OK) {
 	    	return TCL_ERROR;
