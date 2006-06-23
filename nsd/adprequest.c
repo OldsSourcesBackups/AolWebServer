@@ -266,6 +266,9 @@ NsAdpFlush(NsInterp *itPtr, int stream)
     	}
     }
     Tcl_DStringTrunc(&itPtr->adp.output, 0);
-    NsAdpReset(itPtr);
+
+    if (!stream) {
+        NsAdpReset(itPtr);
+    }
     return result;
 }
