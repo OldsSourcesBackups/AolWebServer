@@ -40,7 +40,7 @@ MODINIT	 = NsProxy_ModInit
 INSTALL	 = install-hdr
 MAN	 = ns_proxy.n
 
-include   $(AOLSERVER)/include/ns.mak
+include   ../include/ns.mak
 
 install-hdr:
 	$(INST) -d $(AOLSERVER)/include $(HDRS)
