@@ -1769,8 +1769,7 @@ SockReadLine(Driver *drvPtr, Ns_Sock *sock, Conn *connPtr)
 	    connPtr->rend = e;
 	    if (NsFindVersion(s, &connPtr->major, &connPtr->minor) == NULL
 		    || connPtr->major < 1) {
-        	connPtr->flags |= NS_CONN_SKIPHDRS;
-		e = s;
+        	connPtr->flags |= (NS_CONN_SKIPHDRS | NS_CONN_READHDRS);
 	    }
 	} else if (e > s) {
             if (Ns_ParseHeader(connPtr->headers, s, Preserve) != NS_OK) {
