@@ -240,6 +240,47 @@ NsTclAdpCtlObjCmd(ClientData arg, Tcl_Interp *interp, int objc,
 /*
  *----------------------------------------------------------------------
  *
+ * NsTclAdpCompressObjCmd --
+ *
+ *	Process the Tcl ns_adp_compress command to enable on-the-fly
+ *	gzip compression of ADP response.
+ *
+ * Results:
+ *	A standard Tcl result.
+ *
+ * Side effects:
+ *	None.
+ *
+ *----------------------------------------------------------------------
+ */
+ 
+int
+NsTclAdpCompressObjCmd(ClientData arg, Tcl_Interp *interp, int objc,
+		     Tcl_Obj **objv)
+{
+    NsInterp *itPtr = arg;
+    int compress = 1;
+
+    if (objc != 1 && objc != 2) {
+	Tcl_WrongNumArgs(interp, 1, objv, "?boolean?");
+        return TCL_ERROR;
+    }
+    if (objc >= 2
+	    && Tcl_GetBooleanFromObj(interp, objv[1], &compress) != TCL_OK) {
+        return TCL_ERROR;
+    }
+    if (compress) {
+	itPtr->adp.flags |= ADP_GZIP;
+    } else {
+	itPtr->adp.flags &= ~ADP_GZIP;
+    }
+    return TCL_OK;
+}
+
+
+/*
+ *----------------------------------------------------------------------
+ *
  * NsTclAdpEvalObjCmd, NsTclAdpSafeEvalObjCmd --
  *
  *	(Safe) Evaluate an ADP string.
