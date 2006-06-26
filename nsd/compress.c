@@ -88,3 +88,32 @@ Ns_SetGzipProc(Ns_GzipProc *procPtr)
 {
     gzipProcPtr = procPtr;
 }
+
+
+/*
+ *----------------------------------------------------------------------
+ *
+ * Ns_Compress, Ns_CompressGzip --
+ *
+ *      AOLserver 4.0 compression routines.
+ *
+ * Results:
+ *      See Ns_Gzip.
+ *
+ * Side effects:
+ *      See Ns_Gzip.
+ *
+ *----------------------------------------------------------------------
+ */
+
+int
+Ns_Compress(char *buf, int len, Tcl_DString *outPtr, int level)
+{
+    return Ns_Gzip(buf, len, level, outPtr);
+}
+
+int
+Ns_CompressGzip(char *buf, int len, Tcl_DString *outPtr, int level)
+{
+    return Ns_Gzip(buf, len, level, outPtr);
+}
