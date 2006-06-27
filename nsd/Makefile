@@ -35,7 +35,7 @@ HDRS	= nsd.h
 PGM	= nsd
 PGMOBJS	= main.o
 DLL	= nsd
-#DLLINIT	= Ns_LibInit
+DLLINIT	= Ns_LibInit
 OBJS	= adpcmds.o adpeval.o adpparse.o adprequest.o auth.o binder.o \
 	  cache.o callbacks.o cls.o compress.o config.o conn.o connio.o \
 	  crypt.o dns.o driver.o dsprintf.o dstring.o encoding.o exec.o \
