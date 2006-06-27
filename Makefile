@@ -58,6 +58,7 @@ install-mods:
 install-util:
 	$(INST) -d $(INSTBIN) util/*.tcl
 	$(INST) -d $(INSTBIN) -e util/nsinstall-man.sh
+	$(INST) -d $(INSTBIN) -e util/install-sh
 
 install-tcl:
 	$(INST) -d $(AOLSERVER)/modules/tcl tcl/*.tcl
