@@ -833,8 +833,11 @@ NsAdpLogError(NsInterp *itPtr)
     
     framePtr = itPtr->adp.framePtr;
     Ns_DStringInit(&ds);
-    Ns_DStringPrintf(&ds, "\n    at line %d of ",
-		     framePtr->line + interp->errorLine);
+
+    if (framePtr != NULL) {
+        Ns_DStringPrintf(&ds, "\n    at line %d of ",
+                        framePtr->line + interp->errorLine);
+    }
     inc = "";
     while (framePtr != NULL) {
 	if (framePtr->file != NULL) {
