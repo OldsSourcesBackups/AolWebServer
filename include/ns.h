@@ -1012,6 +1012,7 @@ NS_EXTERN void Ns_SetRequestUrl(Ns_Request *request, char *url);
  */
 
 NS_EXTERN void Ns_RegisterReturn(int status, char *url);
+NS_EXTERN void Ns_RegisterRedirect(char *server, int status, char *url);
 NS_EXTERN void Ns_ConnConstructHeaders(Ns_Conn *conn, Ns_DString *dsPtr);
 NS_EXTERN void Ns_ConnQueueHeaders(Ns_Conn *conn, int status);
 NS_EXTERN int Ns_ConnFlushHeaders(Ns_Conn *conn, int status);
