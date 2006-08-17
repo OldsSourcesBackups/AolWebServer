@@ -362,8 +362,8 @@ NsTclMkdirObjCmd(ClientData arg, Tcl_Interp *interp, int objc, Tcl_Obj *CONST ob
         Tcl_WrongNumArgs(interp, 1, objv, "dir");
         return TCL_ERROR;
     }
-    if (mkdir(Tcl_GetString(objv[1]), 0755) != 0) {
-        Tcl_AppendStringsToObj(Tcl_GetObjResult(interp), "mkdir (\"", 
+    if (mkdir(Tcl_GetString(objv[1]), 0777) != 0) {
+       Tcl_AppendStringsToObj(Tcl_GetObjResult(interp), "mkdir (\"", 
 		Tcl_GetString(objv[1]),
 		"\") failed:  ", Tcl_PosixError(interp), NULL);
         return TCL_ERROR;
