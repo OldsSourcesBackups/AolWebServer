@@ -946,7 +946,13 @@ DriverThread(void *arg)
     drvPtr->flags |= flags;
     Ns_CondBroadcast(&drvPtr->cond);
     Ns_MutexUnlock(&drvPtr->lock);
-    
+
+    /*
+     * Register an at-ready callback to trigger the poll.
+     */
+
+    Ns_RegisterAtReady(TriggerDriver, drvPtr);   
+
     /*
      * Loop forever until signalled to shutdown and all
      * connections are complete and gracefully closed.
