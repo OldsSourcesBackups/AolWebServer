@@ -837,6 +837,7 @@ NsTclConnSendFpObjCmd(ClientData arg, Tcl_Interp *interp, int objc,
 static int
 Result(Tcl_Interp *interp, int result)
 {
-    Tcl_SetBooleanObj(Tcl_GetObjResult(interp), result == NS_OK ? 1 : 0);
+    /* Tcl_SetBooleanObj(Tcl_GetObjResult(interp), result == NS_OK ? 1 : 0); */
+    Tcl_SetObjResult(interp, Tcl_NewBooleanObj((result == NS_OK ? 1 : 0)));
     return TCL_OK;
 }
