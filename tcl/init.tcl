@@ -53,10 +53,10 @@ set ::errorInfo ""
 # versions, one for general use and one for AOLserver.
 #
 
-if {[info exists ::auto_path] == 0} {
+if {![info exists ::auto_path]} {
     set ::auto_path [file join [ns_info home] lib]
-} else {
-    set ::auto_path [concat [file join [ns_info home] lib] $::auto_path]
+} elseif {[lsearch -exact $::auto_path [file join [ns_info home] lib]] == -1} {
+    lappend [concat [file join [ns_info home] lib] $::auto_path]
 }
 
 # EOF $RCSfile$
