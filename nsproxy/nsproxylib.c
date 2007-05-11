@@ -837,7 +837,7 @@ GetObjCmd(ClientData data, Tcl_Interp *interp, int objc, Tcl_Obj **objv)
 		} else {
 		    proxyPtr = ns_calloc(1, sizeof(Proxy));
 		    proxyPtr->poolPtr = poolPtr;
-		    sprintf(proxyPtr->id, "proxy%d", poolPtr->nextid++);
+                    sprintf(proxyPtr->id, "%s-proxy-%d", poolPtr->name, poolPtr->nextid++);
 		    Tcl_DStringInit(&proxyPtr->in);
 		}
 		proxyPtr->nextPtr = firstPtr;
