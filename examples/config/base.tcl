@@ -65,6 +65,7 @@ ns_section "ns/server/server1/adp"
 ns_section "ns/server/server1/modules"
     ns_param nssock nssock.so
     ns_param nslog nslog.so
+    ns_param nscp nscp.so
 
 ns_section "ns/server/server1/module/nssock"
     ns_param hostname [ns_info hostname]
@@ -76,3 +77,11 @@ ns_section "ns/server/server1/module/nslog"
     ns_param rollonsignal true
     ns_param rollhour 0
     ns_param maxbackup 2
+
+ns_section "ns/server/server1/module/nscp"
+    ns_param address "127.0.0.1"
+    ns_param port 8001
+    ns_param cpcmdlogging "false"
+
+ns_section "ns/server/server1/module/nscp/users"
+    ns_param user ":"
