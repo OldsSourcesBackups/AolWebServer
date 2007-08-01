@@ -54,7 +54,7 @@ ns_section "ns/server/server1"
     ns_param pageroot $pageRoot
     ns_param maxthreads 20
     ns_param minthreads 5
-    ns_param maxconns 20
+    ns_param maxconnections 20
     ns_param urlcharset "utf-8"
     ns_param outputcharset "utf-8"
     ns_param inputcharset "utf-8"
