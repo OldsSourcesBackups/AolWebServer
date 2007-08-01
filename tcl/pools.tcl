@@ -33,7 +33,7 @@ set cfgsection "ns/server/[ns_info server]"
 
 set minthreads [ns_config $cfgsection minthreads 0]
 set maxthreads [ns_config $cfgsection maxthreads 10]
-set maxconns [ns_config $cfgsection maxconns 0]
+set maxconns [ns_config $cfgsection maxconnections 0]
 set timeout [ns_config $cfgsection threadtimeout 0]
 
 ns_pools set default -minthreads $minthreads -maxthreads $maxthreads -maxconns $maxconns -timeout $timeout
