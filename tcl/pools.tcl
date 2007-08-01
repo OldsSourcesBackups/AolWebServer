@@ -38,4 +38,4 @@ set timeout [ns_config $cfgsection threadtimeout 0]
 
 ns_pools set default -minthreads $minthreads -maxthreads $maxthreads -maxconns $maxconns -timeout $timeout
 
-ns_log debug "default Pool: [ns_pools get default]"
+ns_log notice "default thread pool: [ns_pools get default]"
