@@ -58,7 +58,7 @@ if {[info exists libraryList]} {
     foreach lib $libraryList {
         if {[lsearch -exact $::auto_path $lib] == -1} {
             lappend ::auto_path $lib
-            ns_log debug "Added lib to ::auto_path: ${lib}"
+            ns_log debug "added library to ::auto_path: ${lib}"
         }
     }
 }
@@ -76,7 +76,7 @@ foreach package $requireList {
         continue
     }
 
-    ns_log debug "Package Loaded: ${package}: ${version}"
+    ns_log debug "loaded package: ${package}: ${version}"
 }
 
 #
