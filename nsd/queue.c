@@ -366,7 +366,7 @@ NsConnThread(void *arg)
 
     Ns_TlsSet(&ctdtls, dataPtr);
     Ns_MutexLock(&poolPtr->lock);
-    sprintf(name, "-conn:%d-", poolPtr->threads.nextid++);
+    sprintf(name, "-%s:%d-", poolPtr->name, poolPtr->threads.nextid++);
     Ns_MutexUnlock(&poolPtr->lock);
     Ns_ThreadSetName(name);
     ncons = poolPtr->threads.maxconns;
