@@ -948,12 +948,6 @@ DriverThread(void *arg)
     Ns_MutexUnlock(&drvPtr->lock);
 
     /*
-     * Register an at-ready callback to trigger the poll.
-     */
-
-    Ns_RegisterAtReady(TriggerDriver, drvPtr);   
-
-    /*
      * Loop forever until signalled to shutdown and all
      * connections are complete and gracefully closed.
      */
@@ -1313,7 +1307,7 @@ dropped:
 	    Tcl_DStringStartSublist(drvPtr->queryPtr);
 	    Ns_DStringPrintf(drvPtr->queryPtr,
 		"time %ld:%ld "
-		"spins %ld accepts %u queued %u reads %u "
+		"spins %d accepts %u queued %u reads %u "
 		"dropped %u overflow %d timeout %u",
 	    	now.sec, now.usec,
 		drvPtr->stats.spins, drvPtr->stats.accepts,
