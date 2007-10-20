@@ -481,7 +481,7 @@ StartPool(Pool *poolPtr, void *ignored)
 
     poolPtr->threads.current = poolPtr->threads.idle = poolPtr->threads.min;
     for (i = 0; i < poolPtr->threads.min; ++i) {
-        NsCreateConnThread(poolPtr);
+        NsCreateConnThread(poolPtr, 1);
     }
 }
 
