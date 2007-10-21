@@ -502,18 +502,18 @@ NsConnThread(void *arg)
     if (poolPtr->threads.current == 0) {
         Ns_CondBroadcast(&poolPtr->cond);
     }
-    Ns_MutexUnlock(&poolPtr->lock);
 
     if (poolPtr->queue.wait.num > 0 && poolPtr->threads.idle == 0 && !poolPtr->shutdown) {
         /* We are exiting from a thread in a situation, where more
            queue entries are waiting. Since no other mechanism ensures
            that the entries are processed, we recreate a new connection thread.
         */
-        Ns_MutexLock(&poolPtr->lock);
         poolPtr->threads.current++;
         poolPtr->threads.idle++;
         Ns_MutexUnlock(&poolPtr->lock);
         NsCreateConnThread(poolPtr, 0); /* joinThreads == 0 to avoid deadlock */
+    } else {
+        Ns_MutexUnlock(&poolPtr->lock);
     }
 
     Ns_Log(Notice, "exiting: %s", msg);
