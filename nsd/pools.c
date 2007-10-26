@@ -184,6 +184,19 @@ NsTclPoolsObjCmd(ClientData data, Tcl_Interp *interp, int objc, Tcl_Obj **objv)
                 break;
             }
         }
+        /* catch unsane values */
+        if (poolPtr->threads.max < 1) {
+            Tcl_SetResult(interp, "maxthreads can't be less than 1", TCL_STATIC);
+            return TCL_ERROR;
+        }
+        if (poolPtr->threads.min > poolPtr->threads.max) {
+            Tcl_SetResult(interp, "minthreads can't be larger than maxthreads", TCL_STATIC);
+            return TCL_ERROR;
+        }
+        if (poolPtr->threads.timeout < 1) {
+            Tcl_SetResult(interp, "timeout cannot be less than 1", TCL_STATIC);
+            return TCL_ERROR;
+        }
         if (PoolResult(interp, poolPtr) != TCL_OK) {
             return TCL_ERROR;
         }
@@ -479,8 +492,13 @@ StartPool(Pool *poolPtr, void *ignored)
 {
     int i;
 
-    poolPtr->threads.current = poolPtr->threads.idle = poolPtr->threads.min;
+    poolPtr->threads.current = 0;
+    poolPtr->threads.starting = 0;
+    poolPtr->threads.waiting = 0;
+    poolPtr->threads.idle = 0;
+
     for (i = 0; i < poolPtr->threads.min; ++i) {
+        poolPtr->threads.current ++;
         NsCreateConnThread(poolPtr, 1);
     }
 }
