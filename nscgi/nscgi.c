@@ -748,13 +748,7 @@ CgiExec(Cgi *cgiPtr, Ns_Conn *conn)
      * Set all the CGI specified variables.
      */
 
-    Ns_DStringAppend(dsPtr, conn->request->url);
-    if (conn->request->query != NULL) {
-        Ns_DStringVarAppend(dsPtr, "?", conn->request->query, NULL);
-    }
-    SetUpdate(cgiPtr->env, "REQUEST_URI", dsPtr->string);
-    Ns_DStringTrunc(dsPtr, 0);
-
+    SetUpdate(cgiPtr->env, "REQUEST_URI", conn->request->url);
     SetUpdate(cgiPtr->env, "SCRIPT_NAME", cgiPtr->name);
     SetUpdate(cgiPtr->env, "SCRIPT_FILENAME", cgiPtr->path);
     if (cgiPtr->pathinfo != NULL && *cgiPtr->pathinfo != '\0') {
