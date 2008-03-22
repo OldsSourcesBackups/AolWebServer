@@ -125,9 +125,17 @@ NsInitFd(void)
 	       strerror(errno));
     } else {
 	if (rl.rlim_cur != rl.rlim_max) {
-    	    rl.rlim_cur = rl.rlim_max;
+#if defined(__APPLE__) && defined(__ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__) && __ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__ > 1040
+            if (rl.rlim_max == RLIM_INFINITY) {
+                rl.rlim_cur = OPEN_MAX < rl.rlim_max ? OPEN_MAX : rl.rlim_max;
+            } else {
+                rl.rlim_cur = rl.rlim_max;
+            }
+#else
+            rl.rlim_cur = rl.rlim_max;
+#endif
     	    if (setrlimit(RLIMIT_NOFILE, &rl) != 0) {
-	        Ns_Log(Warning, "fd: setrlimit(RLIMIT_NOFILE, %d) failed: %s",
+	        Ns_Log(Warning, "fd: setrlimit(RLIMIT_NOFILE, %lld) failed: %s",
 		       rl.rlim_max, strerror(errno));
 	    } 
 	}
