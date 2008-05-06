@@ -579,6 +579,7 @@ NsTclTmpNamObjCmd(ClientData arg, Tcl_Interp *interp, int objc, Tcl_Obj *CONST o
       the environment variable TMP is not set or points to a directory
       that does not exist.
     */
+    int i;
     char *buf = _tempnam("/tmp", NULL);
 
     if (buf == NULL) {
