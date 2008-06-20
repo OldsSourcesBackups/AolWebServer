@@ -853,7 +853,7 @@ CheckControl(NsServer *servPtr, Tcl_Interp *interp, LoopData *dataPtr)
 	    }
 	    Ns_MutexLock(&servPtr->tcl.llock);
 	    if (dataPtr->evalPtr == NULL) {
-		Ns_Log(Error, "loopctl: dropped result: %s", interp->result);
+		Ns_Log(Error, "loopctl: dropped result: %s", Tcl_GetStringResult(interp));
 	    } else {
 		str = Tcl_GetStringFromObj(Tcl_GetObjResult(interp), &len);
 	    	Tcl_DStringAppend(&dataPtr->evalPtr->result, str, len);

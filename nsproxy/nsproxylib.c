@@ -280,7 +280,7 @@ Ns_ProxyMain(int argc, char **argv, Tcl_AppInitProc *init)
 {
     Tcl_Interp *interp;
     Proc proc;
-    int result, len, n, max;
+    int result, len, n, max = 0;
     Req *reqPtr;
     Tcl_DString in, out;
     char *script, *active, *dots;
@@ -329,7 +329,7 @@ Ns_ProxyMain(int argc, char **argv, Tcl_AppInitProc *init)
     interp = Ns_TclCreateInterp();
     if (init != NULL) {
 	if ((*init)(interp) != TCL_OK) {
-	    FatalExit(interp->result);
+	    FatalExit(Tcl_GetStringResult(interp));
 	}
     }
 
@@ -1460,7 +1460,7 @@ static void
 Export(Tcl_Interp *interp, int code, Tcl_DString *dsPtr)
 {
     Res hdr;
-    char *einfo, *ecode, *result;
+    char *einfo = NULL, *ecode = NULL, *result;
     int   clen, ilen, rlen;
 
     clen = ilen = rlen = 0;
@@ -1898,9 +1898,8 @@ FatalExit(char *func)
 static char *
 ProxyError(Tcl_Interp *interp, Err err)
 {
-    char *msg, *sysmsg, *code;
+    char *msg = NULL, *sysmsg = NULL, *code = NULL;
 
-    sysmsg = NULL;
     switch (err) {
     case ENone:
 	code = "ENone";
