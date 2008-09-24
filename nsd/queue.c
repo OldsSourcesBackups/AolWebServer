@@ -179,7 +179,7 @@ NsQueueConn(Conn *connPtr)
     poolPtr->queue.wait.lastPtr = connPtr;
     connPtr->nextPtr = NULL;
 
-    if (poolPtr->queue.wait.num > 0
+    if (poolPtr->threads.waiting == 0
         && poolPtr->threads.current < poolPtr->threads.max) {
         /* 
            Create a new thread if no thread is waiting and the number
