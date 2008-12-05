@@ -336,10 +336,12 @@ CreateServer(char *server)
      */
      
     Ns_MutexInit(&servPtr->tcl.llock);
+    Ns_MutexSetName(&servPtr->tcl.llock, "ns:tcl.llock");
     Ns_CondInit(&servPtr->tcl.lcond);
     Ns_RWLockInit(&servPtr->tcl.tlock);
     Ns_CsInit(&servPtr->tcl.olock);
     Ns_MutexInit(&servPtr->tcl.plock);
+    Ns_MutexSetName(&servPtr->tcl.plock, "ns:tcl.plock");
     Ns_RWLockInit(&servPtr->tcl.slock);
     Tcl_InitHashTable(&servPtr->tcl.packages, TCL_STRING_KEYS);
     Tcl_InitHashTable(&servPtr->tcl.once, TCL_STRING_KEYS);

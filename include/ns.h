@@ -46,7 +46,7 @@
                                 + NS_MINOR_VERSION * 100 \
                                 + NS_RELEASE_SERIAL)
 #define NS_VERSION		"4.5"
-#define NS_PATCH_LEVEL		"4.5.0"
+#define NS_PATCH_LEVEL		"4.5.0p1"
 
 #define NS_ALPHA_RELEASE	0
 #define NS_BETA_RELEASE		1

@@ -273,6 +273,7 @@ FindLimits(char *limits, int create)
             limitsPtr = ns_malloc(sizeof(Limits));
             limitsPtr->name = Tcl_GetHashKey(&limtable, hPtr);
 	        Ns_MutexInit(&limitsPtr->lock);
+                Ns_MutexSetName(&limitsPtr->lock, "ns:limits");
 	        limitsPtr->nrunning = limitsPtr->nwaiting = 0;
 	        limitsPtr->ntimeout = limitsPtr->ndropped = limitsPtr->noverflow = 0;
 	        limitsPtr->maxrun = limitsPtr->maxwait = 100;
