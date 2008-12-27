@@ -370,6 +370,7 @@ NsConnThread(void *arg)
     char             name[100];
     int              status, ncons;
     char            *msg;
+    double           spread;
     
     /*
      * Set the conn thread name.
@@ -380,7 +381,12 @@ NsConnThread(void *arg)
     sprintf(name, "-%s:%d-", poolPtr->name, poolPtr->threads.nextid++);
     Ns_MutexUnlock(&poolPtr->lock);
     Ns_ThreadSetName(name);
-    ncons = poolPtr->threads.maxconns;
+
+    /* spread is a value of 1.0 +- specified percentage, 
+       i.e. between 0.0 and 2.0 when the configured percentage is 100 */
+    spread = 1.0 + (2 * poolPtr->threads.spread * Ns_DRand() - poolPtr->threads.spread) / 100.0;
+
+    ncons = round(poolPtr->threads.maxconns * spread);
     msg = "exceeded max connections per thread";
     
     /*
@@ -403,7 +409,7 @@ NsConnThread(void *arg)
 	    timePtr = NULL;
 	} else {
 	    Ns_GetTime(&wait);
-	    Ns_IncrTime(&wait, poolPtr->threads.timeout, 0);
+	    Ns_IncrTime(&wait, round(poolPtr->threads.timeout * spread), 0);
 	    timePtr = &wait;
 	}
 
