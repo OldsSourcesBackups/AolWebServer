@@ -391,7 +391,7 @@ proc _ns_put {} {
 	    set ismw [_ns_ismw $file]
 	}
     }
-    if {$type == "application/x-naviwad"} {
+    if {$type eq "application/x-naviwad"} {
 	if {$exists} {
 	    if {!$ismw} {
 		return [ns_returnerror 500 "not miniweb"]

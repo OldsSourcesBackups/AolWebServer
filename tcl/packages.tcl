@@ -42,9 +42,9 @@ for {set x 0} {$x < [ns_set size $nsSetId]} {incr x} {
     set key [ns_set key $nsSetId $x]
     set value [ns_set value $nsSetId $x]
 
-    if {[string eq "library" $key]} {
+    if {"library" eq $key} {
         lappend libraryList $value
-    } elseif {[string eq "require" $key]} {
+    } elseif {"require" eq $key} {
         lappend requireList $value
     }
 }

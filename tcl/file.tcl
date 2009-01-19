@@ -88,11 +88,11 @@ proc ns_sourceproc {conn args} {
 	    set errorInfo ""
 	}
 	
-	if {$code == 1 && $errorCode == "NS_TCL_ABORT"} {
+	if {$code == 1 && $errorCode eq "NS_TCL_ABORT"} {
 	    return
 	}
 
-	if { $errorPage == "" } {
+	if { $errorPage eq "" } {
 	    return -code $code \
 		-errorcode $errorCode -errorinfo $errorInfo $result
 	} else {
