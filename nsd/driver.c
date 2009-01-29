@@ -1328,7 +1328,12 @@ dropped:
 		    pdata.pfds[sockPtr->pidx].revents, 
 		    sockPtr->acceptTime.sec, sockPtr->acceptTime.usec,
 		    sockPtr->timeout.sec, sockPtr->timeout.usec);
-	    	NsAppendConn(drvPtr->queryPtr, sockPtr->connPtr, "i/o");
+		if (sockPtr->connPtr != NULL) {
+		    NsAppendConn(drvPtr->queryPtr, sockPtr->connPtr, "i/o");
+		} else {
+		    Tcl_DStringStartSublist(drvPtr->queryPtr);
+		    Tcl_DStringEndSublist(drvPtr->queryPtr);
+		}
 	    	Tcl_DStringEndSublist(drvPtr->queryPtr);
 		sockPtr = sockPtr->nextPtr;
 	    }
