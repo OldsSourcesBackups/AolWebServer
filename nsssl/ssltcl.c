@@ -653,12 +653,8 @@ DerEncodeCmd(ClientData dummy, Tcl_Interp *interp, int argc, char **argv)
 		    break;
 		}
 	    }
+            Tcl_SetResult(interp, *p == '\0' ? "1" : "0", TCL_STATIC);
 
-	    if (*p == '\0') {
-		interp->result = "1";
-	    } else {
-		interp->result = "0";
-	    }
         } else {
             Tcl_AppendResult(interp, "usage: \"", argv[0],
                              " valid options are octets or "
