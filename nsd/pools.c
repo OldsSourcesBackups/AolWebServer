@@ -153,7 +153,7 @@ NsTclPoolsObjCmd(ClientData data, Tcl_Interp *interp, int objc, Tcl_Obj **objv)
 
     case PSetIdx:
         if (objc < 3 || (((objc - 3) % 2) != 0)) {
-            Tcl_WrongNumArgs(interp, 2, objv, "limit ?opt val opt val...?");
+            Tcl_WrongNumArgs(interp, 2, objv, "pool ?opt val opt val...?");
             return TCL_ERROR;
         }
         pool = Tcl_GetString(objv[2]);
