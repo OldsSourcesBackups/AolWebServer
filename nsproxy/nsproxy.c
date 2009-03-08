@@ -42,6 +42,7 @@ static Tcl_AppInitProc MyInit;
 int
 main(int argc, char **argv)
 {
+    Tcl_FindExecutable(argv[0]);
     return Ns_ProxyMain(argc, argv, MyInit);
 }
 
