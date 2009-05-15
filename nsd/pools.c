@@ -201,8 +201,8 @@ NsTclPoolsObjCmd(ClientData data, Tcl_Interp *interp, int objc, Tcl_Obj **objv)
             Tcl_SetResult(interp, "timeout cannot be less than 1", TCL_STATIC);
             return TCL_ERROR;
         }
-        if (poolPtr->threads.maxconns < 1) {
-            Tcl_SetResult(interp, "maxconns cannot be less than 1", TCL_STATIC);
+        if (poolPtr->threads.maxconns < 0) {
+            Tcl_SetResult(interp, "maxconns cannot be less than 0", TCL_STATIC);
             return TCL_ERROR;
         }
         if (poolPtr->threads.spread < 0 || poolPtr->threads.spread > 100 ) {
