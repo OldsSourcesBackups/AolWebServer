@@ -374,6 +374,10 @@ Ns_ConnSend(Ns_Conn *conn, struct iovec *bufs, int nbufs)
 
         nwrote = n;
     }
+    if (nwrote >= 0
+	&& NsRunFilters((Ns_Conn *) connPtr, NS_FILTER_WRITE) != NS_OK) {
+	nwrote = -1;
+    }
     return nwrote;
 }
 
