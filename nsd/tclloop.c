@@ -157,7 +157,7 @@ NsTclForObjCmd(arg, interp, objc, objv)
             if (result == TCL_ERROR) {
                 char msg[32 + TCL_INTEGER_SPACE];
 
-                sprintf(msg, "\n    (\"for\" body line %d)",interp->errorLine);
+                sprintf(msg, "\n    (\"for\" body line %d)",Tcl_GetErrorLine(interp));
                 Tcl_AddErrorInfo(interp, msg);
             }
             break;
@@ -242,7 +242,7 @@ NsTclWhileObjCmd(arg, interp, objc, objv)
                 char msg[32 + TCL_INTEGER_SPACE];
 
                 sprintf(msg, "\n    (\"while\" body line %d)",
-                        interp->errorLine);
+                        Tcl_GetErrorLine(interp));
                 Tcl_AddErrorInfo(interp, msg);
             }
             break;
@@ -460,7 +460,7 @@ NsTclForeachObjCmd(arg, interp, objc, objv)
                 char msg[32 + TCL_INTEGER_SPACE];
 
 		sprintf(msg, "\n    (\"foreach\" body line %d)",
-			interp->errorLine);
+			Tcl_GetErrorLine(interp));
 		Tcl_AddObjErrorInfo(interp, msg, -1);
 		break;
 	    } else {
