@@ -374,6 +374,13 @@ LogTrace(void *arg, Ns_Conn *conn)
 	}
     }
 
+    for (i=0; i<ds.length; i++) {
+      /* don't allow terminal escape characters in the log file */
+      if (ds.string[i] == 0x1b) {
+	ds.string[i] = 7; /* bell */
+      }
+    }
+
     /*
      * Append the trailing newline and buffer and/or flush the line.
      */
