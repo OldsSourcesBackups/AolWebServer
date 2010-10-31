@@ -1,3 +1,19 @@
+2010-10-31 Gustaf Neumann <neumann@wu-wien.ac.at>
+	* nsd/init.tcl: The original code in _ns_getensemble blindly
+	(re)creates ensembles with the consequence, that ensembles are not
+	efficiently compiled anymore (see byte code in [1]) leading to
+	slow code. This patch causes aolserver to reconfigure preexisting
+	ensembles instead of recreating it. This behavior could be seen as
+	a bug in Tcl. The fixed code is correct, even when TCT decides to
+	do something about this unpleasant behavior.
+
+	[1] http://sourceforge.net/tracker/?func=detail&aid=3098085&group_id=10894&atid=110894
+
+2010-09-09 Gustaf Neumann <neumann@wu-wien.ac.at>
+
+	* nslog/nslog.c: Quick fix for terminal escape sequence attack
+	http://www.securityfocus.com/bid/37712
+
 2009-12-24 Jeff Rogers <dvrsn@diphi.com>
 
 	* include/nsthread.h: added pre-8.6 compatibility define 

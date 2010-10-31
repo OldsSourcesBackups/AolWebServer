@@ -443,12 +443,30 @@ proc _ns_getnamespaces {listVar {top "::"}} {
 if {[catch {package require Tcl 8.5}]} {
     proc _ns_getensemble {cmd} {}
 } else {
+    #
+    # "... ensemble create ..." removes the compileProc
+    # from ensembles with compiled submethods (like e.g. "info").
+    # In such a case, "info exists ..." is not efficiently 
+    # byte-code compiled and substantially slower. 
+    # Therefore, we want to create only "new" ensembles and
+    # reconfigure existing ones to keep the compileProc. 
+    # This is what _ns_create_or_config_ensemble does.
+    #
+    # -gustaf neumann (Oct 2010)
+    #
+    proc _ns_create_or_config_ensemble {cmd cfg} {
+       if {[namespace ensemble exists $cmd]} {
+         namespace configure $cmd {*}$cfg
+       } else {
+         namespace ensemble create -command $cmd {*}$cfg
+       }
+    }
     proc _ns_getensemble {cmd} {
         ::if {[::namespace ensemble exists $cmd]} {
             ::array set _cfg [::namespace ensemble configure $cmd]
             ::set _enns $_cfg(-namespace)
             ::unset _cfg(-namespace)
-            ::set _encmd [::list namespace ensemble create -command $cmd {*}[::array get _cfg]]
+            ::set _encmd [::list ::_ns_create_or_config_ensemble $cmd [::array get _cfg]]
             return [::list namespace eval $_enns $_encmd]\n
         }
     }
