@@ -456,7 +456,7 @@ if {[catch {package require Tcl 8.5}]} {
     #
     proc _ns_create_or_config_ensemble {cmd cfg} {
        if {[namespace ensemble exists $cmd]} {
-         namespace configure $cmd {*}$cfg
+         namespace ensemble configure $cmd {*}$cfg
        } else {
          namespace ensemble create -command $cmd {*}$cfg
        }
