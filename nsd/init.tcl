@@ -455,10 +455,10 @@ if {[catch {package require Tcl 8.5}]} {
     # -gustaf neumann (Oct 2010)
     #
     proc _ns_create_or_config_ensemble {cmd cfg} {
-       if {[namespace ensemble exists $cmd]} {
-         namespace ensemble configure $cmd {*}$cfg
+       if {[info command $cmd] eq $cmd && [namespace ensemble exists $cmd]} {
+         uplevel 1 [list namespace ensemble configure $cmd {*}$cfg]
        } else {
-         namespace ensemble create -command $cmd {*}$cfg
+         uplevel 1 [list namespace ensemble create -command $cmd {*}$cfg]
        }
     }
     proc _ns_getensemble {cmd} {
