@@ -395,7 +395,7 @@ NsCreateThread(void *arg, long stacksize, Ns_Thread *resultPtr)
 {
     static char *func = "NsCreateThread";
     pthread_attr_t attr;
-    pthread_t tid;
+    pthread_t tid, *tidPtr = (resultPtr != NULL ? resultPtr : &tid);
     size_t size;
     int err;
 
@@ -422,7 +422,7 @@ NsCreateThread(void *arg, long stacksize, Ns_Thread *resultPtr)
     if (err != 0 && err != ENOTSUP) {
         NsThreadFatal(func, "pthread_setscope", err);
     }
-    err = pthread_create(&tid, &attr, ThreadMain, arg);
+    err = pthread_create(tidPtr, &attr, ThreadMain, arg);
     if (err != 0) {
         NsThreadFatal(func, "pthread_create", err);
     }
@@ -430,9 +430,7 @@ NsCreateThread(void *arg, long stacksize, Ns_Thread *resultPtr)
     if (err != 0) {
         NsThreadFatal(func, "pthread_attr_destroy", err);
     }
-    if (resultPtr != NULL) {
-	*resultPtr = (Ns_Thread) tid;
-    } else {
+    if (resultPtr == NULL) {
 	err = pthread_detach(tid);
 	if (err != 0) {
 	    NsThreadFatal(func, "pthread_detach", err);

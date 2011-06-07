@@ -1,3 +1,7 @@
+2011-05-07 Jeff Rogers <dvrsn@diphi.com>
+    * nsthread/pthread.c: change to use passed resultArg directly so
+    thread id is always set in ConnData struct.  Fixes bug #3313417
+
 2010-10-31 Gustaf Neumann <neumann@wu-wien.ac.at>
 	* nsd/init.tcl: The original code in _ns_getensemble blindly
 	(re)creates ensembles with the consequence, that ensembles are not
