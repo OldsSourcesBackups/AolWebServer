@@ -1057,7 +1057,34 @@ Ns_ConnReturnNotModified(Ns_Conn *conn)
 {
     return Ns_ConnReturnStatus(conn, 304);
 }
+
+/*
+ *----------------------------------------------------------------------
+ *
+ * Ns_ConnReturnEntityToLarge --
+ *
+ *	Return a 414 Request Entity to large response.
+ *
+ * Results:
+ *	NS_OK/NS_ERROR 
+ *
+ * Side effects:
+ *	Will close the connection. 
+ *
+ *----------------------------------------------------------------------
+ */
 
+int
+Ns_ConnReturnEntityToLarge(Ns_Conn *conn)
+{
+    int result;
+
+    if (ReturnRedirect(conn, 413, &result)) {
+	return result;
+    }
+    return Ns_ConnReturnNotice(conn, 413, "Request Entity Too Large",
+	"The request entity (e.g. file to be uploaded) is too large.");
+}
 
 /*
  *----------------------------------------------------------------------

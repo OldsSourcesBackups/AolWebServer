@@ -1043,6 +1043,7 @@ NS_EXTERN int Ns_ConnReturnNoResponse(Ns_Conn *conn);
 NS_EXTERN int Ns_ConnReturnRedirect(Ns_Conn *conn, char *url);
 NS_EXTERN int Ns_ConnReturnBadRequest(Ns_Conn *conn, char *reason);
 NS_EXTERN int Ns_ConnReturnUnauthorized(Ns_Conn *conn);
+NS_EXTERN int Ns_ConnReturnEntityToLarge(Ns_Conn *conn);
 NS_EXTERN int Ns_ConnReturnForbidden(Ns_Conn *conn);
 NS_EXTERN int Ns_ConnReturnNotFound(Ns_Conn *conn);
 NS_EXTERN int Ns_ConnReturnNotModified(Ns_Conn *conn);

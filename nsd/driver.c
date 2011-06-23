@@ -1674,7 +1674,7 @@ TriggerDriver(Driver *drvPtr)
 {
     if (send(drvPtr->trigger[1], "", 1, 0) != 1) {
 	Ns_Fatal("driver: trigger send() failed: %s",
-	    ns_sockstrerror(ns_sockerrno));
+		 ns_sockstrerror(ns_sockerrno));
     }
 }
 
@@ -1750,6 +1750,9 @@ SockRead(Sock *sockPtr)
 	    SockState(sockPtr, SOCK_ERROR);
 	}
 	LogReadError(connPtr, err);
+	if (err == E_CRANGE) {
+	  Ns_ConnReturnEntityToLarge(connPtr);
+	}
     }
 }
 
