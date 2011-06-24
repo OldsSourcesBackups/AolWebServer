@@ -1216,7 +1216,6 @@ DriverThread(void *arg)
 	/*
          * Process sockets ready to run.
 	 */
-
         while ((sockPtr = preqSockPtr) != NULL) {
             preqSockPtr = sockPtr->nextPtr;
             sockPtr->connPtr->times.ready = now;
@@ -1752,6 +1751,7 @@ SockRead(Sock *sockPtr)
 	LogReadError(connPtr, err);
 	if (err == E_CRANGE) {
 	  Ns_ConnReturnEntityToLarge(connPtr);
+	  NsRunTraces(connPtr);
 	}
     }
 }
