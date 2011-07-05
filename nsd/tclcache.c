@@ -188,6 +188,8 @@ NsTclCacheObjCmd(ClientData arg, Tcl_Interp *interp, int objc, Tcl_Obj **objv)
     }
     cachePtr = objv[2]->internalRep.otherValuePtr;
 
+    //fprintf(stderr,"CACHE %s %s\n",Tcl_GetString(objv[1]),Tcl_GetString(objv[2]));
+
     Ns_GetTime(&now);
     err = 0;
     switch (opt) {
@@ -502,6 +504,9 @@ CreateCacheObjCmd(ClientData arg, Tcl_Interp *interp, int objc, Tcl_Obj **objv)
 	return TCL_ERROR;
     }
     cache = Tcl_GetString(objv[2]);
+
+    //fprintf(stderr,"CACHE create %s\n",cache);
+
     wait.sec = 2;
     ttl.sec = 60;
     wait.usec = ttl.usec = 0;

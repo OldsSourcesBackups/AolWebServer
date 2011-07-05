@@ -110,12 +110,22 @@ Ns_HtuuEncode(unsigned char *input, unsigned int len, char *output)
      */
 
     p = input;
-    q = output;
+    q = (unsigned char*)output;
     for (n = len / 3; n > 0; --n) {
 	*q++ = ENC(p[0] >> 2);
+        fprintf(stderr,"1 (%d) %d\n",p[0] >> 2, p[0]);
+	*q++ = ENC(((p[0] & 0x03) << 4) | ((p[1] & 0xf0) >> 4));
+        fprintf(stderr,"2 (%d) %d %d\n",(((p[0] & 0x03) << 4) | ((p[1] & 0xf0) >> 4)), p[0], p[1]);
+	*q++ = ENC(((p[1] & 0x0f) << 2) | ((p[2] & 0xc0) >> 6));
+        fprintf(stderr,"3 (%d) %d %d\n",(((p[1] & 0x0f) << 2) | ((p[2] & 0xc0) >> 6)), p[1], p[2]);
+	*q++ = ENC(p[2] & 0x3f);
+        fprintf(stderr,"4 (%d) %d\n",(p[2] & 0x3f),p[2]);
+
+        /*
 	*q++ = ENC(((p[0] << 4) & 060) | ((p[1] >> 4) & 017));
 	*q++ = ENC(((p[1] << 2) & 074) | ((p[2] >> 6) & 03));
 	*q++ = ENC(p[2] & 077);
+        */
 	p += 3;
     }
 
@@ -127,11 +137,11 @@ Ns_HtuuEncode(unsigned char *input, unsigned int len, char *output)
     if (n > 0) {
 	*q++ = ENC(p[0] >> 2);
 	if (n == 1) {
-	    *q++ = ENC((p[0] << 4) & 060);
+	    *q++ = ENC(((p[0] & 0x03) << 4));
 	    *q++ = '=';
 	} else {
-	    *q++ = ENC(((p[0] << 4) & 060) | ((p[1] >> 4) & 017));
-	    *q++ = ENC((p[1] << 2) & 074);
+            *q++ = ENC(((p[0] & 0x03) << 4) | ((p[1] & 0xf0) >> 4));
+	    *q++ = ENC(((p[1] & 0x0f) << 2));
 	}
 	*q++ = '=';
     }

@@ -297,7 +297,6 @@ CreateServer(char *server)
      * Set the default URL encoding used to decode the request.  The default
      * is no encoding, i.e., assume UTF-8.
      */
-
     GetCharsetEncoding(path, "urlcharset", NULL, &servPtr->urlEncoding);
 
     /*
