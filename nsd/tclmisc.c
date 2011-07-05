@@ -365,11 +365,7 @@ NsTclHTUUEncodeObjCmd(ClientData dummy, Tcl_Interp *interp, int objc, Tcl_Obj **
         Tcl_WrongNumArgs(interp, 1, objv, "string");
         return TCL_ERROR;
     }
-    string = Tcl_GetString(objv[1]);
-    nbytes = objv[1]->length;
-    fprintf(stderr, "STRANGE %d %d\n",(unsigned char)string[0],(unsigned char)string[1]);
-    /*    string = Tcl_GetStringFromObj(objv[1], &nbytes);*/
-
+    string = Tcl_GetStringFromObj(objv[1], &nbytes);
     if (nbytes > 48) {
         Tcl_AppendStringsToObj(Tcl_GetObjResult(interp), "invalid string \"",
                          string, "\": must be less than 48 characters", NULL);

@@ -555,86 +555,6 @@ NsConnThread(void *arg)
  *----------------------------------------------------------------------
  */
 
-/*
- *----------------------------------------------------------------------
- *
- * ConnAuthorize --
- *
- *      Try to authorize a connection.
- *
- * Results:
- *      NS_OK on successful authorization,
- *      NS_FILTER_RETURN on authorization failure, or
- *      NS_ERROR on error.
- *
- * Side effects:
- *      Connection request is authorized. On failure an alternative
- *      response may be sent to the client.
- *
- *----------------------------------------------------------------------
- */
-
-static int
-ConnAuthorize(Conn *connPtr)
-{
-    Ns_Conn 	  *conn = (Ns_Conn *) connPtr;
-    NsServer	  *servPtr = connPtr->servPtr;
-    int            status;
-
-    status = Ns_AuthorizeRequest(servPtr->server,
-		connPtr->request->method, connPtr->request->url, 
-		connPtr->authUser, connPtr->authPasswd, connPtr->peer);
-
-    switch (status) {
-    case NS_OK:
-        break;
-    case NS_FORBIDDEN:
-        /*
-         * NS_OK indicates that a response was sent to the client
-         * a this point, we must fast-forward to traces,
-         * so we convert the NS_OK to NS_FILTER_RETURN.
-         */
-        if ((status = Ns_ConnReturnForbidden(conn)) == NS_OK) {
-	    status = NS_FILTER_RETURN;
-        }
-        break;
-    case NS_UNAUTHORIZED:
-        /*
-         * NS_OK indicates that a response was sent to the client
-         * a this point, we must fast-forward to traces,
-         * so we convert the NS_OK to NS_FILTER_RETURN.
-         */
-        if ((status = Ns_ConnReturnUnauthorized(conn)) == NS_OK) {
-            status = NS_FILTER_RETURN;
-        }
-        break;
-    case NS_ERROR:
-    default:
-        status = NS_ERROR;
-        break;
-    }
-
-    return status;
-}
-
-
-/*
- *----------------------------------------------------------------------
- *
- * ConnRun --
- *
- *	Run a valid connection.
- *
- * Results:
- *	None.
- *
- * Side effects:
- *	Connection request is read and parsed and the cooresponding
- *	service routine is called.
- *
- *----------------------------------------------------------------------
- */
-
 static void
 ConnRun(Conn *connPtr)
 {
@@ -669,102 +589,62 @@ ConnRun(Conn *connPtr)
      * Run the request.
      */
 
-    while (1) {
+    if (connPtr->request->protocol != NULL && connPtr->request->host != NULL) {
+	status = NsConnRunProxyRequest((Ns_Conn *) connPtr);
+    } else {
+	status = NsRunFilters(conn, NS_FILTER_PRE_AUTH);
+	if (status == NS_OK) {
+	    status = Ns_AuthorizeRequest(servPtr->server,
+			connPtr->request->method, connPtr->request->url, 
+			connPtr->authUser, connPtr->authPasswd, connPtr->peer);
+	    switch (status) {
+	    case NS_OK:
+		status = NsRunFilters(conn, NS_FILTER_POST_AUTH);
+		if (status == NS_OK) {
+		    status = Ns_ConnRunRequest(conn);
+		}
+		break;
 
-        /*
-         * Proxy requests replace request logic
-         */
+	    case NS_FORBIDDEN:
+		Ns_ConnReturnForbidden(conn);
+		break;
 
-        if (connPtr->request->protocol != NULL
-            && connPtr->request->host != NULL) {
+	    case NS_UNAUTHORIZED:
+		Ns_ConnReturnUnauthorized(conn);
+		break;
 
-            status = NsConnRunProxyRequest((Ns_Conn *) connPtr);
-            break;
+	    case NS_ERROR:
+	    default:
+		Ns_ConnReturnInternalError(conn);
+		break;
+	    }
+        } else if (status != NS_FILTER_RETURN) {
+            /* if not ok or filter_return, then the pre-auth filter coughed
+             * an error.  We are not going to proceed, but also we
+             * can't count on the filter to have sent a response
+             * back to the client.  So, send an error response.
+             */
+            Ns_ConnReturnInternalError(conn);
+            status = NS_FILTER_RETURN; /* to allow tracing to happen */
         }
-
-        /*
-         * Each stage of request processing can return one of three
-         * possible results:
-         * NS_OK means continue to next stage
-         * NS_FILTER_RETURN means skip to traces
-         * NS_ERROR means skip to 500 response attempt
-         */
-
-        status = NsRunFilters(conn, NS_FILTER_PRE_AUTH);
-        if (status != NS_OK) {
-            break;
-        }
-
-        status = ConnAuthorize(connPtr);
-        if (status != NS_OK) {
-            break;
-        }
-
-        status = NsRunFilters(conn, NS_FILTER_POST_AUTH);
-        if (status != NS_OK) {
-            break;
-        }
-
-        status = Ns_ConnRunRequest(conn);
-        break;
     }
-
-    if (status == NS_ERROR) {
-        status = Ns_ConnReturnInternalError(conn);
-    }
-
-    /*
-     * Closing connection also runs code registered with
-     * ns_atclose.
-     */ 
-
     Ns_ConnClose(conn);
-
-    /*
-     * Trace filters, void filter traces and server traces
-     * run a response was sent to the client
-     * Note that a successful response includes sending
-     * an internal server error response.
-     */
-
     if (status == NS_OK || status == NS_FILTER_RETURN) {
-       /*
-        * Filter Traces are registered with ns_register_filter
-        * Ignore the return code? We need to do NsRunTraces based
-        * upon status before trace filters ran. Question is if we
-        * should skip void trace filters. We could wrap them in another
-        * status check, then move on to NsRunTraces.
-        */
-        NsRunFilters(conn, NS_FILTER_TRACE);
-       /*
-        * Filters registered outside the context of a particular server
-        */
-        (void) NsRunFilters(conn, NS_FILTER_VOID_TRACE);
-       /*
-        * Server traces registered with Ns_RegisterServerTrace
-        * Access logging is handled at this point.
-        */
-        NsRunTraces(conn);
+	status = NsRunFilters(conn, NS_FILTER_TRACE);
+	if (status == NS_OK) {
+	    (void) NsRunFilters(conn, NS_FILTER_VOID_TRACE);
+	    NsRunTraces(conn);
+	}
     }
 
     /*
      * Cleanup the connections, calling any registered cleanup traces
      * followed by free the connection interp if it was used.
      */
-    
-   /*
-    * Cleanups are registered with either:
-    * Ns_RegisterConnCleanup: same signature as Ns_RegisterServerTrace
-    * Ns_RegisterCleanup: runs for all servers
-    */
 
     NsRunCleanups(conn);
-
-    /* Finished with conn */
-
     NsFreeConnInterp(connPtr);
 }
-
 
 
 /*
