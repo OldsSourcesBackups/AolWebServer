@@ -87,6 +87,7 @@
 #define NS_CONN_TIMEOUT	       	  0x400
 #define NS_CONN_GZIP		  0x800
 #define NS_CONN_CHUNK		  0x1000
+#define NS_CONN_ENTITYTOOLARGE	  0x2000
 
 #define NS_CONN_MAXCLS		 16
 
@@ -1043,7 +1044,7 @@ NS_EXTERN int Ns_ConnReturnNoResponse(Ns_Conn *conn);
 NS_EXTERN int Ns_ConnReturnRedirect(Ns_Conn *conn, char *url);
 NS_EXTERN int Ns_ConnReturnBadRequest(Ns_Conn *conn, char *reason);
 NS_EXTERN int Ns_ConnReturnUnauthorized(Ns_Conn *conn);
-NS_EXTERN int Ns_ConnReturnEntityToLarge(Ns_Conn *conn);
+NS_EXTERN int Ns_ConnReturnEntityTooLarge(Ns_Conn *conn);
 NS_EXTERN int Ns_ConnReturnForbidden(Ns_Conn *conn);
 NS_EXTERN int Ns_ConnReturnNotFound(Ns_Conn *conn);
 NS_EXTERN int Ns_ConnReturnNotModified(Ns_Conn *conn);

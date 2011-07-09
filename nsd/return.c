@@ -1061,7 +1061,7 @@ Ns_ConnReturnNotModified(Ns_Conn *conn)
 /*
  *----------------------------------------------------------------------
  *
- * Ns_ConnReturnEntityToLarge --
+ * Ns_ConnReturnEntityTooLarge --
  *
  *	Return a 414 Request Entity to large response.
  *
@@ -1075,7 +1075,7 @@ Ns_ConnReturnNotModified(Ns_Conn *conn)
  */
 
 int
-Ns_ConnReturnEntityToLarge(Ns_Conn *conn)
+Ns_ConnReturnEntityTooLarge(Ns_Conn *conn)
 {
     int result;
 

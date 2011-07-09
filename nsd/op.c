@@ -230,6 +230,14 @@ Ns_ConnRunRequest(Ns_Conn *conn)
     }
 
     /*
+     * Return entity too large error message
+     */
+
+    if (connPtr->flags & NS_CONN_ENTITYTOOLARGE) {
+        return Ns_ConnReturnEntityTooLarge(conn);
+    }
+
+    /*
      * Prevent infinite internal redirect loops.
      */
 

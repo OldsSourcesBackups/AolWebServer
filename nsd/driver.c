@@ -1481,7 +1481,7 @@ static void
 SockState(Sock *sockPtr, int state)
 {
     if (sockPtr->drvPtr->flags & DRIVER_DEBUG) {
-	Ns_Log(Notice, "%s[%d]: %s -> %s\n", sockPtr->drvPtr->name,
+	Ns_Log(Notice, "%s[%d]: %s -> %s", sockPtr->drvPtr->name,
 	       sockPtr->sock, states[sockPtr->state], states[state]);
     }
     sockPtr->state = state;
@@ -1749,10 +1749,6 @@ SockRead(Sock *sockPtr)
 	    SockState(sockPtr, SOCK_ERROR);
 	}
 	LogReadError(connPtr, err);
-	if (err == E_CRANGE) {
-	  Ns_ConnReturnEntityToLarge(connPtr);
-	  NsRunTraces(connPtr);
-	}
     }
 }
 
@@ -1972,7 +1968,23 @@ SockReadLine(Driver *drvPtr, Ns_Sock *sock, Conn *connPtr)
         return E_NINVAL;
     }
     if (len > (int) connPtr->limitsPtr->maxupload) {
-        return E_CRANGE;
+      /*
+       * Gustaf Neumann: The entity is too large and is not allowed to
+       * be processed. In principle, we could stop processing the
+       * request here and return immediately an error message to the
+       * client. However, if the content to be sent from the client to
+       * the server is large it is likely, that at the time we process
+       * the header, the content is not fully sent yet. If the server
+       * replies and closes the connection while the client is sending
+       * the request, current browsers (e.g. Firefox, Chrome, ...)
+       * will show the user their own error message ("server has
+       * closed connection"). Therefore, in order to provide reliable
+       * error messages, we have process the full request. We flag the
+       * fact of the too large entity here and return the error
+       * message from the connection thread.
+       */
+        connPtr->flags |= NS_CONN_ENTITYTOOLARGE;
+	LogReadError(connPtr, E_CRANGE);
     }
     connPtr->contentLength = len;
 
