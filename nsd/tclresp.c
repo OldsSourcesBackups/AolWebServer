@@ -444,11 +444,13 @@ NsTclReturnBadRequestObjCmd(ClientData arg, Tcl_Interp *interp, int objc,
  *
  * ReturnObjCmd --
  * NsTclReturnNotFoundObjCmd --
+ * NsTclReturnTooLargeObjCmd --
  * NsTclReturnUnauthorizedObjCmd --
  * NsTclReturnForbiddenCmd --
  *
- *	Implement the ns_returnnotfound, ns_returnunauthorized, and
- *	ns_returnforbidden generic return commands.
+ *	Implement the ns_returnnotfound, ns_returntoolarge,
+ *      ns_returnunauthorized, and ns_returnforbidden generic return
+ *      commands.
  *
  * Results:
  *	Tcl result. 
@@ -484,6 +486,14 @@ NsTclReturnNotFoundObjCmd(ClientData arg, Tcl_Interp *interp, int objc,
 {
     return ReturnObjCmd(arg, interp, objc, objv, Ns_ConnReturnNotFound);
 }
+
+int
+NsTclReturnTooLargeObjCmd(ClientData arg, Tcl_Interp *interp, int objc,
+			  Tcl_Obj *CONST objv[])
+{
+    return ReturnObjCmd(arg, interp, objc, objv, Ns_ConnReturnEntityTooLarge);
+}
+
 
 int
 NsTclReturnUnauthorizedObjCmd(ClientData arg, Tcl_Interp *interp, int objc,

@@ -234,6 +234,7 @@ Ns_ConnRunRequest(Ns_Conn *conn)
      */
 
     if (connPtr->flags & NS_CONN_ENTITYTOOLARGE) {
+        connPtr->flags &= ~NS_CONN_ENTITYTOOLARGE;
         return Ns_ConnReturnEntityTooLarge(conn);
     }
 

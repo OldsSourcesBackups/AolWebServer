@@ -148,6 +148,7 @@ extern Tcl_ObjCmdProc
     NsTclReturnNotFoundObjCmd,
     NsTclReturnObjCmd,
     NsTclReturnRedirectObjCmd,
+    NsTclReturnTooLargeObjCmd,
     NsTclReturnUnauthorizedObjCmd,
     NsTclRmdirObjCmd,
     NsTclRollFileObjCmd,
