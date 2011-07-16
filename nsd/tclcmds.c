@@ -378,6 +378,7 @@ static Cmd cmds[] = {
     {"ns_returnnotice", NsTclReturnNoticeCmd, NULL},
     {"ns_returnredirect", NULL, NsTclReturnRedirectObjCmd},
     {"ns_returnunauthorized", NULL, NsTclReturnUnauthorizedObjCmd},
+    {"ns_returntoolarge", NULL, NsTclReturnTooLargeObjCmd},
     {"ns_rmdir", NULL, NsTclRmdirObjCmd},
     {"ns_rollfile", NULL, NsTclRollFileObjCmd},
     {"ns_rwlock", NULL, NsTclRWLockObjCmd},
