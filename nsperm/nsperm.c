@@ -580,7 +580,11 @@ AddUserCmd(Server *servPtr, Tcl_Interp *interp, int argc, char **argv)
 	     */
 
 	    *slash = '\0';
-	    if (inet_aton(net, &ip) == 0 || inet_aton(slash+1, &mask) == 0) {
+#ifndef _WIN32
+ 	    if (inet_aton(net, &ip) == 0 || inet_aton(slash+1, &mask) == 0) {
+#else
+	    if (inet_pton(AF_INET,net, &ip) == 0 || inet_pton(AF_INET,slash+1, &mask) == 0) {
+#endif
 		Tcl_AppendResult(interp, "invalid address or hostname \"",
 				 net, "\". "
 				 "should be ipaddr/netmask or hostname",

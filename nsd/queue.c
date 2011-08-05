@@ -39,6 +39,10 @@ static const char *RCSID = "@(#) $Header$, compiled: " __DATE__ " " __TIME__;
 #include "nsd.h"
 #include <math.h>
 
+#ifdef _WIN32
+static double round(double x) { return floor (x + 0.5); }
+#endif
+
 /*
  * The following structure is allocated for each new thread.  The
  * connPtr arg is used for the proc arg callback to list conn

@@ -72,11 +72,13 @@
   #define POLLOUT 2
   #define POLLPRI 4
   #define POLLHUP 8
+#ifndef _WIN32
   struct pollfd {
     int fd;
     short events;
     short revents;
   };
+#endif
   extern int poll(struct pollfd *, unsigned long, int);
 #endif
 
@@ -306,7 +308,7 @@ typedef struct Driver {
     Ns_Mutex	 lock;		    /* Lock to protect lists below. */
     Ns_Cond 	 cond;		    /* Cond to signal reader threads,
 				     * driver query, startup, and shutdown. */
-    int     	 trigger[2];	    /* Wakeup trigger pipe. */
+    SOCKET    	 trigger[2];	    /* Wakeup trigger pipe. */
 
     Ns_DriverProc *proc;	    /* Driver callback. */
     int		 opts;		    /* Driver options. */

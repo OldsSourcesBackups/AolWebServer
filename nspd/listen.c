@@ -47,7 +47,7 @@ static const char *RCSID = "@(#) $Header$, compiled: " __DATE__ " " __TIME__;
  * Local functions defined in this file
  */
 
-static void     PdNewConn(int sock, int new);
+static void     PdNewConn(SOCKET sock, SOCKET new);
 static int      fdNull;
 
 /*
@@ -77,7 +77,7 @@ static int      fdNull;
 void
 PdListen(int port)
 {
-    int                sock, new;
+    SOCKET             sock, new;
     struct sockaddr_in sa;
     int                n;
 
@@ -149,7 +149,7 @@ PdListen(int port)
  */
 
 static void
-PdNewConn(int sock, int new)
+PdNewConn(SOCKET sock, SOCKET new)
 {
     int pid, status;
 

@@ -612,7 +612,7 @@ Ns_ConnPort(Ns_Conn *conn)
  *----------------------------------------------------------------------
  */
 
-int
+SOCKET
 Ns_ConnSock(Ns_Conn *conn)
 {
     Conn *connPtr = (Conn *) conn;

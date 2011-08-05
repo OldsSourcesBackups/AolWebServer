@@ -160,6 +160,16 @@ typedef unsigned long long	ns_uint64;
 
 typedef ns_int64 INT64;
 
+#if !defined(INT2PTR) && !defined(PTR2INT)
+#   if defined(HAVE_INTPTR_T) || defined(intptr_t)
+#       define INT2PTR(p) ((void *)(intptr_t)(p))
+#       define PTR2INT(p) ((int)(intptr_t)(p))
+#   else
+#       define INT2PTR(p) ((void *)(p))
+#       define PTR2INT(p) ((int)(p))
+#   endif
+#endif
+
 /*
  * The following flags define how Ns_Set's
  * are managed by Tcl:
@@ -219,7 +229,7 @@ NS_EXTERN int			kill(int pid, int sig);
 #else
 #define O_TEXT			0
 #define O_BINARY		0
-#define SOCKET                  int
+#define SOCKET			int
 #define INVALID_SOCKET	        (-1)
 #define SOCKET_ERROR	        (-1)
 #define NS_EXPORT
@@ -670,7 +680,7 @@ NS_EXTERN int Ns_ConnPeerPort(Ns_Conn *conn);
 NS_EXTERN char *Ns_ConnLocation(Ns_Conn *conn);
 NS_EXTERN char *Ns_ConnHost(Ns_Conn *conn);
 NS_EXTERN int Ns_ConnPort(Ns_Conn *conn);
-NS_EXTERN int Ns_ConnSock(Ns_Conn *conn);
+NS_EXTERN SOCKET Ns_ConnSock(Ns_Conn *conn);
 NS_EXTERN char *Ns_ConnDriverName(Ns_Conn *conn);
 NS_EXTERN void *Ns_ConnDriverContext(Ns_Conn *conn);
 NS_EXTERN int Ns_ConnGetKeepAliveFlag(Ns_Conn *conn);

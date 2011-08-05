@@ -49,8 +49,10 @@
 #include <fcntl.h>
 
 #include <unistd.h>
-#define SOCKET          int
-#define INVALID_SOCKET  (-1)
+#ifndef _WIN32
+# define SOCKET          int
+# define INVALID_SOCKET  (-1)
+#endif
 #define socket_errno    errno
 #include <sys/time.h>
 #include <sys/types.h>
