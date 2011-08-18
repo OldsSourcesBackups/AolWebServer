@@ -510,7 +510,7 @@ ClosePipeOnExec(int *fds)
  *	Memory map a region of a file.
  *
  * Results:
- *	Pointer to mapped region or NULL if mapping failed.
+ *	Pointer to mapped region or MAP_FAILED if mapping failed.
  *
  * Side effects:
  *	None.
@@ -523,7 +523,7 @@ NsMap(int fd, off_t start, size_t len, int writable, void **argPtr)
 {
 #ifdef _WIN32
     /* TODO: Make this work on Win32. */
-    return NULL;
+    return MAP_FAILED;
 #else
     int prot;
 

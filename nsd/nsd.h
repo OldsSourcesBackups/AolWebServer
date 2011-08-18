@@ -104,6 +104,9 @@
 #ifdef _WIN32
 #define NS_SIGTERM  1
 #define NS_SIGHUP   2
+# ifndef MAP_FAILED
+#  define MAP_FAILED ((void *) (-1))
+# endif
 #else
 #define NS_SIGTERM  SIGTERM
 #define NS_SIGHUP   SIGHUP

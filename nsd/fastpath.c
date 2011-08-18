@@ -42,11 +42,6 @@ static const char *RCSID = "@(#) $Header$, compiled: " __DATE__ " " __TIME__;
  * The following constants are defined for this file
  */
 
-#ifdef MAP_FAILED
-#undef MAP_FAILED 
-#endif
-#define MAP_FAILED ((void *) (-1))
-
 /*
  * The following structure defines the contents of a file
  * stored in the file cache.
@@ -521,7 +516,7 @@ FastReturn(NsServer *servPtr, Ns_Conn *conn, int status,
 	}
 	if (servPtr->fastpath.mmap) {
 	    map = NsMap(fd, 0, stPtr->st_size, 0, &arg);
-	    if (map != NULL) {
+	    if (map != MAP_FAILED) {
 	    	close(fd);
 	    	fd = -1;
             	result = Ns_ConnReturnData(conn, status, map,
