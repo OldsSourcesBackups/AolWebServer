@@ -1,3 +1,8 @@
+2011-08-24 Jeff Rogers <dvrsn@diphi.com>
+    * nsd/adpparse.c: enhance parsing to recognize a xml-style minimized
+    registered tag as an empty open/close sequence.  Fix to allow
+    arbitrary balanced nesting of <% %> tags (SF bug #2958550)
+
 2011-05-07 Jeff Rogers <dvrsn@diphi.com>
     * nsthread/pthread.c: change to use passed resultArg directly so
     thread id is always set in ConnData struct.  Fixes bug #3313417

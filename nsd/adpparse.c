@@ -61,6 +61,7 @@ typedef struct Tag {
     int		   type;   /* Type of tag, ADP or proc. */
     char          *tag;    /* The name of the tag (e.g., "mytag") */
     char          *endtag; /* The closing tag or null (e.g., "/mytag")*/
+    int           balanced;/* true if open/close tags are the same */
     char          *string; /* Proc (e.g., "ns_adp_netscape") or ADP string. */
 } Tag;
 
@@ -200,6 +201,8 @@ RegisterObjCmd(ClientData arg, Tcl_Interp *interp, int objc,
     }
     Tcl_SetHashValue(hPtr, tagPtr);
     tagPtr->tag = Tcl_GetHashKey(&servPtr->adp.tags, hPtr);
+    tagPtr->balanced=(tagPtr->endtag != NULL && *(tagPtr->endtag) == '/' &&
+        STREQ(tagPtr->tag, (tagPtr->endtag+1)));
     Ns_RWLockUnlock(&servPtr->adp.taglock);
     Tcl_DStringFree(&tbuf);
     return TCL_OK;
@@ -288,16 +291,11 @@ NsAdpParse(AdpCode *codePtr, NsServer *servPtr, char *adp, int flags)
 		 * nested <% ... %> sequences.
 		 */
 
-		level = 0;
 		e = strstr(e - 1, "%>");
 		n = s + 2;
 		while (e != NULL && (n = strstr(n, "<%")) != NULL && n < e) {
-		    ++level;
 		    n = n + 2;
-		}
-		while (e != NULL && level > 0) {
 		    e = strstr(e + 2, "%>");
-		    --level;
 		}
 		if (e == NULL) {
 		    /*
@@ -355,6 +353,9 @@ NsAdpParse(AdpCode *codePtr, NsServer *servPtr, char *adp, int flags)
 		        if (tagPtr->endtag == NULL) {
 			    AppendTag(&parse, tagPtr, a, e, NULL);
 			    text = e + 1;
+                        } else if (tagPtr->balanced && *(e-1) == '/') {
+                            AppendTag(&parse, tagPtr, a, e, e+1);
+                            text = e + 1;
 			} else {
 			    as = a;
 			    ae = e;
@@ -590,6 +591,13 @@ ParseAtts(char *s, char *e, int *servPtr, Tcl_DString *attsPtr, int atts)
     
     if (servPtr != NULL) {
 	*servPtr = 0;
+    }
+    /*
+     * discard a trailing '/' from the attribute value 
+     * for xml-ish minimized empty elements
+     */
+    if (*(e-1) == '/') {
+        e--;
     }
     while (s < e) {
 	/*
