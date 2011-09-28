@@ -604,6 +604,37 @@ NsTclCrashCmd(ClientData dummy, Tcl_Interp *interp, int argc, char **argv)
 /*
  *----------------------------------------------------------------------
  *
+ * NsTclGetNative --
+ *
+ *      Gets a string from a Tcl_Obj in the system encoding, suitable 
+ *      for passing to system calls
+ *
+ * Results:
+ *      native string
+ *
+ * Side effects:
+ *      Memory is allocated.  Caller should free result
+ *
+ *----------------------------------------------------------------------
+ */
+
+char *
+NsTclGetNative(Tcl_Obj *objPtr)
+{
+	Tcl_DString ds;
+	char *encoded, *native;
+	int len;
+	encoded=Tcl_GetStringFromObj(objPtr, &len);
+	native=ns_strdup(Tcl_UtfToExternalDString(NULL,encoded,len,&ds));
+	Tcl_DStringFree(&ds);
+	return native;
+}
+
+
+
+/*
+ *----------------------------------------------------------------------
+ *
  * WordEndsInSemi --
  *
  *      Does this word end in a semicolon or a space?

@@ -1090,6 +1090,7 @@ extern void NsStopSockCallbacks(void);
 extern void NsStopScheduledProcs(void);
 extern Tcl_Encoding NsGetInputEncoding(Conn *connPtr);
 extern Tcl_Encoding NsGetOutputEncoding(Conn *connPtr);
+extern char *NsTclGetNative(Tcl_Obj *objPtr);
 
 /*
  * Proxy support

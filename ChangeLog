@@ -1,3 +1,10 @@
+2011-09-27 Jeff Rogers <dvrsn@diphi.com>
+	* nsd/nsd.h:
+	* nsd/tclmisc.c: add NsTclGetNative function to retrieve decoded
+	strings (rather than utf-8) from Tcl_Objs 
+	* nsd/tclreturn.c: decode strings for passing to ns_returnfile 
+	and ns_respond
+
 2011-08-24 Jeff Rogers <dvrsn@diphi.com>
     * nsd/adpparse.c: enhance parsing to recognize a xml-style minimized
     registered tag as an empty open/close sequence.  Fix to allow

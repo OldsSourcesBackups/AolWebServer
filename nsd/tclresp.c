@@ -239,7 +239,7 @@ error:
 	    string = Tcl_GetString(objv[i]);
 
 	} else if (STRIEQ(carg, "-file")) {
-	    filename = Tcl_GetString(objv[i]);
+	    filename = NsTclGetNative(objv[i]);
 
 	} else if (STRIEQ(carg, "-fileid")) {
 	    if (Ns_TclGetOpenChannel(interp, carg, 0, 1, &chan) != TCL_OK) {
@@ -294,6 +294,7 @@ error:
 	 */
 	
         retval = Ns_ConnReturnFile(conn, status, type, filename);
+	ns_free(filename);
 
     } else {
 	/*
@@ -327,7 +328,7 @@ int
 NsTclReturnFileObjCmd(ClientData arg, Tcl_Interp *interp, int objc,
 		      Tcl_Obj *CONST objv[])
 {
-    int      status;
+    int      status, result;
     Ns_Conn *conn;
     char    *type, *file;
 
@@ -344,9 +345,11 @@ NsTclReturnFileObjCmd(ClientData arg, Tcl_Interp *interp, int objc,
     if (Tcl_GetIntFromObj(interp, objv[objc-3], &status) != TCL_OK) {
         return TCL_ERROR;
     }
-    file = Tcl_GetString(objv[objc-1]);
+    file = NsTclGetNative(objv[objc-1]);
     type = Tcl_GetString(objv[objc-2]);
-    return Result(interp, Ns_ConnReturnFile(conn, status, type, file));
+    result = Ns_ConnReturnFile(conn, status, type, file);
+    ns_free(file);
+    return Result(interp, result);
 }
 
 
