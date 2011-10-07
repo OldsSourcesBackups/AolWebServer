@@ -654,6 +654,7 @@ typedef struct NsServer {
 	char	    	   *diradp;
 	bool	    	    mmap;
 	int 	    	    cachemaxentry;
+	int                 cacheminage;
 	Ns_UrlToFileProc   *url2file;
 	Ns_Cache    	   *cache;
     } fastpath;

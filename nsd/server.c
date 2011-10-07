@@ -392,6 +392,10 @@ CreateServer(char *server)
 	    i = n / 10;
 	}
 	servPtr->fastpath.cachemaxentry = i;
+	if (!Ns_ConfigGetInt(path, "cacheminage", &i) || i < 0) {
+	    i = 1;
+	}
+	servPtr->fastpath.cacheminage = i;
     	servPtr->fastpath.cache = NsFastpathCache(server, n);
     }
     if (!Ns_ConfigGetBool(path, "mmap", &servPtr->fastpath.mmap)) {

@@ -502,9 +502,11 @@ FastReturn(NsServer *servPtr, Ns_Conn *conn, int status,
     }
 
     if (servPtr->fastpath.cache == NULL
-    	    || stPtr->st_size > servPtr->fastpath.cachemaxentry) {
+    	    || stPtr->st_size > servPtr->fastpath.cachemaxentry
+            || (time(NULL) - stPtr->st_ctime) < servPtr->fastpath.cacheminage ) {
 	/*
-	 * Caching is disabled or the entry is too large for the cache
+	 * Caching is disabled, the entry is too large for the cache,
+	 * or the inode was changed too recently to be cached safely,
 	 * so just open, mmap, and send the content directly.
 	 */
 
