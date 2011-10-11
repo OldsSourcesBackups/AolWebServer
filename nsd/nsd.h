@@ -512,6 +512,12 @@ typedef struct Conn {
     void	   *maparg;	/* Argument for NsUnMap. */
 
     /*
+     * output buffers, used if needed
+     */
+    char           *sbuf;       /* pointer to content requested to be sent */
+    Tcl_DString	   *rbuf;	/* buffer for response content. */
+
+    /*
      * The following offsets are used to manage the 
      * buffer read-ahead process.
      *
@@ -584,6 +590,7 @@ typedef struct Pool {
 #define SERV_MODSINCE		0x0004	/* Check if-modified-since. */
 #define SERV_NOTICEDETAIL	0x0008	/* Add detail to notice messages. */
 #define SERV_GZIP		0x0010	/* Enable GZIP compression. */
+#define SERV_FILTERREDIRECT     0x0020  /* re-run filters on redirects */
 
 /*
  * The following struct maintains nsv's, shared string variables.
@@ -1098,5 +1105,6 @@ extern char *NsTclGetNative(Tcl_Obj *objPtr);
  */
 
 extern int NsConnRunProxyRequest(Ns_Conn *conn);
+extern int NsConnRunDirectRequest(Ns_Conn *conn);
 
 #endif

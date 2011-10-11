@@ -57,11 +57,21 @@ Glob matching pattern for requested methods.
 Glob matching pattern for requested urls.
 
 .AP int when in
-OR-ed combination of the values \fBNS_FILTER_READ\fR,
-\fBNS_FILTER_PRE_QUEUE\fR, \fBNS_FILTER_PRE_AUTH\fR,
-\fBNS_FILTER_POST_AUTH\fR, \fBNS_FILTER_WRITE\fR, and
-\fBNS_FILTER_TRACE\fI indicating the connection state at
-which \fIproc\fR should be invoked.
+OR-ed combination of flags controlling when 
+.B proc 
+is to be invoked.  Suppoeted values
+are 
+.BR NS_FILTER_READ ,
+.BR NS_FILTER_PRE_QUEUE ,
+.BR NS_FILTER_PRE_AUTH ,
+.BR NS_FILTER_POST_AUTH ,
+.BR NS_FILTER_PRE_WRITE ,
+.BR NS_FILTER_WRITE ,
+.BR NS_FILTER_TRACE ,
+.BR NS_FILTER_PRIORITY(prio) ,
+.BR NS_FILTER_INSERT ,
+.BR NS_FILTER_APPEND .
+See below for more information.
 
 .AP void *arg in
 Arbitrary one-word value to pass to \fIproc\fR.
@@ -130,12 +140,12 @@ This callback will occur just once within the single "driver" thread
 and can be used to register one or more \fBNs_QueueWait\fR callbacks
 to access addition, possibly blocking network resources before
 queueing the thread for processing.
-If this \fIproc\fR returns a value other than \fBNS_OK\fR, the conneciton
+If this \fIproc\fR returns a value other than \fBNS_OK\fR, the connection
 will be aborted.
 
 .sp
 NOTE: See the comments above for \fBNS_FILTER_READ\fR for caveats
-of \fIproc\fR being invoked in a thread other than the conneciton
+of \fIproc\fR being invoked in a thread other than the connection
 processing thread.
 
 .TP
@@ -147,6 +157,33 @@ NS_FILTER_POST_AUTH
 Invoke \fIproc\fR just after a successful authentication.
 
 .TP
+NS_FILTER_PRE_WRITE
+Invoke
+.I proc
+just before sending content to the client.  A filter at this point can
+access content to be sent with 
+.BR Ns_ConnGetResponseContent,
+set it with 
+.BR Ns_ConnSetResponseContent,
+or append to it with 
+.B Ns_ConnAppendResponseContent.
+
+.sp
+NOTE(1): This filter may not get called at all for a response;  in
+particular FastPath responses will bypass it, as will content sent by
+the lower-level i/o functions.
+
+.sp
+NOTE(2): This filter may be invoked from the connection thread or
+from a different thread.  See the comments above for 
+.B NS_FILTER_READ
+for caveats
+of 
+.I proc
+being invoked in a thread other than the connection
+processing thread.
+
+.TP
 NS_FILTER_WRITE
 Invoke \fIproc\fR after each write to the client.
 If \fIproc\fR
@@ -156,6 +193,22 @@ aborted.
 .TP
 NS_FILTER_TRACE
 
+.TP
+NS_FILTER_PRIORITY(prio)
+Sets the priortiy of this filter.  Valid values for prio are -128 to
+127.  Numerically lower values have higher priority, i.e., they will 
+be executed first.  The default priority value is 0; values outside the 
+range [-100 .. 100] are reserved for system use.
+
+.TP
+NS_FILTER_INSERT
+Insert this filter at the beginning of the list of filters with equal 
+priority.
+
+.TP
+NS_FILTER_APPEND
+Append this filter to the end of the list of filters with equal priority.
+This flag is the default.
 
 .SH "SEE ALSO"
 Ns_RegisterConnCleanup(3), ns_register_filter(n), Ns_RegisterServerTrace(3)

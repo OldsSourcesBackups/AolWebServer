@@ -1,3 +1,21 @@
+2011-10-11 Jeff Rogers <dvrsn@diphi.com>
+	* doc/Ns_Filter.3:
+	* doc/ns_filter.n:
+	* nsd/conn.c:
+	* nsd/connio.c:
+	* nsd/driver.c:
+	* nsd/filter.c:
+	* nsd/nsd.h:
+	* nsd/op.c:
+	* nsd/queue.c:
+	* nsd/server.c:
+	* nsd/tclrequest.c:
+	* include/ns.h: add various functions, mostly from SF RFEs - 
+	pre-write filter, response content modification, 
+	insert/append filter, priority filters, ns_conn gzip flag,
+	re-run filters on redirect with new config option "filterredirect",
+	add new constants, fix STREQ macro
+
 2011-10-07 Jeff Rogers <dvrsn@diphi.com>
 	* nsd/nsd.h:
 	* nsd/fastpath.c:

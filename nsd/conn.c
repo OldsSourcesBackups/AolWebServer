@@ -1005,6 +1005,62 @@ SetFlag(Ns_Conn *conn, int bit, int flag)
 /*
  *----------------------------------------------------------------------
  *
+ * Ns_ConnGetResponseContent
+ * Ns_ConnSetResponseContent
+ * Ns_ConnAppendResponseContent
+ *
+ *	get, set, or append to the response content
+ *
+ * Results:
+ *	the current content buffer
+ *
+ * Side effects:
+ *	None. 
+ *
+ *----------------------------------------------------------------------
+ */
+char *Ns_ConnGetResponseContent(Ns_Conn *conn)
+{
+    Conn *connPtr = (Conn *) conn;
+
+    if (connPtr->rbuf!= NULL) {
+        return Tcl_DStringValue(connPtr->rbuf);
+    } else {
+        return connPtr->sbuf;
+    }
+}
+
+char *Ns_ConnSetResponseContent(Ns_Conn *conn, char *content)
+{
+    Conn *connPtr = (Conn *) conn;
+
+    if (connPtr->rbuf == NULL) {
+        connPtr->rbuf=ns_malloc(sizeof(Tcl_DString));
+        Tcl_DStringInit(connPtr->rbuf);
+    }
+    Tcl_DStringSetLength(connPtr->rbuf,0);
+    Tcl_DStringAppend(connPtr->rbuf, content, -1);
+    return Tcl_DStringValue(connPtr->rbuf);
+}
+
+char *Ns_ConnAppendResponseContent(Ns_Conn *conn, char *content)
+{
+    Conn *connPtr = (Conn *) conn;
+
+    if (connPtr->rbuf == NULL) {
+        connPtr->rbuf=ns_malloc(sizeof(Tcl_DString));
+        Tcl_DStringInit(connPtr->rbuf);
+        Tcl_DStringAppend(connPtr->rbuf, connPtr->sbuf, -1);
+    }
+    Tcl_DStringAppend(connPtr->rbuf, content, -1);
+    return Tcl_DStringValue(connPtr->rbuf);
+}
+
+
+
+/*
+ *----------------------------------------------------------------------
+ *
  * NsTclConnObjCmd --
  *
  *	Implements ns_conn as an obj command. 
@@ -1043,7 +1099,7 @@ NsTclConnObjCmd(ClientData arg, Tcl_Interp *interp, int objc, Tcl_Obj **objv)
 	 "outputheaders", "peeraddr", "peerport", "port", "protocol",
 	 "query", "request", "server", "sock", "start", "status",
 	 "url", "urlc", "urlencoding", "urlv", "version",
-	 "write_encoded", "interp", NULL
+	 "write_encoded", "interp","gzip","responsecontent", NULL
     };
     enum {
 	 CAuthPasswordIdx, CAuthUserIdx, CChannelIdx, CCloseIdx, CAvailIdx, CContentIdx,
@@ -1054,7 +1110,8 @@ NsTclConnObjCmd(ClientData arg, Tcl_Interp *interp, int objc, Tcl_Obj **objv)
 	 COutputHeadersIdx, CPeerAddrIdx, CPeerPortIdx, CPortIdx,
 	 CProtocolIdx, CQueryIdx, CRequestIdx, CServerIdx, CSockIdx,
 	 CStartIdx, CStatusIdx, CUrlIdx, CUrlcIdx, CUrlEncodingIdx,
-	 CUrlvIdx, CVersionIdx, CWriteEncodedIdx, CInterpIdx
+	 CUrlvIdx, CVersionIdx, CWriteEncodedIdx, CInterpIdx, 
+	 CGzipIdx, CRespContentIdx
     } opt;
 
     if (objc < 2) {
@@ -1393,6 +1450,27 @@ NsTclConnObjCmd(ClientData arg, Tcl_Interp *interp, int objc, Tcl_Obj **objv)
 	case CInterpIdx:
 	    Tcl_SetLongObj(result, (long) interp);
 	    break;
+
+	case CGzipIdx:
+	    if (objc > 2) {
+	    	int flag;
+		if (Tcl_GetBooleanFromObj(interp, objv[2], &flag) != TCL_OK) {
+			return TCL_ERROR;
+		}
+	    	Ns_ConnSetGzipFlag(conn, flag);
+	    }
+	    Tcl_SetIntObj(result, Ns_ConnGetGzipFlag(conn));
+	    break;
+
+        case CRespContentIdx:
+            if (objc == 2) {
+                Tcl_SetResult(interp, Ns_ConnGetResponseContent(connPtr), TCL_STATIC);
+            } else if (objc == 3) {
+                Tcl_SetResult(interp, Ns_ConnSetResponseContent(connPtr, Tcl_GetString(objv[2])), TCL_STATIC);
+            } else {
+                Tcl_WrongNumArgs(interp, 2, objv, "?value?");
+                return TCL_ERROR;
+            }
     }
 
     return TCL_OK;
@@ -1638,6 +1716,9 @@ MakeConnChannel(Ns_Conn *conn, int spliceout)
     chan = Tcl_MakeTcpClientChannel((ClientData)sock);
     if (chan == NULL && spliceout) {
         connPtr->sockPtr->sock = sock;
+    }
+    if (chan != NULL) {
+        Tcl_Ungets(chan,connPtr->content, connPtr->avail, 0);
     }
 
     return chan;

@@ -57,6 +57,8 @@ typedef struct Trace {
     void            *arg;
 } Trace;
 
+#define FILTER_GETPRIO(when) ((signed char)((when & 0xFF000000) >> 24))
+
 static Trace *NewTrace(Ns_TraceProc *proc, void *arg);
 static void RunTraces(Ns_Conn *conn, Trace *firstPtr);
 static void *RegisterCleanup(NsServer *servPtr, Ns_TraceProc *proc,
@@ -95,11 +97,20 @@ Ns_RegisterFilter(char *server, char *method, char *url,
     fPtr->url = ns_strdup(url);
     fPtr->when = when;
     fPtr->arg = arg;
-    fPtr->nextPtr = NULL;
     fPtrPtr = &servPtr->filter.firstFilterPtr;
-    while (*fPtrPtr != NULL) {
+    /* locate the first filter at this priority */
+    while (*fPtrPtr != NULL 
+           && FILTER_GETPRIO(fPtr->when) > FILTER_GETPRIO((*fPtrPtr)->when)) {
     	fPtrPtr = &((*fPtrPtr)->nextPtr);
     }
+    /* if appending, locate last filter in the same priority group */
+    if (!(when & NS_FILTER_INSERT)) {
+        while (*fPtrPtr != NULL 
+                && FILTER_GETPRIO(fPtr->when) == FILTER_GETPRIO((*fPtrPtr)->when)) {
+            fPtrPtr = &((*fPtrPtr)->nextPtr);
+        }
+    }
+    fPtr->nextPtr = *fPtrPtr;
     *fPtrPtr = fPtr;
     return (void *) fPtr;
 }

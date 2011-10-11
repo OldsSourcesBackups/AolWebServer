@@ -42,17 +42,19 @@ ns_register_filter, ns_register_trace \- Register connection callbacks
 .sp
 \fBns_register_trace \fImethod url script ?arg?\fR
 .sp
-\fBns_register_filter read\fR \fImethod url script ?arg?\fR
+\fBns_register_filter read\fR \fI?-insert|-append? ?-priority num? method url script ?arg?\fR
 .sp
-\fBns_register_filter prequeue\fR \fImethod url script ?arg?\fR
+\fBns_register_filter prequeue\fR \fI?-insert|-append? ?-priority num? method url script ?arg?\fR
 .sp
-\fBns_register_filter preauth\fR \fImethod url script ?arg?\fR
+\fBns_register_filter preauth\fR \fI?-insert|-append? ?-priority num? method url script ?arg?\fR
 .sp
-\fBns_register_filter postauth\fR \fImethod url script ?arg?\fR
+\fBns_register_filter postauth\fR \fI?-insert|-append? ?-priority num? method url script ?arg?\fR
 .sp
-\fBns_register_filter write\fR \fImethod url script ?arg?\fR
+\fBns_register_filter prewrite\fR \fI?-insert|-append? ?-priority num? method url script ?arg?\fR
 .sp
-\fBns_register_filter trace\fR \fImethod url script ?arg?\fR
+\fBns_register_filter write\fR \fI?-insert|-append? ?-priority num? method url script ?arg?\fR
+.sp
+\fBns_register_filter trace\fR \fI?-insert|-append? ?-priority num? method url script ?arg?\fR
 .BE
 
 .SH DESCRIPTION
@@ -86,6 +88,30 @@ See the man pages for \fBstring(n)\fR for details on glob matching.
 Note this matching approach differs from that of the \fBns_register_proc\fR
 command which is designed to match the method exactly and the single
 most specific url pattern.
+
+.PP
+The 
+.I -priority num
+option controls the order in which filters will be executed for a given 
+phase.  The valid range for 
+.I num
+is -128 to 127, with lower values having higher priority, i.e., they
+will be executed sooner.  The default priority is 0.  Priority values
+outside the range [-100 .. 100] are reserved for system use.
+
+.PP
+The
+.I -insert 
+or 
+.I -append
+options control where a new filter is added in relation to other
+filters of equal priority. 
+.I -insert
+causes the filter to be added to the front of the list (executed first),
+while 
+.I -append
+causes it to be added to the end of the list.  The default is 
+.I -append
 
 .PP
 The \fIproc\fR argument is the name of a Tcl procedure to invoke
@@ -164,6 +190,13 @@ requests is ultimately not authorized.
 \fBns_register_filter \fBpostauth\fR \fImethod url script ?arg?\fR
 Invoke \fIproc\fR after successful authorization.  If prior authorization
 fails, this callback will not be invoked.
+
+.TP
+\fBns_register_filter \fBprewrite\fR \fImethod url script ?arg?\fR
+Invoke \fIproc\fR before the response content is sent to the client.
+This filter can be used to modify the response content before being
+sent.  This filter will not get called for content sent with 
+\fBns_returnfile\fR or \fBns_write\fR
 
 .TP
 \fBns_register_filter \fBwrite\fR \fImethod url script ?arg?\fR

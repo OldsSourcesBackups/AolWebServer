@@ -135,6 +135,16 @@ Ns_ConnFlush(Ns_Conn *conn, char *buf, int len, int stream)
     char *ahdr;
     int status;
 
+    connPtr->sbuf=buf;
+    if (NsRunFilters((Ns_Conn *) connPtr, NS_FILTER_PRE_WRITE) != NS_OK) {
+        return NS_ERROR;
+    } 
+    if (connPtr->rbuf != NULL) {
+        /* the content was set by pre-write filters */
+        buf=Tcl_DStringValue(connPtr->rbuf);
+        len=Tcl_DStringLength(connPtr->rbuf);
+    }
+
     Tcl_DStringInit(&enc);
     Tcl_DStringInit(&gzip);
     if (len < 0) {

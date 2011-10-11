@@ -2325,6 +2325,11 @@ FreeConn(Conn *connPtr)
     Ns_SetFree(connPtr->headers);
     Ns_SetFree(connPtr->outputheaders);
 
+    if (connPtr->rbuf != NULL) {
+        Tcl_DStringFree(connPtr->rbuf);
+        ns_free(connPtr->rbuf);
+    }
+
     /*
      * Truncate the I/O buffers, zero remaining elements of the Conn,
      * and return the Conn to the free list.

@@ -103,9 +103,13 @@
 #define NS_FILTER_POST_AUTH       2
 #define NS_FILTER_TRACE           4
 #define NS_FILTER_VOID_TRACE      8
-#define NS_FILTER_PRE_QUEUE	 16
-#define NS_FILTER_READ	 	 32
-#define NS_FILTER_WRITE	 	 64
+#define NS_FILTER_PRE_QUEUE       16
+#define NS_FILTER_READ            32
+#define NS_FILTER_PRE_WRITE       64
+#define NS_FILTER_WRITE           128
+#define NS_FILTER_INSERT          (1 << 16)
+#define NS_FILTER_APPEND          0
+#define NS_FILTER_PRIORITY(p)     (((signed char)p) << 24)
 #define NS_REGISTER_SERVER_TRACE 16
 #define NS_OP_NOINHERIT		  2
 #define NS_OP_NODELETE		  4
@@ -246,7 +250,7 @@ NS_EXTERN int			kill(int pid, int sig);
  */
 
 #define UCHAR(c) 		((unsigned char)(c))
-#define STREQ(a,b) 		(((*a) == (*b)) && (strcmp((a),(b)) == 0))
+#define STREQ(a,b) 		(((*(a)) == (*(b))) && (strcmp((a),(b)) == 0))
 #define STRIEQ(a,b)     	(strcasecmp((a),(b)) == 0)
 #define Ns_IndexCount(X) 	((X)->n)
 #define Ns_ListPush(elem,list)  ((list)=Ns_ListCons((elem),(list)))

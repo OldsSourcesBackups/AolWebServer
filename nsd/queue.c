@@ -596,41 +596,7 @@ ConnRun(Conn *connPtr)
     if (connPtr->request->protocol != NULL && connPtr->request->host != NULL) {
 	status = NsConnRunProxyRequest((Ns_Conn *) connPtr);
     } else {
-	status = NsRunFilters(conn, NS_FILTER_PRE_AUTH);
-	if (status == NS_OK) {
-	    status = Ns_AuthorizeRequest(servPtr->server,
-			connPtr->request->method, connPtr->request->url, 
-			connPtr->authUser, connPtr->authPasswd, connPtr->peer);
-	    switch (status) {
-	    case NS_OK:
-		status = NsRunFilters(conn, NS_FILTER_POST_AUTH);
-		if (status == NS_OK) {
-		    status = Ns_ConnRunRequest(conn);
-		}
-		break;
-
-	    case NS_FORBIDDEN:
-		Ns_ConnReturnForbidden(conn);
-		break;
-
-	    case NS_UNAUTHORIZED:
-		Ns_ConnReturnUnauthorized(conn);
-		break;
-
-	    case NS_ERROR:
-	    default:
-		Ns_ConnReturnInternalError(conn);
-		break;
-	    }
-        } else if (status != NS_FILTER_RETURN) {
-            /* if not ok or filter_return, then the pre-auth filter coughed
-             * an error.  We are not going to proceed, but also we
-             * can't count on the filter to have sent a response
-             * back to the client.  So, send an error response.
-             */
-            Ns_ConnReturnInternalError(conn);
-            status = NS_FILTER_RETURN; /* to allow tracing to happen */
-        }
+	status = NsConnRunDirectRequest((Ns_Conn *) connPtr);
     }
     Ns_ConnClose(conn);
     if (status == NS_OK || status == NS_FILTER_RETURN) {

@@ -257,24 +257,50 @@ NsTclRegisterFilterObjCmd(ClientData arg, Tcl_Interp *interp, int objc, Tcl_Obj 
     Tcl_Obj **lobjv;
     int       when, i;
     static CONST char *wopt[] = {
-        "read", "write", "prequeue", "preauth", "postauth", "trace", NULL
+        "read", "prewrite", "write", "prequeue", "preauth", "postauth", "trace", NULL
     };
     enum {
-        ReadIdx, WriteIdx, PreQueueIdx, PreAuthIdx, PostAuthIdx, TraceIdx,
+        ReadIdx, PreWriteIdx, WriteIdx, PreQueueIdx, PreAuthIdx, PostAuthIdx, TraceIdx,
     } widx;
 
     if (objc < 2) {
-        Tcl_WrongNumArgs(interp, 1, objv, "option ?args?");
+error:
+        Tcl_SetResult(interp, "wrong arguments: should be ns_register_filter "
+                "?-insert? ?-priority num? when method url script ?arg?",
+                TCL_STATIC);
         return TCL_ERROR;
     }
-    if (objc != 5 && objc != 6) {
-        Tcl_WrongNumArgs(interp, 1, objv, "when method url script ?arg?");
-        return TCL_ERROR;
+    when = 0;
+    for (i = 1; i < objc; i++) {
+        char *arg = Tcl_GetString(objv[i]);
+        if (*arg != '-') break;
+        if (STRIEQ(arg, "-insert")) {
+            when |= NS_FILTER_INSERT;
+        } else if (STRIEQ(arg, "-priority")) {
+            if (++i >= objc) goto error;
+            int prio;
+            if (Tcl_GetIntFromObj(interp,objv[i],&prio) != TCL_OK) {
+                return TCL_ERROR;
+            }
+            if (prio < -128 || prio > 127) {
+                Tcl_SetResult(interp, "priority must be in range -128 .. 127",
+                    TCL_STATIC);
+                return TCL_ERROR;
+            }
+            when |= NS_FILTER_PRIORITY(prio);
+        } else {
+            goto error;
+        }
+    }
+    objc-=(i-1);
+    objv+=(i-1);
+
+    if (objc < 5 || objc > 6) {
+        goto error;
     }
     if (Tcl_ListObjGetElements(interp, objv[1], &lobjc, &lobjv) != TCL_OK) {
 	return TCL_ERROR;
     }
-    when = 0;
     for (i = 0; i < lobjc; ++i) {
     	if (Tcl_GetIndexFromObj(interp, lobjv[i], wopt, "when", 0,
                 (int *) &widx) != TCL_OK) {
@@ -283,6 +309,9 @@ NsTclRegisterFilterObjCmd(ClientData arg, Tcl_Interp *interp, int objc, Tcl_Obj 
 	switch (widx) {
 	case ReadIdx:
             when |= NS_FILTER_READ;
+	    break;
+	case PreWriteIdx:
+            when |= NS_FILTER_PRE_WRITE;
 	    break;
 	case WriteIdx:
             when |= NS_FILTER_WRITE;
@@ -512,6 +541,9 @@ ProcFilter(void *arg, Ns_Conn *conn, int why)
     switch (why) {
 	case NS_FILTER_READ:
 	    Tcl_DStringAppendElement(&script, "read");
+	    break;
+	case NS_FILTER_PRE_WRITE:
+	    Tcl_DStringAppendElement(&script, "prewrite");
 	    break;
 	case NS_FILTER_WRITE:
 	    Tcl_DStringAppendElement(&script, "write");

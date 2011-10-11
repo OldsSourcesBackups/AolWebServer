@@ -270,6 +270,9 @@ CreateServer(char *server)
     if (!Ns_ConfigGetBool(path, "noticedetail", &i) || i) {
     	servPtr->opts.flags |= SERV_NOTICEDETAIL;
     }
+    if (!Ns_ConfigGetBool(path, "filterredirect", &i) || i) {
+    	servPtr->opts.flags |= SERV_FILTERREDIRECT;
+    }
     p = Ns_ConfigGetValue(path, "headercase");
     if (p != NULL && STRIEQ(p, "tolower")) {
     	servPtr->opts.hdrcase = ToLower;
