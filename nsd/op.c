@@ -246,7 +246,9 @@ Ns_ConnRunRequest(Ns_Conn *conn)
         Ns_Log(Error, "return: failed to redirect '%s %s': "
                "exceeded recursion limit of %d",
                conn->request->method, conn->request->url, MAX_RECURSION);
-        return Ns_ConnReturnInternalError(conn);
+        return Ns_ConnReturnNotice(conn, 500, "Server Error",
+            "The requested URL cannot be accessed "
+            "due to a system error on this server.");
     }
 
     Ns_MutexLock(&ulock);

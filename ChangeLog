@@ -1,4 +1,9 @@
 2011-10-11 Jeff Rogers <dvrsn@diphi.com>
+	* nsd/op.c: handle internal error from redirect recursion overflow
+	directly instead of redirecting to internal error page.  Prevents
+	error displaying error page from crashing server.
+
+2011-10-11 Jeff Rogers <dvrsn@diphi.com>
 	* doc/Ns_Filter.3:
 	* doc/ns_filter.n:
 	* nsd/conn.c:
