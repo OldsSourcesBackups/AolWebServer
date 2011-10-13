@@ -321,6 +321,7 @@ typedef struct Driver {
     char        *bindaddr;	    /* Numerical listen address. */
     int          port;		    /* Port in location. */
     int		 backlog;	    /* listen() backlog. */
+    int		 maxaccept;	    /* connections to accept per spin. */
     
     int          maxline;           /* Maximum request line length to read. */
     int          maxheader;         /* Maximum total header length to read. */

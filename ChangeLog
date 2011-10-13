@@ -1,3 +1,9 @@
+2011-10-13 Jeff Rogers <dvrsn@diphi.com>
+	* nsd/nsd.h:
+	* nsd/driver.c: add tuning tweak and config variable to let 
+	driver accept more than one connection per spin.  
+	SF RFE #1014273
+
 2011-10-11 Jeff Rogers <dvrsn@diphi.com>
 	* nsd/op.c: handle internal error from redirect recursion overflow
 	directly instead of redirecting to internal error page.  Prevents

@@ -409,6 +409,10 @@ Ns_DriverInit(char *server, char *module, Ns_DriverInitData *init)
         n = 30;         /* 30 seconds wait for more data in keep-alive.*/
     }
     drvPtr->keepwait = _MAX(n, 0); /* NB: 0 for no keepalive. */
+    if (!Ns_ConfigGetInt(path, "maxaccept", &n)) {
+        n = 10;         /* accept up to 10 connections per driver spin */
+    }
+    drvPtr->maxaccept = _MAX(n, 0); /* NB: 0 for no max. */
     if (!Ns_ConfigGetInt(path, "maxreaders", &n) || n < 1) {
         n = 10;         /* Max of 10 threads for non-event driven I/O. */
     }
@@ -1334,12 +1338,16 @@ dropped:
 	 * Attempt to accept new sockets.
 	 */
 
-  	if (!stop && lidx >= 0 && PollIn(&pdata, lidx)
-                && ((sockPtr = SockAccept(lsock, drvPtr)) != NULL)) {
-    	    sockPtr->acceptTime = now;
-	    sockPtr->connPtr = AllocConn(drvPtr, &now, sockPtr);
-	    SockWait(sockPtr, &now, drvPtr->recvwait, &waitPtr);
-	    ++drvPtr->stats.accepts;
+  	if (!stop && lidx >= 0 && PollIn(&pdata, lidx)) {
+	    int naccept = 0;
+	    while (drvPtr->freeSockPtr != NULL &&
+	           (drvPtr->maxaccept == 0 || naccept++ < drvPtr->maxaccept) &&
+		   (sockPtr = SockAccept(lsock, drvPtr)) != NULL) {
+		sockPtr->acceptTime = now;
+		sockPtr->connPtr = AllocConn(drvPtr, &now, sockPtr);
+		SockWait(sockPtr, &now, drvPtr->recvwait, &waitPtr);
+		++drvPtr->stats.accepts;
+	    }
 	}
 
 	/*
