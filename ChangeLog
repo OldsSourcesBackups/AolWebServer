@@ -1,3 +1,5 @@
+2011-10-25 tag aolserver_v45_r2
+
 2011-10-25 Jeff Rogers <dvrsn@diphi.com>
 	* nsd/nsd.h: set patchlevel to 4.5.2
 
