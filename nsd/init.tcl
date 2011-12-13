@@ -573,6 +573,10 @@ proc _ns_getscript n {
             } else {
                 # procedure imported from other namespace
                 ::append _import [::list namespace import -force $_orig] \n
+		# renamed after import
+		::if {[::namespace tail $_orig] != $_proc} {
+		    ::append _import [::list rename [::namespace tail $_orig] $_proc] \n
+		}
             }
         }
 
@@ -585,6 +589,10 @@ proc _ns_getscript n {
             ::if {[::info exists _prcs($_cmnd)] == 0 
                     && $_orig != [::namespace which -command $_cmnd]} {
                 ::append _import [::list namespace import -force $_orig] \n
+		# renamed after import
+		::if {[::namespace tail $_orig] != [::namespace tail $_cmnd]} {
+		    ::append _import [::list rename [::namespace current]::[::namespace tail $_orig] $_cmnd] \n
+		}
             }
 	    ::append _import [_ns_getensemble $_cmnd]
         }

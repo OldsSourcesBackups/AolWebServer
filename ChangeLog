@@ -1,3 +1,7 @@
+2011-12-13 Jeff Rogers <dvrsn@diphi.com>
+	* nsd/init.tcl: add logic to handle commands imported from a namespace
+	and then renamed (some tcllib packages do this)
+
 2011-10-25 tag aolserver_v45_r2
 
 2011-10-25 Jeff Rogers <dvrsn@diphi.com>
