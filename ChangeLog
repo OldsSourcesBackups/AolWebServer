@@ -1,3 +1,6 @@
+2012-05-11 Jeff Rogers <dvrsn@diphi.com>
+	* nsd/init.tcl: fix previous version that had renaming logic twice
+
 2011-12-13 Jeff Rogers <dvrsn@diphi.com>
 	* nsd/init.tcl: add logic to handle commands imported from a namespace
 	and then renamed (some tcllib packages do this)
