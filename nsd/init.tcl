@@ -326,9 +326,9 @@ proc _ns_savenamespaces {} {
     _ns_getnamespaces nslist
     foreach n $nslist {
         foreach {ns_script ns_import} [_ns_getscript $n] {
-            append script [list namespace eval $n $ns_script] \n
+            append script [list ::namespace eval $n $ns_script] \n
             if {$ns_import != ""} {
-                append import [list namespace eval $n $ns_import] \n
+                append import [list ::namespace eval $n $ns_import] \n
             }
         }
     }
@@ -428,6 +428,8 @@ proc _ns_getnamespaces {listVar {top "::"}} {
     upvar $listVar list
     lappend list $top
     foreach c [namespace children $top] {
+	# skip built-in namespaces
+        if {$c in {::oo}} continue
         _ns_getnamespaces list $c
     }
 }
@@ -456,9 +458,9 @@ if {[catch {package require Tcl 8.5}]} {
     #
     proc _ns_create_or_config_ensemble {cmd cfg} {
        if {[info command $cmd] eq $cmd && [namespace ensemble exists $cmd]} {
-         uplevel 1 [list namespace ensemble configure $cmd {*}$cfg]
+         uplevel 1 [list ::namespace ensemble configure $cmd {*}$cfg]
        } else {
-         uplevel 1 [list namespace ensemble create -command $cmd {*}$cfg]
+         uplevel 1 [list ::namespace ensemble create -command $cmd {*}$cfg]
        }
     }
     proc _ns_getensemble {cmd} {
@@ -467,7 +469,7 @@ if {[catch {package require Tcl 8.5}]} {
             ::set _enns $_cfg(-namespace)
             ::unset _cfg(-namespace)
             ::set _encmd [::list ::_ns_create_or_config_ensemble $cmd [::array get _cfg]]
-            return [::list namespace eval $_enns $_encmd]\n
+            return [::list ::namespace eval $_enns $_encmd]\n
         }
     }
 }
@@ -572,7 +574,7 @@ proc _ns_getscript n {
                       [::list proc $_proc $_args [::info body $_proc]] \n
             } else {
                 # procedure imported from other namespace
-                ::append _import [::list namespace import -force $_orig] \n
+                ::append _import [::list ::namespace import -force $_orig] \n
 		# renamed after import
 		::if {[::namespace tail $_orig] != $_proc} {
 		    ::append _import [::list rename [::namespace tail $_orig] $_proc] \n
@@ -588,7 +590,7 @@ proc _ns_getscript n {
             ::set _orig [::namespace origin $_cmnd]
             ::if {[::info exists _prcs($_cmnd)] == 0 
                     && $_orig != [::namespace which -command $_cmnd]} {
-                ::append _import [::list namespace import -force $_orig] \n
+                ::append _import [::list ::namespace import -force $_orig] \n
             }
 	    ::append _import [_ns_getensemble $_cmnd]
         }
@@ -600,7 +602,7 @@ proc _ns_getscript n {
 
         ::set _exp [::namespace export]
         if {[::llength $_exp]} {
-            ::append _script [::concat namespace export $_exp] \n
+            ::append _script [::concat ::namespace export $_exp] \n
         }
 
         ::return [::list $_script $_import]
