@@ -1,7 +1,12 @@
 2012-09-17 Jeff Rogers <dvrsn@diphi.com>
-	* include/nsthread.h:
-	* include/ns.h: update definition of NS_EXPORT to use modern GCC
+	* include/nsthread.h: update definition of NS_EXPORT to use modern GCC
 	visibility attributes
+	* include/ns.h: add an automatic export for ModInit proc to avoid 
+	forcing all modules to change for visibility.
+	* include/ns.mak.in: add NS_MODINIT define when compiling modules
+	to pull in automatic export
+	* nsd/init.tcl: make sure to fully qualify 'namespace'.  Omit 
+	'::oo' from namespace traversal until tcloo is better understood.
 
 2012-05-11 Jeff Rogers <dvrsn@diphi.com>
 	* nsd/init.tcl: fix previous version that had renaming logic twice

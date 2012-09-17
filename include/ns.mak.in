@@ -161,6 +161,7 @@ ifdef MOD
 	MODSRC	 = $(INCDIR)/nsmodinit.c
 	MODOBJ	 = $(MOD)_modinit.o
 	MODOBJS	+= $(MODOBJ)
+	DEFS	+= -DNS_MODINIT=$(MODINIT)
     endif
 endif
 

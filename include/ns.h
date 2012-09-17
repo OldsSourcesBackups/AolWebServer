@@ -1394,4 +1394,9 @@ NS_EXTERN Ns_ConnFile *Ns_ConnNextFile(Tcl_HashSearch *searchPtr);
 #define Ns_DecodeUrl(p,u)       Ns_DecodeUrlCharset(p,u,NULL)
 #endif
 
+/* Module init proc automatic export */
+#ifdef NS_MODINIT
+NS_EXPORT Ns_ModuleInitProc NS_MODINIT;
+#endif
+
 #endif /* NS_H */
