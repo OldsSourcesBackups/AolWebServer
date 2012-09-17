@@ -46,7 +46,11 @@
 #define NS_EXPORT		__declspec(dllexport)
 #define NS_IMPORT		__declspec(dllimport)
 #else
-#define NS_EXPORT
+# if __GNUC__ >= 4
+#  define NS_EXPORT		__attribute__ ((visibility ("default")))
+# else
+#  define NS_EXPORT
+# endif /* __GNUC__ >= 4 */
 #define NS_IMPORT
 #ifndef _REENTRANT
 #define _REENTRANT

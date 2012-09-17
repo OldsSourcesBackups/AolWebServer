@@ -1,3 +1,8 @@
+2012-09-17 Jeff Rogers <dvrsn@diphi.com>
+	* include/nsthread.h:
+	* include/ns.h: update definition of NS_EXPORT to use modern GCC
+	visibility attributes
+
 2012-05-11 Jeff Rogers <dvrsn@diphi.com>
 	* nsd/init.tcl: fix previous version that had renaming logic twice
 

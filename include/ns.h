@@ -236,7 +236,6 @@ NS_EXTERN int			kill(int pid, int sig);
 #define SOCKET			int
 #define INVALID_SOCKET	        (-1)
 #define SOCKET_ERROR	        (-1)
-#define NS_EXPORT
 #define ns_sockclose		close
 #define ns_socknbclose		close
 #define ns_sockioctl		ioctl
