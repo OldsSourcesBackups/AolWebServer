@@ -61,7 +61,7 @@ Ns_QuoteHtml(Ns_DString *pds, char *string)
     char *end, *next;
 
     end = string + strlen(string);
-    do {
+    while (string < end) {
 	next = Tcl_UtfNext(string);
         switch (*string) {
         case '<':
@@ -89,7 +89,7 @@ Ns_QuoteHtml(Ns_DString *pds, char *string)
             break;
         }
 	string = next;
-    } while (string < end);
+    };
 }
 
 
