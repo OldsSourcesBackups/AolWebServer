@@ -729,7 +729,5 @@ SetCacheFromAny(Tcl_Interp *interp, Tcl_Obj *objPtr)
     }
     objPtr->typePtr = &cacheType;
     objPtr->internalRep.otherValuePtr = cachePtr;
-    Tcl_InvalidateStringRep(objPtr);
-    objPtr->length = 0;  /* ensure there's no stumbling */
     return TCL_OK;
 }
