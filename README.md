@@ -146,7 +146,7 @@ such as HP/UX should be easy.  To compile and install AOLserver:
 There is a mailing list for AOLserver to discuss anything from
 configuration, development, and future direction.  To join visit:
 
-	https://sourceforge.net/projects/aolserver/
+https://sourceforge.net/projects/aolserver/
 
 
 5. Thank You
