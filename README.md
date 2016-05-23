@@ -3,7 +3,7 @@
 This is the AOLserver 4.5 source distribution.  AOLserver is
 available at https://sourceforge.net/projects/aolserver/, a SourceForge hosted site.
 
-# cvs import from https://sourceforge.net/projects/aolserver/
+### cvs import from Aolserver on sourceforge 
     # rsync -av rsync://aolserver.cvs.sourceforge.net/cvsroot/aolserver/\* aolserver-cvs-rsync
     # git cvsimport -a -k -d $PWD/aolserver-cvs-rsync/ -C aolserver-git aolserver
 
