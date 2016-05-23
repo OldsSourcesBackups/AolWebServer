@@ -1,8 +1,7 @@
-# AolWebServer
-fork of https://sourceforge.net/projects/aolserver/
+# AolWebServer fork on github
 
     This is the AOLserver 4.5 source distribution.  AOLserver is
-    available at http://aolserver.com, a SourceForge hosted site.
+    available at https://sourceforge.net/projects/aolserver/, a SourceForge hosted site.
 
 RCS: @(#) $Id$
 
@@ -150,7 +149,7 @@ such as HP/UX should be easy.  To compile and install AOLserver:
 There is a mailing list for AOLserver to discuss anything from
 configuration, development, and future direction.  To join visit:
 
-	http://aolserver.com/
+	https://sourceforge.net/projects/aolserver/
 
 
 5. Thank You
