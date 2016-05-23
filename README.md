@@ -1,10 +1,7 @@
 # AolWebServer fork on github
 
-    This is the AOLserver 4.5 source distribution.  AOLserver is
-    available at https://sourceforge.net/projects/aolserver/, a SourceForge hosted site.
-
-RCS: @(#) $Id$
-
+This is the AOLserver 4.5 source distribution.  AOLserver is
+available at https://sourceforge.net/projects/aolserver/, a SourceForge hosted site.
 
 Contents
 --------
